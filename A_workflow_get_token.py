@@ -582,20 +582,36 @@ class TokenCollector:
     async def _wait_web_stable_by_create_button(self, timeout_ms: int = 30000) -> bool:
         if not self.page:
             return False
+        
+        # ✅ Tuyển tập XPath cho nút Tạo/Create (broadened to handle UI changes)
         create_btn_xpath = (
-            ".//button[i[normalize-space()='arrow_forward'] and "
-            "(span[normalize-space()='Tạo'] or span[normalize-space()='Create'] or pan[normalize-space()='Create'])]"
+            ".//button[(i[normalize-space()='arrow_forward'] or contains(@class, 'arrow_forward')) and "
+            "(span[contains(text(),'Tạo')] or span[contains(text(),'Create')] or contains(text(),'Tạo') or contains(text(),'Create'))]"
         )
+        
+        # ✅ XPath cho trang đăng nhập Google
+        login_check_xpath = ".//button[contains(normalize-space(.), 'Sign in') or contains(normalize-space(.), 'Đăng nhập')]"
+        
         self._log("⏳waiting web stable")
         deadline = time.time() + (max(1000, timeout_ms) / 1000.0)
         while time.time() < deadline:
             if self._should_stop():
                 return False
+            
+            # Check Create button
             btn = await self._first_visible_locator(create_btn_xpath, timeout_ms=300)
             if btn is not None:
                 self._log("✅ Web Stabled")
                 return True
+            
+            # Check Login page
+            login_btn = await self._first_visible_locator(login_check_xpath, timeout_ms=200)
+            if login_btn is not None:
+                self._log("⚠️ Vui lòng đăng nhập Google! (Phát hiện trang Login)")
+                # Chúng ta tiếp tục chờ để user có thể đăng nhập tay
+            
             await asyncio.sleep(0.15)
+            
         self._log("⚠️ Quá thời gianwaiting web stable: chưa thấy nút Tạo/Create")
         return False
 
