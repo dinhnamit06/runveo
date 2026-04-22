@@ -1,0 +1,205 @@
+{
+  "project_name": "default_project",
+  "updated_at": 1776844515,
+  "rows": [
+    {
+      "row": 0,
+      "stt": "001",
+      "prompt_id": "1",
+      "prompt": "người đàn ông chào khán giả",
+      "mode_key": "grok_image_to_video",
+      "mode_label": "GROK - Tạo video từ Ảnh",
+      "mode_name": "GROK - Tạo video từ Ảnh",
+      "mode_payload": {
+        "image_link": "C:/Users/Admin/OneDrive/Pictures/LÀM VD/45-year-old_Asian_man,_202604220947.jpeg|C:/Users/Admin/OneDrive/Pictures/LÀM VD/z7750723405133_3fb84df50c8db0878305b4fc902c8699.jpg",
+        "prompt": "người đàn ông chào khán giả"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\001_45-year-old_Asian_man__2026042_ng_i_n_ng_ch_o_kh_n_gi_20260422_115920_068406.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_thumnail\\001_45-year-old_Asian_man__2026042_ng_i_n_ng_ch_o_kh_n_gi_20260422_115920_068406.thumb.jpg"
+      }
+    },
+    {
+      "row": 1,
+      "stt": "002",
+      "prompt_id": "2",
+      "prompt": "người đàn ông chào khán giả",
+      "mode_key": "grok_image_to_video",
+      "mode_label": "GROK - Tạo video từ Ảnh",
+      "mode_name": "GROK - Tạo video từ Ảnh",
+      "mode_payload": {
+        "image_link": "C:/Users/Admin/OneDrive/Pictures/LÀM VD/45-year-old_Asian_man,_202604220947.jpeg|C:/Users/Admin/OneDrive/Pictures/LÀM VD/z7750723405133_3fb84df50c8db0878305b4fc902c8699.jpg",
+        "prompt": "người đàn ông chào khán giả"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\001_45-year-old_Asian_man__2026042_ng_i_n_ng_ch_o_kh_n_gi_20260422_120103_763476.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_thumnail\\001_45-year-old_Asian_man__2026042_ng_i_n_ng_ch_o_kh_n_gi_20260422_120103_763476.thumb.jpg"
+      }
+    },
+    {
+      "row": 2,
+      "stt": "003",
+      "prompt_id": "3",
+      "prompt": "người đàn ông chào khán giả, giới thiệu sản phầm phong thuỷ",
+      "mode_key": "grok_image_to_video",
+      "mode_label": "GROK - Tạo video từ Ảnh",
+      "mode_name": "GROK - Tạo video từ Ảnh",
+      "mode_payload": {
+        "image_link": "C:/Users/Admin/OneDrive/Pictures/LÀM VD/45-year-old_Asian_man,_202604220947.jpeg|C:/Users/Admin/OneDrive/Pictures/LÀM VD/z7750723405133_3fb84df50c8db0878305b4fc902c8699.jpg",
+        "prompt": "người đàn ông chào khán giả, giới thiệu sản phầm phong thuỷ"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\001_45-year-old_Asian_man__2026042_ng_i_n_ng_ch_o_kh_n_gi_g_20260422_120242_562713.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\001_45-year-old_Asian_man__2026042_ng_i_n_ng_ch_o_kh_n_gi_g_20260422_120242_562713.mp4"
+      }
+    },
+    {
+      "row": 3,
+      "stt": "004",
+      "prompt_id": "4",
+      "prompt": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features (dots for eyes, line for mouth), is walking alone in a dark office. Other stick figures are visible in the background, whispering and holding knives behind their backs. The entire scene is in a sketchy 2D chalkboard style on a dark green chalkboard.",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features (dots for eyes, line for mouth), is walking alone in a dark office. Other stick figures are visible in the background, whispering and holding knives behind their backs. The entire scene is in a sketchy 2D chalkboard style on a dark green chalkboard."
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 4,
+      "stt": "005",
+      "prompt_id": "5",
+      "prompt": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features, is watching two other stick figures aggressively tearing apart a piece of paper with a large dollar sign on it. The scene is in a sketchy 2D chalkboard style on a dark green chalkboard.",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features, is watching two other stick figures aggressively tearing apart a piece of paper with a large dollar sign on it. The scene is in a sketchy 2D chalkboard style on a dark green chalkboard."
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 5,
+      "stt": "006",
+      "prompt_id": "6",
+      "prompt": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features, is hunched over, carrying a massive, impossibly tall stack of chalk-drawn folders on his back, looking utterly exhausted. Other stick figures sit nearby, casually drinking coffee, in a sketchy 2D chalkboard style on a dark green chalkboard.",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features, is hunched over, carrying a massive, impossibly tall stack of chalk-drawn folders on his back, looking utterly exhausted. Other stick figures sit nearby, casually drinking coffee, in a sketchy 2D chalkboard style on a dark green chalkboard."
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 6,
+      "stt": "007",
+      "prompt_id": "7",
+      "prompt": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features, is walking away calmly after putting his hands in his pockets. He is turning his back away from a screaming, angry stick figure. The scene is in a sketchy 2D chalkboard style on a dark green chalkboard.",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features, is walking away calmly after putting his hands in his pockets. He is turning his back away from a screaming, angry stick figure. The scene is in a sketchy 2D chalkboard style on a dark green chalkboard."
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 7,
+      "stt": "008",
+      "prompt_id": "8",
+      "prompt": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features, is sitting cross-legged in a meditative pose. Chaotic chalk scribbles and noise lines surround him, but he is glowing slightly, in a sketchy 2D chalkboard style on a dark green chalkboard.",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "mode_payload": {
+        "description": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features, is sitting cross-legged in a meditative pose. Chaotic chalk scribbles and noise lines surround him, but he is glowing slightly, in a sketchy 2D chalkboard style on a dark green chalkboard."
+      },
+      "status_code": "CANCELED",
+      "status_text": "Hủy",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 8,
+      "stt": "009",
+      "prompt_id": "9",
+      "prompt": "{\"scene_id\": \"1\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Lily\", \"species\": \"Fictional Girl\", \"gender\": \"Female\", \"age\": \"Young Child\", \"voice_personality\": \"Sweet, cheerful, and inquisitive; Female; vi-VN; South Vietnamese accent, clear and friendly sound type\", \"body_build\": \"Small and agile\", \"face_shape\": \"Round with large, expressive blue eyes, a small nose, a gentle smile, and rounded ears.\", \"hair\": \"Short, bouncy pigtails, bright red\", \"skin_or_fur_color\": \"Fair\", \"signature_feature\": \"Sparkling blue eyes and a curious smile\", \"outfit_top\": \"A yellow t-shirt with a smiling sun graphic, made of soft cotton.\", \"outfit_bottom\": \"Blue denim shorts with a slightly faded wash.\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"White sneakers with red laces, slightly scuffed from play.\", \"props\": [\"A small, worn teddy bear named 'Beary' with button eyes and a stitched smile.\"], \"body_metrics\": \"u=cm; abs.height=unspecified; abs.head=unspecified; abs.shoulder=unspecified; abs.torso=unspecified; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=unspecified; cons=child-safe-no-metrics,lock-proportions,no-auto-rescale\", \"position\": \"center-left\", \"orientation\": \"facing_camera_slightly_angled_right\", \"pose\": \"sitting at table, holding teddy bear\", \"foot_placement\": \"feet flat on floor, slightly apart\", \"hand_detail\": \"left hand holding teddy bear, right hand resting on table\", \"expression\": \"excited, curious, with wide, bright eyes and a slight smile.\", \"action_flow\": {\"pre_action\": \"Lily is calmly sitting.\", \"main_action\": \"Lily looks towards the front with anticipation, holding her teddy bear.\", \"post_action\": \"Lily maintains her excited expression.\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}, \"CHAR_2\": {\"id\": \"CHAR_2\", \"name\": \"Leo\", \"species\": \"Fictional Boy\", \"gender\": \"Male\", \"age\": \"Young Child\", \"voice_personality\": \"Energetic, friendly, and slightly mischievous; Male; vi-VN; Northern Vietnamese accent, playful sound type\", \"body_build\": \"Lean and energetic\", \"face_shape\": \"Slightly square with bright, eager eyes, a small nose, a dimpled grin, and prominent ears.\", \"hair\": \"Spiky brown hair that always seems to be pointing in different directions\", \"skin_or_fur_color\": \"Light brown\", \"signature_feature\": \"A gap between his two front teeth and a dimple when he grins\", \"outfit_top\": \"A green t-shirt with a cartoon rocket ship on it, vibrant and durable fabric.\", \"outfit_bottom\": \"Khaki cargo pants with multiple pockets.\", \"helmet_or_hat\": \"A blue baseball cap worn backwards.\", \"shoes_or_footwear\": \"Red slip-on shoes, showing minor signs of wear.\", \"props\": [\"A colorful toy airplane with spinning propellers.\"], \"body_metrics\": \"u=cm; abs.height=unspecified; abs.head=unspecified; abs.shoulder=unspecified; abs.torso=unspecified; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=unspecified; cons=child-safe-no-metrics,lock-proportions,no-auto-rescale\", \"position\": \"center-right\", \"orientation\": \"facing_camera_slightly_angled_left\", \"pose\": \"standing, energetic, holding toy airplane\", \"foot_placement\": \"feet slightly apart, one foot forward\", \"hand_detail\": \"right hand holding toy airplane, left hand gesturing slightly\", \"expression\": \"eager, happy, with a wide grin and sparkling eyes.\", \"action_flow\": {\"pre_action\": \"Leo is standing energetically.\", \"main_action\": \"Leo looks towards the front with excitement, holding his toy airplane.\", \"post_action\": \"Leo maintains his enthusiastic posture.\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Sunny Meadow Classroom\", \"setting\": \"An indoor learning space designed to feel like an outdoor meadow.\", \"scenery\": \"Walls are painted a bright sky blue with fluffy white clouds. One wall features a large, stylized illustration of a vibrant green meadow with colorful wildflowers. A large, friendly-looking tree graphic is integrated into the scenery. Large, open windows reveal a gentle, sunny landscape outside. Ceiling has soft, globe-like lights.\", \"props\": \"Child-sized colorful tables and chairs. A whiteboard or interactive screen at the front. Shelves filled with colorful books and learning toys. A cozy rug in the center of the room. A large, soft drawing easel.\", \"lighting\": \"Bright, cheerful, and even daylight. Soft, warm glow emanating from the ceiling lights, simulating a sunny afternoon.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slight pan\", \"focus\": \"characters\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"gentle classroom hum\", \"distant birds chirping\"], \"fx\": [\"soft rustling of papers\"], \"music\": \"Upbeat and cheerful learning music\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Sweet, cheerful, and inquisitive; Female; vi-VN; South Vietnamese accent, clear and friendly sound type\", \"language\": \"vi-VN\", \"line\": \"Hôm nay mình sẽ học gì mới ạ?\"}, {\"speaker\": \"CHAR_2\", \"voice\": \"Energetic, friendly, and slightly mischievous; Male; vi-VN; Northern Vietnamese accent, playful sound type\", \"language\": \"vi-VN\", \"line\": \"Con nóng lòng muốn biết quá đi thôi!\"}], \"lip_sync_director_note\": \"Lily: 'Hôm nay mình sẽ học gì mới ạ?' - Mouth opens wide for 'Hôm', slight movement for 'nay', 'mình', 'sẽ', 'học'. Eyes bright. Leo: 'Con nóng lòng muốn biết quá đi thôi!' - Mouth opens for 'Con', 'nóng', 'lòng', 'muốn', 'biết', 'quá', 'đi', 'thôi'. Enthusiastic nods and gestures. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"In a vibrant classroom, Lily and Leo are seated, eagerly anticipating a new lesson. They express their excitement to learn new things.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "mode_key": "text_to_video",
+      "mode_label": "VEO3 - Tạo video từ văn bản",
+      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "{\"scene_id\": \"1\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Lily\", \"species\": \"Fictional Girl\", \"gender\": \"Female\", \"age\": \"Young Child\", \"voice_personality\": \"Sweet, cheerful, and inquisitive; Female; vi-VN; South Vietnamese accent, clear and friendly sound type\", \"body_build\": \"Small and agile\", \"face_shape\": \"Round with large, expressive blue eyes, a small nose, a gentle smile, and rounded ears.\", \"hair\": \"Short, bouncy pigtails, bright red\", \"skin_or_fur_color\": \"Fair\", \"signature_feature\": \"Sparkling blue eyes and a curious smile\", \"outfit_top\": \"A yellow t-shirt with a smiling sun graphic, made of soft cotton.\", \"outfit_bottom\": \"Blue denim shorts with a slightly faded wash.\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"White sneakers with red laces, slightly scuffed from play.\", \"props\": [\"A small, worn teddy bear named 'Beary' with button eyes and a stitched smile.\"], \"body_metrics\": \"u=cm; abs.height=unspecified; abs.head=unspecified; abs.shoulder=unspecified; abs.torso=unspecified; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=unspecified; cons=child-safe-no-metrics,lock-proportions,no-auto-rescale\", \"position\": \"center-left\", \"orientation\": \"facing_camera_slightly_angled_right\", \"pose\": \"sitting at table, holding teddy bear\", \"foot_placement\": \"feet flat on floor, slightly apart\", \"hand_detail\": \"left hand holding teddy bear, right hand resting on table\", \"expression\": \"excited, curious, with wide, bright eyes and a slight smile.\", \"action_flow\": {\"pre_action\": \"Lily is calmly sitting.\", \"main_action\": \"Lily looks towards the front with anticipation, holding her teddy bear.\", \"post_action\": \"Lily maintains her excited expression.\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}, \"CHAR_2\": {\"id\": \"CHAR_2\", \"name\": \"Leo\", \"species\": \"Fictional Boy\", \"gender\": \"Male\", \"age\": \"Young Child\", \"voice_personality\": \"Energetic, friendly, and slightly mischievous; Male; vi-VN; Northern Vietnamese accent, playful sound type\", \"body_build\": \"Lean and energetic\", \"face_shape\": \"Slightly square with bright, eager eyes, a small nose, a dimpled grin, and prominent ears.\", \"hair\": \"Spiky brown hair that always seems to be pointing in different directions\", \"skin_or_fur_color\": \"Light brown\", \"signature_feature\": \"A gap between his two front teeth and a dimple when he grins\", \"outfit_top\": \"A green t-shirt with a cartoon rocket ship on it, vibrant and durable fabric.\", \"outfit_bottom\": \"Khaki cargo pants with multiple pockets.\", \"helmet_or_hat\": \"A blue baseball cap worn backwards.\", \"shoes_or_footwear\": \"Red slip-on shoes, showing minor signs of wear.\", \"props\": [\"A colorful toy airplane with spinning propellers.\"], \"body_metrics\": \"u=cm; abs.height=unspecified; abs.head=unspecified; abs.shoulder=unspecified; abs.torso=unspecified; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=unspecified; cons=child-safe-no-metrics,lock-proportions,no-auto-rescale\", \"position\": \"center-right\", \"orientation\": \"facing_camera_slightly_angled_left\", \"pose\": \"standing, energetic, holding toy airplane\", \"foot_placement\": \"feet slightly apart, one foot forward\", \"hand_detail\": \"right hand holding toy airplane, left hand gesturing slightly\", \"expression\": \"eager, happy, with a wide grin and sparkling eyes.\", \"action_flow\": {\"pre_action\": \"Leo is standing energetically.\", \"main_action\": \"Leo looks towards the front with excitement, holding his toy airplane.\", \"post_action\": \"Leo maintains his enthusiastic posture.\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Sunny Meadow Classroom\", \"setting\": \"An indoor learning space designed to feel like an outdoor meadow.\", \"scenery\": \"Walls are painted a bright sky blue with fluffy white clouds. One wall features a large, stylized illustration of a vibrant green meadow with colorful wildflowers. A large, friendly-looking tree graphic is integrated into the scenery. Large, open windows reveal a gentle, sunny landscape outside. Ceiling has soft, globe-like lights.\", \"props\": \"Child-sized colorful tables and chairs. A whiteboard or interactive screen at the front. Shelves filled with colorful books and learning toys. A cozy rug in the center of the room. A large, soft drawing easel.\", \"lighting\": \"Bright, cheerful, and even daylight. Soft, warm glow emanating from the ceiling lights, simulating a sunny afternoon.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slight pan\", \"focus\": \"characters\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"gentle classroom hum\", \"distant birds chirping\"], \"fx\": [\"soft rustling of papers\"], \"music\": \"Upbeat and cheerful learning music\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Sweet, cheerful, and inquisitive; Female; vi-VN; South Vietnamese accent, clear and friendly sound type\", \"language\": \"vi-VN\", \"line\": \"Hôm nay mình sẽ học gì mới ạ?\"}, {\"speaker\": \"CHAR_2\", \"voice\": \"Energetic, friendly, and slightly mischievous; Male; vi-VN; Northern Vietnamese accent, playful sound type\", \"language\": \"vi-VN\", \"line\": \"Con nóng lòng muốn biết quá đi thôi!\"}], \"lip_sync_director_note\": \"Lily: 'Hôm nay mình sẽ học gì mới ạ?' - Mouth opens wide for 'Hôm', slight movement for 'nay', 'mình', 'sẽ', 'học'. Eyes bright. Leo: 'Con nóng lòng muốn biết quá đi thôi!' - Mouth opens for 'Con', 'nóng', 'lòng', 'muốn', 'biết', 'quá', 'đi', 'thôi'. Enthusiastic nods and gestures. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"In a vibrant classroom, Lily and Leo are seated, eagerly anticipating a new lesson. They express their excitement to learn new things.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: TOKEN | message: Token timeout)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 9,
+      "stt": "010",
+      "prompt_id": "10",
+      "prompt": "{\"scene_id\": \"1\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Lily\", \"species\": \"Fictional Girl\", \"gender\": \"Female\", \"age\": \"Young Child\", \"voice_personality\": \"Sweet, cheerful, and inquisitive; Female; vi-VN; South Vietnamese accent, clear and friendly sound type\", \"body_build\": \"Small and agile\", \"face_shape\": \"Round with large, expressive blue eyes, a small nose, a gentle smile, and rounded ears.\", \"hair\": \"Short, bouncy pigtails, bright red\", \"skin_or_fur_color\": \"Fair\", \"signature_feature\": \"Sparkling blue eyes and a curious smile\", \"outfit_top\": \"A yellow t-shirt with a smiling sun graphic, made of soft cotton.\", \"outfit_bottom\": \"Blue denim shorts with a slightly faded wash.\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"White sneakers with red laces, slightly scuffed from play.\", \"props\": [\"A small, worn teddy bear named 'Beary' with button eyes and a stitched smile.\"], \"body_metrics\": \"u=cm; abs.height=unspecified; abs.head=unspecified; abs.shoulder=unspecified; abs.torso=unspecified; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=unspecified; cons=child-safe-no-metrics,lock-proportions,no-auto-rescale\", \"position\": \"center-left\", \"orientation\": \"facing_camera_slightly_angled_right\", \"pose\": \"sitting at table, holding teddy bear\", \"foot_placement\": \"feet flat on floor, slightly apart\", \"hand_detail\": \"left hand holding teddy bear, right hand resting on table\", \"expression\": \"excited, curious, with wide, bright eyes and a slight smile.\", \"action_flow\": {\"pre_action\": \"Lily is calmly sitting.\", \"main_action\": \"Lily looks towards the front with anticipation, holding her teddy bear.\", \"post_action\": \"Lily maintains her excited expression.\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}, \"CHAR_2\": {\"id\": \"CHAR_2\", \"name\": \"Leo\", \"species\": \"Fictional Boy\", \"gender\": \"Male\", \"age\": \"Young Child\", \"voice_personality\": \"Energetic, friendly, and slightly mischievous; Male; vi-VN; Northern Vietnamese accent, playful sound type\", \"body_build\": \"Lean and energetic\", \"face_shape\": \"Slightly square with bright, eager eyes, a small nose, a dimpled grin, and prominent ears.\", \"hair\": \"Spiky brown hair that always seems to be pointing in different directions\", \"skin_or_fur_color\": \"Light brown\", \"signature_feature\": \"A gap between his two front teeth and a dimple when he grins\", \"outfit_top\": \"A green t-shirt with a cartoon rocket ship on it, vibrant and durable fabric.\", \"outfit_bottom\": \"Khaki cargo pants with multiple pockets.\", \"helmet_or_hat\": \"A blue baseball cap worn backwards.\", \"shoes_or_footwear\": \"Red slip-on shoes, showing minor signs of wear.\", \"props\": [\"A colorful toy airplane with spinning propellers.\"], \"body_metrics\": \"u=cm; abs.height=unspecified; abs.head=unspecified; abs.shoulder=unspecified; abs.torso=unspecified; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=unspecified; cons=child-safe-no-metrics,lock-proportions,no-auto-rescale\", \"position\": \"center-right\", \"orientation\": \"facing_camera_slightly_angled_left\", \"pose\": \"standing, energetic, holding toy airplane\", \"foot_placement\": \"feet slightly apart, one foot forward\", \"hand_detail\": \"right hand holding toy airplane, left hand gesturing slightly\", \"expression\": \"eager, happy, with a wide grin and sparkling eyes.\", \"action_flow\": {\"pre_action\": \"Leo is standing energetically.\", \"main_action\": \"Leo looks towards the front with excitement, holding his toy airplane.\", \"post_action\": \"Leo maintains his enthusiastic posture.\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Sunny Meadow Classroom\", \"setting\": \"An indoor learning space designed to feel like an outdoor meadow.\", \"scenery\": \"Walls are painted a bright sky blue with fluffy white clouds. One wall features a large, stylized illustration of a vibrant green meadow with colorful wildflowers. A large, friendly-looking tree graphic is integrated into the scenery. Large, open windows reveal a gentle, sunny landscape outside. Ceiling has soft, globe-like lights.\", \"props\": \"Child-sized colorful tables and chairs. A whiteboard or interactive screen at the front. Shelves filled with colorful books and learning toys. A cozy rug in the center of the room. A large, soft drawing easel.\", \"lighting\": \"Bright, cheerful, and even daylight. Soft, warm glow emanating from the ceiling lights, simulating a sunny afternoon.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slight pan\", \"focus\": \"characters\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"gentle classroom hum\", \"distant birds chirping\"], \"fx\": [\"soft rustling of papers\"], \"music\": \"Upbeat and cheerful learning music\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Sweet, cheerful, and inquisitive; Female; vi-VN; South Vietnamese accent, clear and friendly sound type\", \"language\": \"vi-VN\", \"line\": \"Hôm nay mình sẽ học gì mới ạ?\"}, {\"speaker\": \"CHAR_2\", \"voice\": \"Energetic, friendly, and slightly mischievous; Male; vi-VN; Northern Vietnamese accent, playful sound type\", \"language\": \"vi-VN\", \"line\": \"Con nóng lòng muốn biết quá đi thôi!\"}], \"lip_sync_director_note\": \"Lily: 'Hôm nay mình sẽ học gì mới ạ?' - Mouth opens wide for 'Hôm', slight movement for 'nay', 'mình', 'sẽ', 'học'. Eyes bright. Leo: 'Con nóng lòng muốn biết quá đi thôi!' - Mouth opens for 'Con', 'nóng', 'lòng', 'muốn', 'biết', 'quá', 'đi', 'thôi'. Enthusiastic nods and gestures. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"In a vibrant classroom, Lily and Leo are seated, eagerly anticipating a new lesson. They express their excitement to learn new things.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
+      "mode_key": "grok_text_to_video",
+      "mode_label": "GROK - Tạo video từ văn bản",
+      "mode_name": "GROK - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "{\"scene_id\": \"1\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Lily\", \"species\": \"Fictional Girl\", \"gender\": \"Female\", \"age\": \"Young Child\", \"voice_personality\": \"Sweet, cheerful, and inquisitive; Female; vi-VN; South Vietnamese accent, clear and friendly sound type\", \"body_build\": \"Small and agile\", \"face_shape\": \"Round with large, expressive blue eyes, a small nose, a gentle smile, and rounded ears.\", \"hair\": \"Short, bouncy pigtails, bright red\", \"skin_or_fur_color\": \"Fair\", \"signature_feature\": \"Sparkling blue eyes and a curious smile\", \"outfit_top\": \"A yellow t-shirt with a smiling sun graphic, made of soft cotton.\", \"outfit_bottom\": \"Blue denim shorts with a slightly faded wash.\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"White sneakers with red laces, slightly scuffed from play.\", \"props\": [\"A small, worn teddy bear named 'Beary' with button eyes and a stitched smile.\"], \"body_metrics\": \"u=cm; abs.height=unspecified; abs.head=unspecified; abs.shoulder=unspecified; abs.torso=unspecified; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=unspecified; cons=child-safe-no-metrics,lock-proportions,no-auto-rescale\", \"position\": \"center-left\", \"orientation\": \"facing_camera_slightly_angled_right\", \"pose\": \"sitting at table, holding teddy bear\", \"foot_placement\": \"feet flat on floor, slightly apart\", \"hand_detail\": \"left hand holding teddy bear, right hand resting on table\", \"expression\": \"excited, curious, with wide, bright eyes and a slight smile.\", \"action_flow\": {\"pre_action\": \"Lily is calmly sitting.\", \"main_action\": \"Lily looks towards the front with anticipation, holding her teddy bear.\", \"post_action\": \"Lily maintains her excited expression.\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}, \"CHAR_2\": {\"id\": \"CHAR_2\", \"name\": \"Leo\", \"species\": \"Fictional Boy\", \"gender\": \"Male\", \"age\": \"Young Child\", \"voice_personality\": \"Energetic, friendly, and slightly mischievous; Male; vi-VN; Northern Vietnamese accent, playful sound type\", \"body_build\": \"Lean and energetic\", \"face_shape\": \"Slightly square with bright, eager eyes, a small nose, a dimpled grin, and prominent ears.\", \"hair\": \"Spiky brown hair that always seems to be pointing in different directions\", \"skin_or_fur_color\": \"Light brown\", \"signature_feature\": \"A gap between his two front teeth and a dimple when he grins\", \"outfit_top\": \"A green t-shirt with a cartoon rocket ship on it, vibrant and durable fabric.\", \"outfit_bottom\": \"Khaki cargo pants with multiple pockets.\", \"helmet_or_hat\": \"A blue baseball cap worn backwards.\", \"shoes_or_footwear\": \"Red slip-on shoes, showing minor signs of wear.\", \"props\": [\"A colorful toy airplane with spinning propellers.\"], \"body_metrics\": \"u=cm; abs.height=unspecified; abs.head=unspecified; abs.shoulder=unspecified; abs.torso=unspecified; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=unspecified; cons=child-safe-no-metrics,lock-proportions,no-auto-rescale\", \"position\": \"center-right\", \"orientation\": \"facing_camera_slightly_angled_left\", \"pose\": \"standing, energetic, holding toy airplane\", \"foot_placement\": \"feet slightly apart, one foot forward\", \"hand_detail\": \"right hand holding toy airplane, left hand gesturing slightly\", \"expression\": \"eager, happy, with a wide grin and sparkling eyes.\", \"action_flow\": {\"pre_action\": \"Leo is standing energetically.\", \"main_action\": \"Leo looks towards the front with excitement, holding his toy airplane.\", \"post_action\": \"Leo maintains his enthusiastic posture.\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Sunny Meadow Classroom\", \"setting\": \"An indoor learning space designed to feel like an outdoor meadow.\", \"scenery\": \"Walls are painted a bright sky blue with fluffy white clouds. One wall features a large, stylized illustration of a vibrant green meadow with colorful wildflowers. A large, friendly-looking tree graphic is integrated into the scenery. Large, open windows reveal a gentle, sunny landscape outside. Ceiling has soft, globe-like lights.\", \"props\": \"Child-sized colorful tables and chairs. A whiteboard or interactive screen at the front. Shelves filled with colorful books and learning toys. A cozy rug in the center of the room. A large, soft drawing easel.\", \"lighting\": \"Bright, cheerful, and even daylight. Soft, warm glow emanating from the ceiling lights, simulating a sunny afternoon.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slight pan\", \"focus\": \"characters\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"gentle classroom hum\", \"distant birds chirping\"], \"fx\": [\"soft rustling of papers\"], \"music\": \"Upbeat and cheerful learning music\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Sweet, cheerful, and inquisitive; Female; vi-VN; South Vietnamese accent, clear and friendly sound type\", \"language\": \"vi-VN\", \"line\": \"Hôm nay mình sẽ học gì mới ạ?\"}, {\"speaker\": \"CHAR_2\", \"voice\": \"Energetic, friendly, and slightly mischievous; Male; vi-VN; Northern Vietnamese accent, playful sound type\", \"language\": \"vi-VN\", \"line\": \"Con nóng lòng muốn biết quá đi thôi!\"}], \"lip_sync_director_note\": \"Lily: 'Hôm nay mình sẽ học gì mới ạ?' - Mouth opens wide for 'Hôm', slight movement for 'nay', 'mình', 'sẽ', 'học'. Eyes bright. Leo: 'Con nóng lòng muốn biết quá đi thôi!' - Mouth opens for 'Con', 'nóng', 'lòng', 'muốn', 'biết', 'quá', 'đi', 'thôi'. Enthusiastic nods and gestures. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"In a vibrant classroom, Lily and Leo are seated, eagerly anticipating a new lesson. They express their excitement to learn new things.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\001_scene_id_1_duration_sec_8_ch_20260422_145505_382130.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_thumnail\\001_scene_id_1_duration_sec_8_ch_20260422_145505_382130.thumb.jpg"
+      }
+    }
+  ]
+}
