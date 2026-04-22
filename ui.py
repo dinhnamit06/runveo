@@ -151,6 +151,8 @@ class AppConfig:
     grok_multi_video: int = 5
     grok_video_length_seconds: int = 6
     grok_video_resolution: str = "480p"
+    voice_profile: str = "None_NoVoice"
+    grok_voice_profile: str = "None_NoVoice"
 
     def _config_token_option_for_json(self) -> str:
         raw = str(self.token_option or "Option2").replace(" ", "")
@@ -267,6 +269,8 @@ class AppConfig:
                     data.get("GROK_VIDEO_RESOLUTION", data.get("grok_video_resolution", cfg.grok_video_resolution))
                     or cfg.grok_video_resolution
                 )
+                cfg.voice_profile = str(data.get("VOICE_PROFILE", cfg.voice_profile) or "None_NoVoice")
+                cfg.grok_voice_profile = str(data.get("GROK_VOICE_PROFILE", cfg.grok_voice_profile) or "None_NoVoice")
 
             # If we loaded from the old root config.json, migrate it to data_general/config.json
             try:
@@ -378,6 +382,8 @@ class AppConfig:
             "GROK_VIDEO_LENGTH_SECONDS": int(10 if int(self.grok_video_length_seconds or 6) == 10 else 6),
             "GROK_VIDEO_RESOLUTION": "720p" if str(self.grok_video_resolution or "480p") == "720p" else "480p",
             "GROK_ACCOUNT_TYPE": grok_account_type,
+            "VOICE_PROFILE": str(self.voice_profile or "None_NoVoice"),
+            "GROK_VOICE_PROFILE": str(self.grok_voice_profile or "None_NoVoice"),
             "account1": account1,
             "grok_account": grok_account,
         }

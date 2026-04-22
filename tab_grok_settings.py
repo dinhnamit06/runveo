@@ -21,6 +21,7 @@ from PyQt6.QtWidgets import (
 
 from grok_chrome_manager import kill_profile_chrome, open_profile_chrome, resolve_profile_dir
 from settings_manager import DATA_GENERAL_DIR
+from voice_profiles import VOICE_JSON, VOICE_OPTIONS
 
 
 GROK_CONFIG_PATH = Path(DATA_GENERAL_DIR) / "grok_config.json"
@@ -159,6 +160,23 @@ class GrokSettingsTab(QWidget):
         setup_layout.addWidget(lb_resolution, 1, 2)
         setup_layout.addWidget(self.grok_video_resolution, 1, 3)
 
+        self.grok_voice_profile = _new_combo()
+        self.grok_voice_profile.setFixedWidth(250)
+        for k in VOICE_OPTIONS:
+            self.grok_voice_profile.addItem(VOICE_JSON[k]["label"], k)
+        cur_gv = str(getattr(config, "grok_voice_profile", "None_NoVoice") or "None_NoVoice")
+        if cur_gv not in VOICE_OPTIONS:
+            cur_gv = "None_NoVoice"
+        idx_gv = self.grok_voice_profile.findData(cur_gv)
+        self.grok_voice_profile.setCurrentIndex(idx_gv if idx_gv >= 0 else 0)
+
+        lb_voice = QLabel("Giọng đọc:")
+        lb_voice.setStyleSheet("font-weight:700; color:#1f2d48;")
+        lb_voice.setFixedWidth(115)
+        lb_voice.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignRight)
+        setup_layout.addWidget(lb_voice, 2, 0)
+        setup_layout.addWidget(self.grok_voice_profile, 2, 1, 1, 3)
+
         try:
             setup_layout.setColumnStretch(0, 0)
             setup_layout.setColumnStretch(1, 0)
@@ -250,6 +268,9 @@ class GrokSettingsTab(QWidget):
             multi_video_value = 20
         setattr(self._cfg, "grok_multi_video", multi_video_value)
         self._grok_runtime_cfg["MULTI_VIDEO"] = multi_video_value
+
+        grok_voice_key = self.grok_voice_profile.currentData()
+        setattr(self._cfg, "grok_voice_profile", str(grok_voice_key or "None_NoVoice"))
 
         try:
             self._cfg.save()

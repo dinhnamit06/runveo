@@ -8,6 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from urllib.request import urlopen
 from urllib.error import URLError
+from voice_profiles import VOICE_JSON, VOICE_OPTIONS
 
 from PyQt6.QtCore import QTimer, Qt, QObject, QThread, pyqtSignal
 from PyQt6.QtGui import QIntValidator
@@ -183,6 +184,22 @@ class SettingsTab(QWidget):
         self.seed_value = int_edit(0, 999999, int(getattr(config, "seed_value", 9797) or 9797))
         form.addRow("Seed Value:", self.seed_value)
 
+        voice_items = [VOICE_JSON[k]["label"] for k in VOICE_OPTIONS]
+        self.voice_profile = QComboBox()
+        self.voice_profile.setObjectName("SettingsCombo")
+        self.voice_profile.addItems(voice_items)
+        self.voice_profile.setFixedWidth(180)
+        self.voice_profile.setFixedHeight(34)
+        cur_v = str(getattr(config, "voice_profile", "None_NoVoice") or "None_NoVoice")
+        if cur_v not in VOICE_OPTIONS:
+            cur_v = "None_NoVoice"
+        try:
+            v_idx = VOICE_OPTIONS.index(cur_v)
+            self.voice_profile.setCurrentIndex(v_idx)
+        except Exception:
+            self.voice_profile.setCurrentIndex(0)
+        form.addRow("Giọng đọc:", self.voice_profile)
+
         left.addLayout(form)
         left.addStretch(1)
 
@@ -337,6 +354,10 @@ class SettingsTab(QWidget):
         setattr(self._cfg, "token_option", self.token_option.currentText().strip() or "Option2")
         setattr(self._cfg, "seed_mode", self.seed_mode.currentText().strip() or "Random")
         setattr(self._cfg, "seed_value", _as_int(self.seed_value, 9797))
+
+        voice_idx = self.voice_profile.currentIndex()
+        if 0 <= voice_idx < len(VOICE_OPTIONS):
+            setattr(self._cfg, "voice_profile", VOICE_OPTIONS[voice_idx])
 
         setattr(self._cfg, "veo3_user", self.veo3_user.text().strip())
         setattr(self._cfg, "veo3_pass", self.veo3_pass.text())

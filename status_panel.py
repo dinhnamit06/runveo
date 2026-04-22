@@ -45,6 +45,7 @@ from A_workflow_text_to_video import TextToVideoWorkflow
 from worker_run_workflow_grok import GrokImageToVideoWorker, GrokTextToVideoWorker
 from settings_manager import SettingsManager, WORKFLOWS_DIR, BASE_DIR, DATA_GENERAL_DIR, get_icon_path
 from branding_config import OWNER_ZALO_URL
+from voice_profiles import VOICE_JSON
 
 
 def _win_hidden_kwargs() -> dict:
@@ -2620,12 +2621,16 @@ class StatusPanel(QWidget):
             self._append_run_log(
                 f"🚀 Khởi động workflow GROK Text to Video | prompts={len(prompts)} | max={max_concurrency}"
             )
+            grok_voice_key = str(getattr(self._cfg, "grok_voice_profile", "None_NoVoice") or "None_NoVoice")
+            grok_voice_direction = VOICE_JSON.get(grok_voice_key, {}).get("voice_profile", "")
+
             worker = GrokTextToVideoWorker(
                 prompts=prompts,
                 prompt_ids=prompt_ids,
                 aspect_ratio=aspect_ratio,
                 video_length_seconds=grok_video_length_seconds,
                 resolution_name=grok_video_resolution,
+                voice_direction=grok_voice_direction,
                 output_dir=output_dir,
                 max_concurrency=max_concurrency,
                 offscreen_chrome=offscreen,
@@ -2729,12 +2734,16 @@ class StatusPanel(QWidget):
             self._append_run_log(
                 f"🚀 Khởi động workflow GROK Image to Video | jobs={len(items)} | max={max_concurrency}"
             )
+            grok_voice_key = str(getattr(self._cfg, "grok_voice_profile", "None_NoVoice") or "None_NoVoice")
+            grok_voice_direction = VOICE_JSON.get(grok_voice_key, {}).get("voice_profile", "")
+
             worker = GrokImageToVideoWorker(
                 items=items,
                 prompt_ids=prompt_ids,
                 aspect_ratio=aspect_ratio,
                 video_length_seconds=grok_video_length_seconds,
                 resolution_name=grok_video_resolution,
+                voice_direction=grok_voice_direction,
                 output_dir=output_dir,
                 max_concurrency=max_concurrency,
                 offscreen_chrome=offscreen,
