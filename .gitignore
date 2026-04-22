@@ -1,27 +1,47 @@
-data_general/
-chrome_user_data/
-chrome_user_data_grok/
-downloads/
+# Python
 __pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Distribution / Build
 build/
 dist/
 dist_obfuscated/
+dist_obfuscated_v2/
+*.spec
+
+# Chrome User Data (Internal browsers)
+chrome_userdata/
+chrome_userdata_grok/
+chrome_user_data/
+chrome_user_data_grok/
+chrome_userdata_test/
+
+# Application Logs & Data
 *.log
-*.tmp
-*.bak
-*.pyc
-pyarmor.bug.log
 build_log.txt
-dist_obfuscated/
-.gemini/
-.agent/
-.agents/
-.vs/
-.idea/
+pyarmor.bug.log
+downloads/
+temp_images/
+tests_verification/
+data_general/
+Workflows/**/state.json
+
+# IDEs & System
 .vscode/
-Workflows/*/state.json
-Workflows/*/Download/
-Workflows/*/thumbnails/
-Workflows/*/request.json
-Workflows/*/respone_anh.json
-Workflows/*/respone_video.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Antigravity/Gemini Specific
+.gemini/
+.antigravity/
+.antigravityignore
+brain/

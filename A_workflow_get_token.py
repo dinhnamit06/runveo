@@ -583,8 +583,8 @@ class TokenCollector:
         if not self.page:
             return False
         create_btn_xpath = (
-            ".//button[(i[normalize-space()='arrow_forward'] or .//i[normalize-space()='arrow_forward']) and "
-            "(span[normalize-space()='Tạo'] or span[normalize-space()='Create'] or .//span[normalize-space()='Create'] or .//span[normalize-space()='Tạo'])]"
+            ".//button[i[normalize-space()='arrow_forward'] and "
+            "(span[normalize-space()='Tạo'] or span[normalize-space()='Create'] or pan[normalize-space()='Create'])]"
         )
         self._log("⏳waiting web stable")
         deadline = time.time() + (max(1000, timeout_ms) / 1000.0)
@@ -1264,7 +1264,7 @@ class TokenCollector:
                         return False
                     try:
                         create_button = (
-                            self.page.locator("button").filter(has_text=re.compile(r"^(Tạo|Create)$", re.IGNORECASE))
+                            self.page.locator("button:has-text('Tạo')")
                             .filter(has_not_text="Trình tạo cảnh") \
                             .filter(has_not_text="Không tạo được")
                             .last
