@@ -39,6 +39,7 @@ class GrokTextToVideoWorker(QThread):
         resolution_name: str,
         output_dir: str,
         max_concurrency: int,
+        voice_direction: str = "",
         offscreen_chrome: bool = False,
         parent=None,
     ):
@@ -54,6 +55,7 @@ class GrokTextToVideoWorker(QThread):
             self._resolution_name = "480p"
         self._output_dir = str(output_dir or "").strip()
         self._max_concurrency = max(1, int(max_concurrency or 1))
+        self._voice_direction = str(voice_direction or "").strip()
         self._offscreen_chrome = bool(offscreen_chrome)
         self._stop_event = threading.Event()
         self._last_progress_bucket: dict[int, int] = {}
@@ -131,7 +133,15 @@ class GrokTextToVideoWorker(QThread):
             if self._stop_event.is_set():
                 self._emit_log("🛑 GROK workflow đã dừng.")
                 return
-            prompts = [p for p in self._prompts if p]
+            
+            raw_prompts = [p for p in self._prompts if p]
+            prompts = []
+            for p in raw_prompts:
+                if self._voice_direction:
+                    prompts.append(f"{self._voice_direction}\n{p}")
+                else:
+                    prompts.append(p)
+            
             if not prompts:
                 self._emit_log("❌ GROK: Không có prompt hợp lệ để chạy.")
                 return
@@ -179,6 +189,7 @@ class GrokImageToVideoWorker(QThread):
         resolution_name: str,
         output_dir: str,
         max_concurrency: int,
+        voice_direction: str = "",
         offscreen_chrome: bool = False,
         parent=None,
     ):
@@ -196,6 +207,7 @@ class GrokImageToVideoWorker(QThread):
             self._resolution_name = "480p"
         self._output_dir = str(output_dir or "").strip()
         self._max_concurrency = max(1, int(max_concurrency or 1))
+        self._voice_direction = str(voice_direction or "").strip()
         self._offscreen_chrome = bool(offscreen_chrome)
         self._stop_event = threading.Event()
         self._last_progress_bucket: dict[int, int] = {}
@@ -280,7 +292,15 @@ class GrokImageToVideoWorker(QThread):
                 prompt = str(raw.get("prompt") or "").strip()
                 if not image_path:
                     continue
-                clean_items.append({"image_path": image_path, "prompt": prompt})
+                
+                if self._voice_direction and prompt:
+                    actual_prompt = f"{self._voice_direction}\n{prompt}"
+                elif self._voice_direction:
+                    actual_prompt = self._voice_direction
+                else:
+                    actual_prompt = prompt
+
+                clean_items.append({"image_path": image_path, "prompt": actual_prompt})
 
             if not clean_items:
                 self._emit_log("❌ GROK Image to Video: Không có dữ liệu ảnh hợp lệ để chạy.")

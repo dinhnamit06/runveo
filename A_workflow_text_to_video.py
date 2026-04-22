@@ -445,8 +445,13 @@ class TextToVideoWorkflow(QThread):
 								break
 
 							# ✅ CÓ TOKEN RỒI, KHỞI TẠO PAYLOAD
+							actual_prompt = prompt_text
+							voice_profile_text = self.project_data.get("voice_profile", "")
+							if voice_profile_text:
+								actual_prompt = f"{voice_profile_text}\n{prompt_text}"
+
 							payload = t2v_api.build_create_payload(
-								prompt_text,
+								actual_prompt,
 								session_id,
 								project_id,
 								token,

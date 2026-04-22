@@ -2557,6 +2557,11 @@ class StatusPanel(QWidget):
 
         project_name = self._resolve_project_name()
         project_data = self._build_project_data_from_rows(rows)
+        
+        voice_key = str(getattr(self._cfg, "voice_profile", "None_NoVoice") or "None_NoVoice")
+        voice_direction = VOICE_JSON.get(voice_key, {}).get("voice_profile", "")
+        project_data["voice_profile"] = voice_direction
+
         prompts = project_data.get("prompts", {}).get("text_to_video", [])
         if not prompts:
             QMessageBox.warning(self, "Không có prompt", "Không có prompt hợp lệ trong bảng status.")
@@ -3597,7 +3602,7 @@ class StatusPanel(QWidget):
         )
 
     def _load_merge_video_module(self):
-        module_path = Path(__file__).resolve().parent.parent / "merge+video.py"
+        module_path = Path(__file__).resolve().parent / "merge+video.py"
         if not module_path.exists():
             raise FileNotFoundError(f"Không tìm thấy file: {module_path}")
         spec = importlib.util.spec_from_file_location("merge_plus_video", str(module_path))

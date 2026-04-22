@@ -1,6 +1,6 @@
 {
   "project_name": "default_project",
-  "updated_at": 1776844515,
+  "updated_at": 1776877844,
   "rows": [
     {
       "row": 0,
@@ -199,6 +199,94 @@
       },
       "preview_map": {
         "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_thumnail\\001_scene_id_1_duration_sec_8_ch_20260422_145505_382130.thumb.jpg"
+      }
+    },
+    {
+      "row": 10,
+      "stt": "011",
+      "prompt_id": "11",
+      "prompt": "\"A cinematic shot of a majestic eagle soaring over snow-capped mountains at sunset. The lighting is golden and dramatic, highlighting the eagle's feathers.\"",
+      "mode_key": "grok_text_to_video",
+      "mode_label": "GROK - Tạo video từ văn bản",
+      "mode_name": "GROK - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "\"A cinematic shot of a majestic eagle soaring over snow-capped mountains at sunset. The lighting is golden and dramatic, highlighting the eagle's feathers.\""
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\001_Narrator_Professional_male_voice_deep_20260423_000717_338202.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_thumnail\\001_Narrator_Professional_male_voice_deep_20260423_000717_338202.thumb.jpg"
+      }
+    },
+    {
+      "row": 11,
+      "stt": "012",
+      "prompt_id": "12",
+      "prompt": "\"A cinematic shot of a majestic eagle soaring over snow-capped mountains at sunset. The lighting is golden and dramatic, highlighting the eagle's feathers.\"",
+      "mode_key": "grok_text_to_video",
+      "mode_label": "GROK - Tạo video từ văn bản",
+      "mode_name": "GROK - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "\"A cinematic shot of a majestic eagle soaring over snow-capped mountains at sunset. The lighting is golden and dramatic, highlighting the eagle's feathers.\""
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\001_Voice_Elderly_female_kind_and_nurturin_20260423_000857_655577.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_thumnail\\001_Voice_Elderly_female_kind_and_nurturin_20260423_000857_655577.thumb.jpg"
+      }
+    },
+    {
+      "row": 12,
+      "stt": "013",
+      "prompt_id": "13",
+      "prompt": "\"A cinematic shot of a majestic eagle soaring over snow-capped mountains at sunset. The lighting is golden and dramatic, highlighting the eagle's feathers.\"",
+      "mode_key": "grok_text_to_video",
+      "mode_label": "GROK - Tạo video từ văn bản",
+      "mode_name": "GROK - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "\"A cinematic shot of a majestic eagle soaring over snow-capped mountains at sunset. The lighting is golden and dramatic, highlighting the eagle's feathers.\""
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\001_Voice_Elderly_female_kind_and_nurturin_20260423_001023_028140.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_thumnail\\001_Voice_Elderly_female_kind_and_nurturin_20260423_001023_028140.thumb.jpg"
+      }
+    },
+    {
+      "row": 13,
+      "stt": "014",
+      "prompt_id": "14",
+      "prompt": "\"A modern kitchen setup with a high-end coffee machine brewing a fresh espresso. Close-up on the steam and rich crema filling the glass cup.\"",
+      "mode_key": "grok_text_to_video",
+      "mode_label": "GROK - Tạo video từ văn bản",
+      "mode_name": "GROK - Tạo video từ văn bản",
+      "mode_payload": {
+        "prompt": "\"A modern kitchen setup with a high-end coffee machine brewing a fresh espresso. Close-up on the steam and rich crema filling the glass cup.\""
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\002_Voice_Elderly_female_kind_and_nurturin_20260423_001022_191231.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_thumnail\\002_Voice_Elderly_female_kind_and_nurturin_20260423_001022_191231.thumb.jpg"
       }
     }
   ]
