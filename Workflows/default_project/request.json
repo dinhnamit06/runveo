@@ -1,0 +1,46 @@
+[
+  {
+    "timestamp": 1776961004,
+    "project_name": "default_project",
+    "flow": "character_sync",
+    "prompt_id": "33",
+    "prompt_text": "SCENE_12. Shot medium shot, eye-level, vertical 9:16 framing, inner-glow lens. Style: Cinematic 3D art with strong contrast and a divine glow effect. Characters and objects are illustrated with Warm light illuminating the monk's face and hands. Movements are Slow pulsing light effect. Character consistency lock: Character 'Young Ascetic Monk': consistent young Buddhist monk, shaved head, calm and focused expression. Scene action: A monk meditates in a dark forest shrine, his heart area glowing with a warm, golden light. Environment and background: A traditional stone shrine deep in a misty forest at night. Mood and atmosphere: Spiritual and blissful. Motion details: Pulsing of the golden light from the monk's chest.",
+    "request": {
+      "clientContext": {
+        "projectId": "03a7ad76-489b-49a5-a7b7-71900e0cfbcd",
+        "tool": "PINHOLE",
+        "userPaygateTier": "PAYGATE_TIER_TWO",
+        "sessionId": ";1776953521470",
+        "recaptchaContext": {
+          "token": "0cAFcWeA6nf_1W_IrpRLMrnQy-8ddUBp_zXivYgDSx6b6Fe7DLiofLEo1mvzCSTTSyyvIAnKEw6a1hGc9H4Bgqr2Dm4raoomJwmz04I0TuA5xwAL1EMpSB71ztZZUXql7nPKo_WR--Bu754ADJnqB7V5dfN3dRDSQvwDjAh5NOQUzeAjfReal2BEW5XocD8xtPcMssD9np4a0lk1CMn7gTIKRDfIlDbJqDzxgyB3FsVVP-Tu94r2H0jtBTb8FWGf3efHcPcAUlSvnHNpiVjnGKJsj6wE_1e6QEpwp33QvtSurJtVs4d8FOAS_JA180UvLzX74TLt057cwOXIuW2Y6cMDne4LAjmn8CPinhkdQ87QxIL7RJgsabWS5TRacVgwNBnoRXKpAtD4Vydi_qjemRLRgebz8zV9tNWoqbCHAsemtmC0lVI3ELDgeoVBIw6mPdFXSyHK1Igp1_nVb4Np2EvndRgIgrRO4UtTprcyEUqIPR5EnjDDaHA2LsffFiyezfYS4LEymO0HBRv67rgsfmSOxAireEIVrQeqLP91GERD90yk4ySmJ4TQVSgjxApgp5HWVWgrTkBdGTrQRFioQppJh6BTQqFjSh1txh_EewOTOSxdUqLkgrLvS7TyU1Lmz00u7k7TGiQb5bbYrH2bTEuQ9m1yDzUI4IrW4anBJXLg9l7gStOyyqvHleRYvmVu1eVn5y5wqyHg71PzJUFh58sEaWIiJ_wffiJs1zyMB6NGBgRAGBWfiziHsj0wxy4j5JoDMZasKr7FmOg0UOiblr62X7TS2PKs5ZDfuzK-Uca_G23YB4iRt3s9PDIZDtBU2YPc9cUQVCVFn9OaEb48txgqzyuOtlHtsriIHR0dF7vMaQ9RTcLc3s2dt_y3tpfjxhyPiRiOTnJPjjxtk-53G5OPizIh003Ze60mPnpHfiVgji6662lzaDzJCMbYhT-Ck_Zg45vGJjlHh0aEOmmByF5EaHbsXEP74xoSR33ERXVKSO5_g6i3ydmXWAtKgvS2G8Vbl7cP2CRlsKDu_GIhjpfMXoQQa8t9LBCFoS6yk1GmXWMuQTgWpaGLpDZ_09DoKN9u5Ov4odSDYuzxp7-WTU8esVufy4URlNwEChHjV7ehRl9iODoInR03590GywT-VplTqyNn3hWG3rjH1J70GK269ql9wqoogEbY-qCOqBULdFR3OdJFqCIuYTOEf56bQ9DpNchCCplzhDmO4OcX6I_iIlb_uPdOkZTpxPoWAlKGlR_DiAyAImwEt_NdE_p1lFURSgOryd83y8dpypww6pvCtwvZfEXqLCIsKPF2jeuVCaKtSMes8Dj6_SJqz02zf6Ge_6bI4VOT1FuiHOciRmrCCy_6cD1QVN5uf3fNGkrDFSsSES0FHAZZwQuDvzjcjY54UNZuMTjhQBpC6VL-QWXnRVlGXcMZ6umSiAZQbQ6pNz2sI8NG1lYVqfVU1Qvp4TIsvsTpsE4mkHnuiN41Mi0MNuvVbJSN-XIw6IOPXwIgy5swxJ2CLcnQQw4Aieyx3TEAuBILk-OvLF3LMQzWGnZ7_zbLj2q3vBEoyd6TEE179FBzL4O4CCfIuVZqIkzjS3KlGu_KjDZEIj3-hcc3sJcWQXl5AENLtIAlAtEMTi0Ok8ctN0OCUGbPBEsz53kfKuzE1bxOIXAz8X3StjKKz22pxEdxxDISsnzPJLT2__CQgKvIu8EShRUC0sOyUa2D3MHrcbAJcyF8BE0DMDwoFqHUb4llS7oogOU9VjDkeq7bD7AX2xasgNS6JavzAq9Yhik7YI6WoWZ6SttPNWsZn0cCw8OXuO8RP-lMTM8tYhaLr6FCezxZ9_hFJUQt2PqTe0FH1Y0OHcaKEZQFzIf9RNukZvIoJTnK7UjLTplCS4MRlsV-4pTdEGkx5YKiVqe8V59PQq5o-fkyJITzboG4EikPkiofrhRfJxjXLSFL9RO4k203tAkhxaS17eJj2mkLQ6OXqRGCQA0GMdoTsJJuqgrcreUzuiTCmfxK3Affk7FLmUqwIhRWMlK5K8zw-w0-6QF7koXlXvKFCRuY-1O-euR7-N9QA2lqQAFmomRA5o9TkMGRSEPVjoekpw8d_YseJzwlM0EaTEt81Mml95C968mhtflP6IkAHcK_4QEhSvpVRTQKapN6ukwYxHtKF-phS9tU9TXDr8qb-Vd8RAf-GrO8VckqyuT1zRYw",
+          "applicationType": "RECAPTCHA_APPLICATION_TYPE_WEB"
+        }
+      },
+      "requests": [
+        {
+          "aspectRatio": "VIDEO_ASPECT_RATIO_PORTRAIT",
+          "seed": 4244,
+          "textInput": {
+            "structuredPrompt": {
+              "parts": [
+                {
+                  "text": "SCENE_12. Shot medium shot, eye-level, vertical 9:16 framing, inner-glow lens. Style: Cinematic 3D art with strong contrast and a divine glow effect. Characters and objects are illustrated with Warm light illuminating the monk's face and hands. Movements are Slow pulsing light effect. Character consistency lock: Character 'Young Ascetic Monk': consistent young Buddhist monk, shaved head, calm and focused expression. Scene action: A monk meditates in a dark forest shrine, his heart area glowing with a warm, golden light. Environment and background: A traditional stone shrine deep in a misty forest at night. Mood and atmosphere: Spiritual and blissful. Motion details: Pulsing of the golden light from the monk's chest."
+                }
+              ]
+            }
+          },
+          "videoModelKey": "veo_3_1_r2v_fast_portrait_ultra",
+          "metadata": {
+            "sceneId": "1883aedc-67dc-4b7d-b099-40125098e592"
+          },
+          "referenceImages": [
+            {
+              "mediaId": "CAMaJGYxOGNlMDBmLWUyOWItNGY2ZS04ZDg0LTVkZjYzNGY3ZjFiOSIDQ0FFKiQwZjk5MGJlMi01MTc4LTRkMDUtOGJhYy05NDQzYmNiOTI0MmI",
+              "imageUsageType": "IMAGE_USAGE_TYPE_ASSET"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

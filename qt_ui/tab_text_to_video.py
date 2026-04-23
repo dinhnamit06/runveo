@@ -31,10 +31,15 @@ class PromptEditor(QPlainTextEdit):
         self._rebuild_timer.setSingleShot(True)
         self._rebuild_timer.timeout.connect(self._rebuild_id_map)
         
+        # Larger font for prompts (requested).
         f = self.font()
-        if int(f.pointSize()) > 0:
-            f.setPointSize(int(f.pointSize()) + 2)
-        self.setFont(f)
+        if f.pointSize() > 0:
+            f.setPointSize(f.pointSize() + 2)
+            self.setFont(f)
+        elif f.pixelSize() > 0:
+            # Fallback if font uses pixel size instead of point size
+            f.setPixelSize(f.pixelSize() + 3)
+            self.setFont(f)
         
         self._id_area = _PromptIdArea(self)
         

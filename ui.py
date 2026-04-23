@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import annotations
 
 import json
@@ -32,11 +33,13 @@ from tab_character_sync import CharacterSyncTab
 from tab_create_image import CreateImageTab
 from tab_create_image import CreateImageFromPromptTab
 from tab_idea_to_video import IdeaToVideoTab
+from tab_copy_video import CopyVideoTab
 from popup_theme import install_messagebox_theme
 from tab_settings import SettingsTab
 from tab_grok_settings import GrokSettingsTab
 from branding_config import WINDOW_TITLE
 from settings_manager import BASE_DIR, get_icon_path
+from voice_profiles import get_voice_locale
 from worker_run_workflow import WorkflowRunWorker, WorkflowQueueItem
 
 
@@ -125,6 +128,14 @@ class AppConfig:
     idea_scene_count: int = 1
     idea_style: str = "3d_Pixar"
     idea_dialogue_language: str = "Tiếng Việt (vi-VN)"
+    idea_voice_profile: str = "None_NoVoice"
+    idea_clone_mode: bool = False
+    idea_video_path: str = ""
+    idea_auto_run: bool = False
+    copy_video_path: str = ""
+    copy_video_target_language: str = "en-US"
+    copy_video_voice_profile: str = "None_NoVoice"
+    copy_video_auto_run: bool = False
 
     # VEO3 settings (per Settings tab)
     veo3_user: str = ""
@@ -223,6 +234,18 @@ class AppConfig:
                     )
                     or cfg.idea_dialogue_language
                 )
+                cfg.idea_voice_profile = str(data.get("IDEA_VOICE_PROFILE", cfg.idea_voice_profile) or "None_NoVoice")
+                cfg.idea_clone_mode = bool(data.get("IDEA_CLONE_MODE", cfg.idea_clone_mode))
+                cfg.idea_video_path = str(data.get("IDEA_VIDEO_PATH", cfg.idea_video_path) or "")
+                cfg.idea_auto_run = bool(data.get("IDEA_AUTO_RUN", cfg.idea_auto_run))
+                cfg.copy_video_path = str(data.get("COPY_VIDEO_PATH", cfg.copy_video_path) or "")
+                cfg.copy_video_target_language = str(
+                    data.get("COPY_VIDEO_TARGET_LANGUAGE", cfg.copy_video_target_language) or "en-US"
+                )
+                cfg.copy_video_voice_profile = str(
+                    data.get("COPY_VIDEO_VOICE_PROFILE", cfg.copy_video_voice_profile) or "None_NoVoice"
+                )
+                cfg.copy_video_auto_run = bool(data.get("COPY_VIDEO_AUTO_RUN", cfg.copy_video_auto_run))
 
                 cfg.offscreen_chrome = bool(data.get("offscreen_chrome", cfg.offscreen_chrome))
 
@@ -379,6 +402,14 @@ class AppConfig:
             "IDEA_SCENE_COUNT": int(max(1, min(100, int(self.idea_scene_count or 1)))),
             "IDEA_STYLE": str(self.idea_style or "3d_Pixar"),
             "IDEA_DIALOGUE_LANGUAGE": str(self.idea_dialogue_language or "Tiếng Việt (vi-VN)"),
+            "IDEA_VOICE_PROFILE": str(self.idea_voice_profile or "None_NoVoice"),
+            "IDEA_CLONE_MODE": bool(self.idea_clone_mode),
+            "IDEA_VIDEO_PATH": str(self.idea_video_path or ""),
+            "IDEA_AUTO_RUN": bool(self.idea_auto_run),
+            "COPY_VIDEO_PATH": str(self.copy_video_path or ""),
+            "COPY_VIDEO_TARGET_LANGUAGE": str(self.copy_video_target_language or "en-US"),
+            "COPY_VIDEO_VOICE_PROFILE": str(self.copy_video_voice_profile or "None_NoVoice"),
+            "COPY_VIDEO_AUTO_RUN": bool(self.copy_video_auto_run),
             "GROK_VIDEO_LENGTH_SECONDS": int(10 if int(self.grok_video_length_seconds or 6) == 10 else 6),
             "GROK_VIDEO_RESOLUTION": "720p" if str(self.grok_video_resolution or "480p") == "720p" else "480p",
             "GROK_ACCOUNT_TYPE": grok_account_type,
@@ -709,6 +740,7 @@ class MainWindow(QMainWindow):
         )
         self.tab_idea = IdeaToVideoTab(config)
         self.tab_settings = SettingsTab(config)
+        self.tab_copy_video = CopyVideoTab(config)
 
         self.tabs.addTab(self.tab_text, icon(""), "Text to Video")
         self.tabs.addTab(self.tab_image, icon(""), "Image to Video")
@@ -749,6 +781,7 @@ class MainWindow(QMainWindow):
         grok_main_layout.setSpacing(0)
         grok_main_layout.addWidget(self.grok_tabs)
         self.main_tabs.addTab(grok_main, icon(""), "GROK")
+        self.main_tabs.addTab(self.tab_copy_video, icon(""), "SAO CHÉP VIDEO")
 
         left_layout.addWidget(self.main_tabs, 1)
 
@@ -782,7 +815,7 @@ class MainWindow(QMainWindow):
         btn_row = QHBoxLayout()
         self.btn_start = QPushButton("Tạo video")
         self.btn_start.setObjectName("Accent")
-        self.btn_start.clicked.connect(self._on_start_stop)
+        self.btn_start.clicked.connect(self._on_start_stop_dispatch)
         btn_row.addWidget(self.btn_start, 3)
 
         self.btn_stop = QPushButton("Dừng")
@@ -919,8 +952,11 @@ class MainWindow(QMainWindow):
 
     def _active_leaf_tab(self):
         try:
-            if self.main_tabs.currentWidget() is not None and self.main_tabs.currentWidget() is self.main_tabs.widget(1):
+            current_root = self.main_tabs.currentWidget()
+            if current_root is not None and current_root is self.main_tabs.widget(1):
                 return self.grok_tabs.currentWidget()
+            if current_root is not None and current_root is self.tab_copy_video:
+                return self.tab_copy_video
         except Exception:
             pass
         return self.tabs.currentWidget()
@@ -1000,6 +1036,9 @@ class MainWindow(QMainWindow):
         elif cur is self.tab_idea:
             self.btn_start.setText(f"{platform_prefix} - Tạo từ Ý tưởng")
             self.btn_start.setObjectName("Accent")
+        elif cur is self.tab_copy_video:
+            self.btn_start.setText(f"{platform_prefix} - Phân tích video mẫu")
+            self.btn_start.setObjectName("Accent")
         elif cur is self.tab_char_sync:
             self.btn_start.setText(f"{platform_prefix} - Tạo video đồng nhất Nhân Vật")
             self.btn_start.setObjectName("Accent")
@@ -1022,6 +1061,8 @@ class MainWindow(QMainWindow):
             return "grok_image_to_video"
         if cur is self.tab_idea:
             return "idea_to_video"
+        if cur is self.tab_copy_video:
+            return "copy_video"
         if cur is self.tab_create_image:
             return "create_image"
         if cur is self.tab_grok_create_image:
@@ -1189,6 +1230,36 @@ class MainWindow(QMainWindow):
         self._queue_worker.stop_all()
         self._update_start_button_for_tab()
 
+    def _on_start_stop_dispatch(self) -> None:
+        flow_name = self._flow_name_from_current_tab()
+        if flow_name != "copy_video":
+            self._on_start_stop()
+            return
+
+        if self.status.isRunning() or self._queue_worker.is_busy():
+            QMessageBox.information(self, "Đang chạy", "Hãy đợi workflow hiện tại xong trước khi phân tích video mẫu.")
+            return
+
+        self._ensure_veo_model_allowed(show_message=True)
+        self._cfg.video_aspect_ratio = str(self.combo_aspect.currentData() or "9:16")
+        self._cfg.veo_model = str(self.combo_veo_model.currentData() or VEO_MODEL_FAST)
+        self._cfg.video_output_dir = self.out_dir.text().strip() or DEFAULT_DOWNLOAD_DIR
+        try:
+            self._cfg.save()
+        except Exception:
+            pass
+
+        copy_settings = self.tab_copy_video.get_settings()
+        video_path = str(copy_settings.get("video_path") or "").strip()
+        target_language = str(copy_settings.get("target_language") or "en-US").strip()
+        voice_actor_key = str(copy_settings.get("voice_actor_key") or "None_NoVoice").strip()
+        auto_run = bool(copy_settings.get("auto_run"))
+        style = str(copy_settings.get("style") or "Tự động nhận diện").strip()
+        if not video_path:
+            QMessageBox.warning(self, "Thiếu video", "Hãy chọn video nguồn ở tab SAO CHÉP VIDEO.")
+            return
+        self.status.start_copy_video(video_path, target_language, voice_actor_key, auto_run, style)
+
     def _on_start_stop(self) -> None:
         flow_name = self._flow_name_from_current_tab()
 
@@ -1247,10 +1318,20 @@ class MainWindow(QMainWindow):
                 QMessageBox.information(self, "Đang chạy", "Queue đang chạy. Tab Ý tưởng hiện chưa đưa vào queue tự động.")
                 return
             idea_settings = self.tab_idea.get_settings()
-            try:
-                self.status.start_idea_to_video(idea_settings)
-            except Exception as exc:
-                QMessageBox.critical(self, "Lỗi Idea to Video", f"Không thể khởi động Idea to Video: {exc}")
+            clone_mode = bool(idea_settings.get('clone_mode', False))
+            
+            if clone_mode:
+                video_path = str(idea_settings.get('video_path', '')).strip()
+                voice_profile = str(idea_settings.get('voice_profile', 'None_NoVoice'))
+                auto_run = bool(idea_settings.get('auto_run', False))
+                target_language = get_voice_locale(voice_profile) or "vi-VN"
+                style = str(idea_settings.get("style") or "Tự động nhận diện")
+                self.status.start_copy_video(video_path, target_language, voice_profile, auto_run, style)
+            else:
+                try:
+                    self.status.start_idea_to_video(idea_settings)
+                except Exception as exc:
+                    QMessageBox.critical(self, "Lỗi Idea to Video", f"Không thể khởi động Idea to Video: {exc}")
             return
 
         if flow_name == "image_to_video":

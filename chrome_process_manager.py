@@ -1,6 +1,7 @@
 import subprocess
 import platform
 import os
+import sys
 import time
 import shutil
 import json
@@ -35,6 +36,40 @@ def _run_silent(cmd, shell: bool = False) -> None:
         pass
 
 
+def _safe_console_print(message: str) -> None:
+    text = str(message or "")
+    try:
+        print(text)
+        return
+    except Exception:
+        pass
+
+    try:
+        encoding = getattr(sys.stdout, "encoding", None) or "utf-8"
+        payload = (text + os.linesep).encode(encoding, errors="replace")
+        buffer = getattr(sys.stdout, "buffer", None)
+        if buffer is not None:
+            buffer.write(payload)
+            buffer.flush()
+            return
+    except Exception:
+        pass
+
+    try:
+        print(text.encode("ascii", errors="replace").decode("ascii"))
+    except Exception:
+        pass
+
+
+def _wait_for_debug_port(debug_port: int, timeout_s: float = 3.0) -> bool:
+    deadline = time.time() + max(0.5, float(timeout_s))
+    while time.time() < deadline:
+        if ChromeProcessManager.is_chrome_running(debug_port):
+            return True
+        time.sleep(0.25)
+    return False
+
+
 class ChromeProcessManager:
     """Quản lý Chrome process"""
     
@@ -61,10 +96,10 @@ class ChromeProcessManager:
             if ChromeProcessManager._log_callback and callable(ChromeProcessManager._log_callback):
                 ChromeProcessManager._log_callback(message)
             else:
-                print(message)
+                _safe_console_print(message)
         except Exception as e:
             # Fallback to print if callback fails
-            print(f"{message} (callback error: {e})")
+            _safe_console_print(f"{message} (callback error: {e})")
     
     @staticmethod
     def find_chrome_path():
@@ -448,8 +483,9 @@ class ChromeProcessManager:
             
             try:
                 popen_kwargs = {
-                    "stdout": subprocess.PIPE,
-                    "stderr": subprocess.PIPE,
+                    "stdout": subprocess.DEVNULL,
+                    "stderr": subprocess.DEVNULL,
+                    "stdin": subprocess.DEVNULL,
                 }
 
                 process = subprocess.Popen(
@@ -463,9 +499,16 @@ class ChromeProcessManager:
             # ✅ CHECK NGAY SAU KHI START: Chrome có chạy được không?
             time.sleep(1)
             if process.poll() is not None:
-                # Process đã exit
-                stdout, stderr = process.communicate()
-                error_msg = stderr.decode('utf-8', errors='ignore') if stderr else "Unknown error"
+                if _wait_for_debug_port(debug_port, timeout_s=3.0):
+                    ChromeProcessManager.log(
+                        f"ℹ️ Chrome process cha đã thoát nhanh nhưng CDP vẫn sẵn sàng trên port {debug_port}."
+                    )
+                    ChromeProcessManager._current_chrome_pid = None
+                    ChromeProcessManager._chrome_profile_name = profile_name or "single"
+                    return True
+
+                stdout, stderr = process.communicate(timeout=1)
+                error_msg = "Unknown error"
                 ChromeProcessManager.log(f"❌ Chrome exit ngay sau khi start! Error:\n{error_msg[:500]}")
                 return None
             
@@ -636,8 +679,9 @@ class ChromeProcessManager:
             
             try:
                 popen_kwargs = {
-                    "stdout": subprocess.PIPE,
-                    "stderr": subprocess.PIPE,
+                    "stdout": subprocess.DEVNULL,
+                    "stderr": subprocess.DEVNULL,
+                    "stdin": subprocess.DEVNULL,
                 }
 
                 process = subprocess.Popen(
@@ -651,9 +695,16 @@ class ChromeProcessManager:
             # ✅ CHECK NGAY SAU KHI START: Chrome có chạy được không?
             time.sleep(1)
             if process.poll() is not None:
-                # Process đã exit
-                stdout, stderr = process.communicate()
-                error_msg = stderr.decode('utf-8', errors='ignore') if stderr else "Unknown error"
+                if _wait_for_debug_port(debug_port, timeout_s=3.0):
+                    ChromeProcessManager.log(
+                        f"ℹ️ Chrome process cha đã thoát nhanh nhưng CDP vẫn sẵn sàng trên port {debug_port}."
+                    )
+                    ChromeProcessManager._current_chrome_pid = None
+                    ChromeProcessManager._chrome_profile_name = profile_name or "single"
+                    return True
+
+                stdout, stderr = process.communicate(timeout=1)
+                error_msg = "Unknown error"
                 ChromeProcessManager.log(f"❌ Chrome exit ngay sau khi start! Error:\n{error_msg[:500]}")
                 return None
             

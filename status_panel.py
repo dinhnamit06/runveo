@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import annotations
 
 import json
@@ -45,7 +46,8 @@ from A_workflow_text_to_video import TextToVideoWorkflow
 from worker_run_workflow_grok import GrokImageToVideoWorker, GrokTextToVideoWorker
 from settings_manager import SettingsManager, WORKFLOWS_DIR, BASE_DIR, DATA_GENERAL_DIR, get_icon_path
 from branding_config import OWNER_ZALO_URL
-from voice_profiles import VOICE_JSON
+from voice_profiles import VOICE_JSON, VOICE_OPTIONS, get_voice_profile_text, normalize_locale
+from gemini_automation import GeminiAutomation
 
 
 def _win_hidden_kwargs() -> dict:
@@ -225,6 +227,70 @@ class _IdeaToVideoWorker(QThread):
         except BaseException as exc:
             self.completed.emit({"success": False, "message": f"Lỗi Idea to Video: {exc}"})
 
+class _GeminiCloneWorker(QThread):
+    log_message = pyqtSignal(str)
+    completed = pyqtSignal(dict)
+
+    def __init__(self, video_path: str, profile_path: str, target_language: str, bootstrap_url: str = "", style: str = "Tự động nhận diện", parent=None):
+        super().__init__(parent)
+        self.video_path = video_path
+        self.profile_path = profile_path
+        self.target_language = str(target_language or "en-US")
+        self.bootstrap_url = str(bootstrap_url or "")
+        self.style = str(style or "Tự động nhận diện")
+
+    def run(self):
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        auto = None
+        try:
+            auto = GeminiAutomation(
+                profile_path=self.profile_path,
+                headless=False,
+                bootstrap_url=self.bootstrap_url,
+                log_callback=self.log_message.emit,
+            )
+            loop.run_until_complete(asyncio.wait_for(auto.start(), timeout=25))
+            self.log_message.emit(f"🎬 Đang phân tích video: {os.path.basename(self.video_path)}...")
+            result = loop.run_until_complete(
+                asyncio.wait_for(
+                    auto.analyze_video_v2(self.video_path, target_language=self.target_language, style=self.style),
+                    timeout=360,
+                )
+            )
+            self.completed.emit({"success": True, "data": result})
+        except Exception as e:
+            self.completed.emit({"success": False, "message": str(e)})
+        finally:
+            try:
+                if auto is not None:
+                    loop.run_until_complete(asyncio.wait_for(auto.close(), timeout=10))
+            except Exception:
+                pass
+            try:
+                pending = [task for task in asyncio.all_tasks(loop) if not task.done()]
+                for task in pending:
+                    task.cancel()
+                if pending:
+                    loop.run_until_complete(asyncio.gather(*pending, return_exceptions=True))
+            except Exception:
+                pass
+            try:
+                loop.run_until_complete(asyncio.sleep(0))
+            except Exception:
+                pass
+            try:
+                loop.run_until_complete(loop.shutdown_asyncgens())
+            except Exception:
+                pass
+            try:
+                asyncio.set_event_loop(None)
+            except Exception:
+                pass
+            loop.close()
+
+import asyncio
+
 class StatusPanel(QWidget):
     COL_CHECK = 0
     COL_STT = 1
@@ -241,6 +307,7 @@ class StatusPanel(QWidget):
     MODE_CREATE_IMAGE_REFERENCE = "create_image_reference"
     MODE_GROK_TEXT_TO_VIDEO = "grok_text_to_video"
     MODE_GROK_IMAGE_TO_VIDEO = "grok_image_to_video"
+    MODE_COPY_VIDEO = "copy_video"
     AUTO_RETRY_ERROR_CODES = {"403", "13", "500"}
     AUTO_RETRY_MAX_PER_ROW = 1
 
@@ -257,6 +324,7 @@ class StatusPanel(QWidget):
         self._workflow: TextToVideoWorkflow | None = None
         self._workflows: list[QThread] = []
         self._idea_worker: _IdeaToVideoWorker | None = None
+        self._clone_worker: _GeminiCloneWorker | None = None
         self._retry_mode_queue: list[tuple[str, list[int]]] = []
         self._global_stop_requested = False
         self._stop_poll_attempts = 0
@@ -693,7 +761,8 @@ class StatusPanel(QWidget):
         try:
             wf_running = any(bool(wf and wf.isRunning()) for wf in list(self._workflows))
             idea_running = bool(self._idea_worker and self._idea_worker.isRunning())
-            return bool(wf_running or idea_running)
+            clone_running = bool(self._clone_worker and self._clone_worker.isRunning())
+            return bool(wf_running or idea_running or clone_running)
         except Exception:
             return False
 
@@ -725,6 +794,53 @@ class StatusPanel(QWidget):
                 self._append_run_log("🛑 Đang dừng Idea to Video...")
             except Exception:
                 pass
+        if self._clone_worker is not None:
+            try:
+                self._clone_worker.requestInterruption()
+                self._append_run_log("ðŸ›‘ Äang dá»«ng Copy Video...")
+            except Exception:
+                pass
+        if self._workflow is not None:
+            try:
+                self._workflow.stop()
+                self._workflow.requestInterruption()
+            except Exception:
+                pass
+        for wf in list(self._workflows):
+            try:
+                wf.stop()
+                wf.requestInterruption()
+            except Exception:
+                pass
+        self._mark_active_rows_stopped()
+        self._refresh_pending_positions()
+        self.requestStop.emit()
+        try:
+            self._stop_poll_attempts = 0
+            QTimer.singleShot(150, self._poll_stop_state)
+        except Exception:
+            pass
+
+    def stop(self) -> None:
+        self._global_stop_requested = True
+        self._retry_mode_queue = []
+        self._active_queue_rows.clear()
+        self._awaiting_completion_confirmation = False
+        self._completion_poll_scheduled = False
+        self._completion_poll_attempts = 0
+        self._append_run_log("🛑 Đang dừng workflow...")
+        if self._idea_worker is not None:
+            try:
+                self._idea_worker.stop()
+                self._append_run_log("🛑 Đang dừng Idea to Video...")
+            except Exception:
+                pass
+        if self._clone_worker is not None:
+            try:
+                self._clone_worker.requestInterruption()
+                self._append_run_log("🛑 Đang dừng Sao chép video...")
+            except Exception:
+                pass
         if self._workflow is not None:
             try:
                 self._workflow.stop()
@@ -752,10 +868,16 @@ class StatusPanel(QWidget):
         self._completion_poll_scheduled = False
         self._completion_poll_attempts = 0
         idea = self._idea_worker
+        clone = self._clone_worker
         if idea is not None:
             try:
                 idea.stop()
                 idea.requestInterruption()
+            except Exception:
+                pass
+        if clone is not None:
+            try:
+                clone.requestInterruption()
             except Exception:
                 pass
 
@@ -767,7 +889,7 @@ class StatusPanel(QWidget):
             except Exception:
                 pass
 
-        for thread_obj in ([idea] + workflows):
+        for thread_obj in ([idea, clone] + workflows):
             if thread_obj is None:
                 continue
             try:
@@ -780,6 +902,7 @@ class StatusPanel(QWidget):
                 pass
 
         self._idea_worker = None
+        self._clone_worker = None
         self._workflow = None
         self._workflows = []
 
@@ -791,6 +914,13 @@ class StatusPanel(QWidget):
                     self._idea_worker = None
             except Exception:
                 self._idea_worker = None
+        clone = self._clone_worker
+        if clone is not None:
+            try:
+                if not clone.isRunning():
+                    self._clone_worker = None
+            except Exception:
+                self._clone_worker = None
 
         alive_workflows: list[QThread] = []
         for wf in list(self._workflows):
@@ -803,7 +933,7 @@ class StatusPanel(QWidget):
         self._workflow = self._workflows[-1] if self._workflows else None
 
         wf = self._workflow
-        if (not self._workflows) and self._idea_worker is None:
+        if (not self._workflows) and self._idea_worker is None and self._clone_worker is None:
             self.runStateChanged.emit(False)
             return
 
@@ -859,6 +989,63 @@ class StatusPanel(QWidget):
             self._set_status_code(int(r), "PENDING")
         self._refresh_pending_positions()
 
+    def _clean_copy_video_prompt_part(self, value: str) -> str:
+        text = re.sub(r"\s+", " ", str(value or "")).strip()
+        text = re.sub(r"^(scene action:|action:)\s*", "", text, flags=re.IGNORECASE)
+        return text.rstrip(" .,;:")
+
+    def _build_copy_video_scene_prompt(self, scene: dict, identity_context_en: str) -> str:
+        scene_id = self._clean_copy_video_prompt_part(scene.get("scene_id") or "scene_001").lower()
+
+        shot_type = self._clean_copy_video_prompt_part(scene.get("shot_type") or "medium shot")
+        camera_angle = self._clean_copy_video_prompt_part(scene.get("camera_angle") or "eye-level")
+        framing = self._clean_copy_video_prompt_part(scene.get("framing") or "vertical 9:16 framing")
+        lens_feel = self._clean_copy_video_prompt_part(scene.get("lens_feel") or "cinematic 2D lens feel")
+
+        style_block = self._clean_copy_video_prompt_part(
+            scene.get("style_block_en")
+            or "2D animation style, flat perspective with clean outlines, bold line art, and simplified forms"
+        )
+        consistency_block = self._clean_copy_video_prompt_part(
+            scene.get("render_consistency_en")
+            or "consistent cel shading or flat coloring, no depth simulation"
+        )
+        motion_style_block = self._clean_copy_video_prompt_part(
+            scene.get("motion_style_en")
+            or "smooth but intentionally stylized, frame-by-frame animation feel"
+        )
+
+        identity_block = self._clean_copy_video_prompt_part(identity_context_en)
+        scene_action_en = self._clean_copy_video_prompt_part(
+            scene.get("scene_action_en")
+            or scene.get("visual_summary_en")
+            or scene.get("video_prompt_en")
+            or ""
+        )
+        environment_en = self._clean_copy_video_prompt_part(scene.get("environment_en") or "")
+        mood_en = self._clean_copy_video_prompt_part(scene.get("mood_en") or "")
+        motion_en = self._clean_copy_video_prompt_part(scene.get("motion_en") or "")
+
+        parts: list[str] = [
+            f"{scene_id.upper()}. Shot {shot_type}, {camera_angle}, {framing}, {lens_feel}.",
+            f"Style: {style_block}.",
+            f"Characters and objects are illustrated with {consistency_block}.",
+            f"Movements are {motion_style_block}.",
+        ]
+
+        if identity_block:
+            parts.append(f"Character consistency lock: {identity_block}.")
+        if scene_action_en:
+            parts.append(f"Scene action: {scene_action_en}.")
+        if environment_en:
+            parts.append(f"Environment and background: {environment_en}.")
+        if mood_en:
+            parts.append(f"Mood and atmosphere: {mood_en}.")
+        if motion_en:
+            parts.append(f"Motion details: {motion_en}.")
+
+        return " ".join(part for part in parts if part).strip()
+
     def enqueue_text_to_video(self, prompts: list[str]) -> dict | None:
         self._ensure_status_snapshot_loaded()
         clean_prompts = [str(p or "").strip() for p in (prompts or []) if str(p or "").strip()]
@@ -878,6 +1065,94 @@ class StatusPanel(QWidget):
         self._update_empty_state()
         self._mark_rows_pending(rows)
         return {"mode_key": self.MODE_TEXT_TO_VIDEO, "rows": rows, "label": "VEO3 - Text to Video"}
+
+    def enqueue_copy_video_scenes(
+        self,
+        copy_data: dict,
+        voice_actor_key: str,
+        target_language: str,
+        source_video_path: str,
+    ) -> dict | None:
+        self._ensure_status_snapshot_loaded()
+        if not isinstance(copy_data, dict):
+            return None
+
+        characters = copy_data.get("characters") if isinstance(copy_data.get("characters"), list) else []
+        identity_map: dict[str, str] = {}
+        for item in characters:
+            if not isinstance(item, dict):
+                continue
+            character_id = str(item.get("character_id") or "").strip()
+            character_name = str(item.get("display_name") or item.get("name") or character_id).strip()
+            identity_lock = str(item.get("identity_lock_en") or "").strip()
+            if character_id and identity_lock:
+                identity_map[character_id] = f"Character '{character_name}': {identity_lock}"
+
+        rows: list[int] = []
+        scenes = copy_data.get("scenes") if isinstance(copy_data.get("scenes"), list) else []
+        for idx, scene in enumerate(scenes, start=1):
+            if not isinstance(scene, dict):
+                continue
+            video_prompt_en = str(scene.get("video_prompt_en") or "").strip()
+            dialogue_target = str(scene.get("dialogue_target") or scene.get("dialogue") or "").strip()
+            dialogue_original = str(scene.get("dialogue_original") or dialogue_target).strip()
+            character_ids = [str(x).strip() for x in (scene.get("character_ids") or []) if str(x).strip()]
+            identity_lines = [identity_map.get(character_id, "") for character_id in character_ids if identity_map.get(character_id, "")]
+            identity_context_en = "; ".join([value for value in identity_lines if value])
+            prompt_text = self._build_copy_video_scene_prompt(scene, identity_context_en)
+            if not prompt_text:
+                continue
+
+            row = self.table.rowCount()
+            self._add_row(row, prompt_text)
+            payload = {
+                "prompt": prompt_text,
+                "source_type": "copy_video",
+                "scene_id": str(scene.get("scene_id") or f"scene_{idx:02d}"),
+                "character_ids": character_ids,
+                "dialogue_original": dialogue_original,
+                "dialogue_target": dialogue_target,
+                "video_prompt_en": video_prompt_en,
+                "identity_context_en": identity_context_en,
+                "shot_type": str(scene.get("shot_type") or "medium shot").strip(),
+                "camera_angle": str(scene.get("camera_angle") or "eye-level").strip(),
+                "framing": str(scene.get("framing") or "vertical 9:16 framing").strip(),
+                "lens_feel": str(scene.get("lens_feel") or "cinematic 2D lens feel").strip(),
+                "scene_action_en": str(scene.get("scene_action_en") or scene.get("visual_summary_en") or video_prompt_en).strip(),
+                "environment_en": str(scene.get("environment_en") or "").strip(),
+                "mood_en": str(scene.get("mood_en") or "").strip(),
+                "motion_en": str(scene.get("motion_en") or "").strip(),
+                "style_block_en": str(
+                    scene.get("style_block_en")
+                    or "2D animation style, flat perspective with clean outlines, bold line art, and simplified forms"
+                ).strip(),
+                "render_consistency_en": str(
+                    scene.get("render_consistency_en")
+                    or "consistent cel shading or flat coloring, no depth simulation"
+                ).strip(),
+                "motion_style_en": str(
+                    scene.get("motion_style_en")
+                    or "smooth but intentionally stylized, frame-by-frame animation feel"
+                ).strip(),
+                "voice_actor_key": str(voice_actor_key or "None_NoVoice"),
+                "voice_profile": get_voice_profile_text(voice_actor_key),
+                "target_language": normalize_locale(target_language) or "en-US",
+                "detected_source_language": str(copy_data.get("detected_source_language") or "auto"),
+                "source_video_path": str(source_video_path or "").strip(),
+            }
+            self._set_row_mode_meta(row, self.MODE_COPY_VIDEO, payload=payload)
+            rows.append(row)
+
+        if not rows:
+            QMessageBox.warning(self, "Không có cảnh", "Gemini không trả về cảnh hợp lệ để render.")
+            self._update_empty_state()
+            return None
+
+        self._sync_stt_and_prompt_ids()
+        self._snapshot_output_count_for_rows(rows)
+        self._update_empty_state()
+        self._mark_rows_pending(rows)
+        return {"mode_key": self.MODE_COPY_VIDEO, "rows": rows, "label": "VEO3 - Sao chép video"}
 
     def enqueue_grok_text_to_video(self, prompts: list[str]) -> dict | None:
         self._ensure_status_snapshot_loaded()
@@ -997,7 +1272,20 @@ class StatusPanel(QWidget):
                 continue
             row = self.table.rowCount()
             self._add_row(row, prompt_text)
-            self._set_row_mode_meta(row, self.MODE_CREATE_IMAGE_PROMPT, payload={"description": prompt_text})
+            payload = {"description": prompt_text}
+            aspect_ratio = str(raw.get("aspect_ratio") or "").strip()
+            if aspect_ratio:
+                payload["aspect_ratio"] = aspect_ratio
+            source_type = str(raw.get("source_type") or "").strip()
+            if source_type:
+                payload["source_type"] = source_type
+            character_id = str(raw.get("character_id") or "").strip()
+            if character_id:
+                payload["character_id"] = character_id
+            character_name = str(raw.get("character_name") or "").strip()
+            if character_name:
+                payload["character_name"] = character_name
+            self._set_row_mode_meta(row, self.MODE_CREATE_IMAGE_PROMPT, payload=payload)
             rows.append(row)
 
         if not rows:
@@ -1827,6 +2115,7 @@ class StatusPanel(QWidget):
     def _mode_label(self, mode_key: str) -> str:
         key = str(mode_key or "").strip()
         labels = {
+            self.MODE_COPY_VIDEO: "VEO3 - Sao chép video",
             self.MODE_TEXT_TO_VIDEO: "VEO3 - Tạo video từ văn bản",
             self.MODE_GROK_TEXT_TO_VIDEO: "GROK - Tạo video từ văn bản",
             self.MODE_GROK_IMAGE_TO_VIDEO: "GROK - Tạo video từ Ảnh",
@@ -2137,7 +2426,14 @@ class StatusPanel(QWidget):
                 if prompt_it is not None:
                     prompt_it.setData(Qt.ItemDataRole.UserRole, prompt_id)
             if prompt_text:
-                items.append({"id": prompt_id, "description": prompt_text})
+                item_payload = self._row_mode_payload(r)
+                item_data = {"id": prompt_id, "description": prompt_text}
+                if isinstance(item_payload, dict):
+                    for key, value in item_payload.items():
+                        if key in {"id", "description"}:
+                            continue
+                        item_data[key] = value
+                items.append(item_data)
 
         return {
             "prompts": {"text_to_video": items},
@@ -2515,6 +2811,337 @@ class StatusPanel(QWidget):
         self._idea_worker.start()
         self.runStateChanged.emit(True)
 
+    def start_copy_video(self, video_path: str, target_language: str, voice_actor_key: str, auto_run: bool, style: str = "Tự động nhận diện") -> None:
+        if not video_path or not os.path.exists(video_path):
+            QMessageBox.warning(self, "Loi", f"Khong tim thay video: {video_path}")
+            return
+
+        config_data = SettingsManager.load_config()
+        account = config_data.get("account1", {}) if isinstance(config_data, dict) else {}
+        profile_dir = str(account.get("folder_user_data_get_token") or os.getenv("CHROME_USER_DATA_DIR", "")).strip()
+        if not profile_dir:
+            profile_dir = os.path.expanduser("~\\AppData\\Local\\Google\\Chrome\\User Data\\Default")
+        bootstrap_url = str(account.get("URL_GEN_TOKEN") or "https://labs.google/fx/vi/tools/flow").strip()
+        self._append_run_log(
+            f"ðŸš€ Khoi dong Copy Video | video={os.path.basename(video_path)} | target={normalize_locale(target_language) or 'en-US'}"
+        )
+        self._update_empty_state()
+        self._clone_worker = _GeminiCloneWorker(video_path, profile_dir, target_language, bootstrap_url, style, self)
+        self._clone_worker.log_message.connect(self._append_run_log)
+        self._clone_worker.completed.connect(
+            lambda res, voice_key=str(voice_actor_key or "None_NoVoice"), lang=str(target_language or "en-US"), src=str(video_path or ""), ar=bool(auto_run): self._on_copy_video_complete(res, voice_key, lang, ar, src)
+        )
+        self._clone_worker.start()
+        self.runStateChanged.emit(True)
+
+    def _on_copy_video_complete(
+        self,
+        result: dict,
+        voice_actor_key: str,
+        target_language: str,
+        auto_run: bool,
+        source_video_path: str,
+    ) -> None:
+        self._clone_worker = None
+        if not result.get("success"):
+            self._append_run_log(f"âŒ Loi Copy Video: {result.get('message')}")
+            self.runStateChanged.emit(False)
+            return
+
+        data = result.get("data", {})
+        if not isinstance(data, dict):
+            self._append_run_log("âŒ Gemini khong tra ve JSON hop le.")
+            self.runStateChanged.emit(False)
+            return
+
+        self._append_run_log(
+            f"âœ… Gemini da phan tich xong: {len(data.get('characters') or [])} nhan vat, {len(data.get('scenes') or [])} scene."
+        )
+        character_design = data.get("character_design", {}) if isinstance(data.get("character_design"), dict) else {}
+        designed_characters = character_design.get("characters") if isinstance(character_design.get("characters"), list) else []
+        if designed_characters:
+            self._append_run_log(f"🎨 Đã làm giàu hồ sơ nhân vật: {len(designed_characters)} nhân vật.")
+        image_payload = self._enqueue_copy_video_character_sheet_prompts(data)
+        if image_payload:
+            self._append_run_log(f"🖼️ Đã tạo {len(image_payload.get('rows') or [])} prompt ảnh sheet 4 góc cho nhân vật.")
+        self._populate_character_sync_from_copy_video(data, source_video_path)
+        payload = self.enqueue_copy_video_scenes(
+            copy_data=data,
+            voice_actor_key=voice_actor_key,
+            target_language=target_language,
+            source_video_path=source_video_path,
+        )
+        if not payload:
+            self.runStateChanged.emit(False)
+            return
+
+        if auto_run:
+            self._append_run_log("âš¡ Auto-run Copy Video: dua vao queue render ngay.")
+            try:
+                jobs = []
+                if image_payload:
+                    jobs.append(image_payload)
+                jobs.append(payload)
+                self.queueJobsRequested.emit(jobs)
+            except Exception:
+                pass
+
+        self.runStateChanged.emit(False)
+
+
+
+    def _populate_character_sync_from_copy_video(self, copy_data: dict, source_video_path: str) -> None:
+        try:
+            main_win = self.window()
+        except Exception:
+            main_win = None
+        if main_win is None or not hasattr(main_win, "tab_char_sync"):
+            return
+
+        characters = copy_data.get("characters") if isinstance(copy_data.get("characters"), list) else []
+        scenes = copy_data.get("scenes") if isinstance(copy_data.get("scenes"), list) else []
+        reference_dir = Path(DATA_GENERAL_DIR) / "copy_video_refs"
+        reference_dir.mkdir(parents=True, exist_ok=True)
+        duration_sec = self._probe_video_duration_seconds(source_video_path)
+        total_scenes = max(1, len(scenes))
+
+        character_items: list[dict] = []
+        prompt_lines: list[str] = []
+        for scene in scenes:
+            if not isinstance(scene, dict):
+                continue
+            prompt_text = ", ".join(
+                [
+                    str(scene.get("video_prompt_en") or "").strip(),
+                    str(scene.get("dialogue_target") or "").strip(),
+                ]
+            ).strip(", ")
+            if prompt_text:
+                prompt_lines.append(prompt_text)
+
+        for idx, character in enumerate(characters, start=1):
+            if not isinstance(character, dict):
+                continue
+            character_id = str(character.get("character_id") or f"char_{idx:02d}").strip()
+            identity_lock = str(character.get("identity_lock_en") or "").strip()
+            display_name = str(character.get("display_name") or character_id).strip() or character_id
+            if not character_id:
+                continue
+            timestamp = self._estimate_copy_video_timestamp(character_id, scenes, duration_sec, total_scenes, idx)
+            output_path = reference_dir / f"{Path(source_video_path).stem}_{character_id}.png"
+            frame_path = self._extract_video_frame(source_video_path, float(timestamp), output_path)
+            character_items.append(
+                {
+                    "character_id": character_id,
+                    "name": display_name,
+                    "path": frame_path,
+                    "identity_lock": identity_lock,
+                }
+            )
+
+        try:
+            main_win.tab_char_sync.replace_characters(character_items)
+            main_win.tab_char_sync.set_prompts(prompt_lines)
+        except Exception:
+            pass
+
+    def _enqueue_copy_video_character_sheet_prompts(self, copy_data: dict) -> dict | None:
+        characters = copy_data.get("characters") if isinstance(copy_data.get("characters"), list) else []
+        items: list[dict] = []
+        for idx, character in enumerate(characters, start=1):
+            if not isinstance(character, dict):
+                continue
+            character_id = str(character.get("character_id") or f"char_{idx:02d}").strip()
+            character_name = str(character.get("display_name") or character_id).strip() or character_id
+            
+            # Tạo ảnh nhân vật bằng toàn bộ cấu trúc JSON
+            prompt_text = json.dumps(character, ensure_ascii=True, indent=2)
+            if not prompt_text or prompt_text == "{}":
+                continue
+            items.append(
+                {
+                    "description": prompt_text,
+                    "aspect_ratio": "16:9",
+                    "source_type": "copy_video_character_sheet",
+                    "character_id": character_id,
+                    "character_name": character_name,
+                }
+            )
+        if not items:
+            return None
+        return self.enqueue_generate_image_from_prompts(items)
+
+    def _update_character_sync_sheet_preview(self, row: int, image_path: str) -> None:
+        new_path = str(image_path or "").strip()
+        if row < 0 or not new_path or not os.path.isfile(new_path):
+            return
+
+        payload = self._row_mode_payload(int(row))
+        if str(payload.get("source_type") or "").strip() != "copy_video_character_sheet":
+            return
+
+        try:
+            main_win = self.window()
+        except Exception:
+            main_win = None
+        if main_win is None or not hasattr(main_win, "tab_char_sync"):
+            return
+
+        character_id = str(payload.get("character_id") or "").strip()
+        character_name = str(payload.get("character_name") or "").strip()
+        identity_lock = str(payload.get("identity_lock") or "").strip()
+
+        try:
+            updated = main_win.tab_char_sync.update_character_image(
+                new_path,
+                character_id=character_id,
+                character_name=character_name,
+                identity_lock=identity_lock,
+            )
+        except Exception:
+            updated = False
+
+        if updated:
+            label = character_name or character_id or f"row {int(row) + 1}"
+            self._append_run_log(f"🧩 Đã cập nhật ảnh sheet nhân vật: {label}")
+
+    def _estimate_copy_video_timestamp(
+        self,
+        character_id: str,
+        scenes: list[dict],
+        duration_sec: float,
+        total_scenes: int,
+        fallback_index: int,
+    ) -> float:
+        for idx, scene in enumerate(scenes):
+            if not isinstance(scene, dict):
+                continue
+            scene_character_ids = [str(x).strip() for x in (scene.get("character_ids") or []) if str(x).strip()]
+            if character_id not in scene_character_ids:
+                continue
+            try:
+                start_sec = float(scene.get("start_sec"))
+                end_sec = float(scene.get("end_sec"))
+                if end_sec > start_sec >= 0:
+                    return max(0.0, (start_sec + end_sec) / 2.0)
+            except Exception:
+                pass
+            if duration_sec > 0:
+                return max(0.0, duration_sec * ((idx + 0.5) / max(1, total_scenes)))
+            return float(max(0.0, idx * 1.5))
+        if duration_sec > 0:
+            return max(0.0, duration_sec * ((fallback_index - 0.5) / max(1, total_scenes)))
+        return float(max(0.0, (fallback_index - 1) * 1.5))
+
+    def _probe_video_duration_seconds(self, video_path: str) -> float:
+        try:
+            ffmpeg_exe = imageio_ffmpeg.get_ffmpeg_exe()
+            result = subprocess.run(
+                [ffmpeg_exe, "-i", str(video_path)],
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="ignore",
+                **_win_hidden_kwargs(),
+            )
+            text = f"{result.stdout}\n{result.stderr}"
+            match = re.search(r"Duration:\s*(\d+):(\d+):(\d+(?:\.\d+)?)", text)
+            if not match:
+                return 0.0
+            hours = float(match.group(1))
+            minutes = float(match.group(2))
+            seconds = float(match.group(3))
+            return max(0.0, (hours * 3600.0) + (minutes * 60.0) + seconds)
+        except Exception:
+            return 0.0
+
+    def _extract_video_frame(self, video_path: str, timestamp_sec: float, output_path: Path) -> str:
+        try:
+            ffmpeg_exe = imageio_ffmpeg.get_ffmpeg_exe()
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            subprocess.run(
+                [
+                    ffmpeg_exe,
+                    "-y",
+                    "-ss",
+                    f"{max(0.0, float(timestamp_sec)):.3f}",
+                    "-i",
+                    str(video_path),
+                    "-frames:v",
+                    "1",
+                    str(output_path),
+                ],
+                check=True,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="ignore",
+                **_win_hidden_kwargs(),
+            )
+            if output_path.is_file():
+                return str(output_path)
+        except Exception:
+            pass
+        return ""
+
+    def start_clone_video(self, video_path: str, voice_profile: str, auto_run: bool) -> None:
+        if not video_path or not os.path.exists(video_path):
+            QMessageBox.warning(self, "Lỗi", f"Không tìm thấy video: {video_path}")
+            return
+
+        profile_dir = str(os.getenv("CHROME_USER_DATA_DIR", "")) or os.path.expanduser("~\\AppData\\Local\\Google\\Chrome\\User Data\\Default")
+
+        self._append_run_log(f"🚀 Khởi động Clone Video (Pro Max) | video={os.path.basename(video_path)}")
+        self._update_empty_state()
+        self._clone_worker = _GeminiCloneWorker(video_path, profile_dir, "en-US", "", "Tự động nhận diện", self)
+        self._clone_worker.log_message.connect(self._append_run_log)
+        self._clone_worker.completed.connect(lambda res: self._on_clone_complete(res, voice_profile, auto_run))
+        self._clone_worker.start()
+        self.runStateChanged.emit(True)
+
+    def _on_clone_complete(self, result: dict, voice_profile: str, auto_run: bool) -> None:
+        self._clone_worker = None
+        if not result.get("success"):
+            self._append_run_log(f"❌ Lỗi Clone: {result.get('message')}")
+            self.runStateChanged.emit(False)
+            return
+
+        data = result.get("data", {})
+        self._append_run_log("✅ Phân tích video thành công!")
+
+        # 1. Sync Character
+        identity = data.get("identity_lock", "")
+        if identity:
+            self._append_run_log(f"👤 Character ID: {identity}")
+            # Here we should ideally have a way to inject into tab_char_sync
+            # For now, let's just log it or find the tab via parent
+            try:
+                main_win = self.window()
+                if hasattr(main_win, "tab_char_sync"):
+                    main_win.tab_char_sync.add_character("Cloned_Char", "", identity)
+            except Exception:
+                pass
+
+        # 2. Populate DataGrid (Status Table)
+        script = data.get("vietnamese_script", "")
+        prompt = data.get("video_prompt", "")
+        
+        # Inject voice into prompt
+        if voice_profile and voice_profile != "None_NoVoice":
+            prompt = f"{prompt} | speaking: \"{script}\" using {voice_profile}"
+        
+        row = self._add_status_row(
+            prompt=prompt,
+            mode_key=self.MODE_TEXT_TO_VIDEO
+        )
+        self._append_run_log(f"📝 Đã thêm kịch bản vào dòng {row+1}")
+
+        if auto_run:
+            self._append_run_log("⚡ Auto Run enabled: Bắt đầu render...")
+            self._start_text_to_video_rows([row])
+        else:
+            self.runStateChanged.emit(False)
+
     def _on_idea_to_video_complete(self, result: dict) -> None:
         self._idea_worker = None
 
@@ -2854,12 +3481,16 @@ class StatusPanel(QWidget):
             return False
 
         clean_items: list[dict] = []
+        aspect_ratio_override = ""
         for r in rows:
             prompt_item = self.table.item(int(r), self.COL_PROMPT)
             prompt_text = str((prompt_item.text() if prompt_item is not None else "") or "").strip()
             if not prompt_text:
                 continue
             clean_items.append({"id": self._prompt_id_of_row(int(r)) or str(int(r) + 1), "description": prompt_text})
+            if not aspect_ratio_override:
+                payload = self._row_mode_payload(int(r))
+                aspect_ratio_override = str(payload.get("aspect_ratio") or "").strip() if isinstance(payload, dict) else ""
 
         if not clean_items:
             return False
@@ -2870,7 +3501,7 @@ class StatusPanel(QWidget):
             "prompts": {"text_to_video": clean_items},
             "_use_project_prompts": True,
             "_worker_controls_lifecycle": True,
-            "aspect_ratio": str(getattr(self._cfg, "video_aspect_ratio", "9:16") or "9:16"),
+            "aspect_ratio": str(aspect_ratio_override or getattr(self._cfg, "video_aspect_ratio", "9:16") or "9:16"),
             "veo_model": str(getattr(self._cfg, "veo_model", "Veo 3.1 - Fast") or "Veo 3.1 - Fast"),
             "output_count": int(getattr(self._cfg, "output_count", 1) or 1),
             "video_output_dir": str(getattr(self._cfg, "video_output_dir", "") or "").strip(),
@@ -3063,7 +3694,7 @@ class StatusPanel(QWidget):
                 if mode_key == self.MODE_IMAGE_TO_VIDEO_START_END:
                     if not str(payload.get("start_image_link") or "").strip() or not str(payload.get("end_image_link") or "").strip():
                         continue
-                if mode_key in {self.MODE_TEXT_TO_VIDEO, self.MODE_GROK_TEXT_TO_VIDEO, self.MODE_CREATE_IMAGE_PROMPT} and not prompt_text:
+                if mode_key in {self.MODE_TEXT_TO_VIDEO, self.MODE_GROK_TEXT_TO_VIDEO, self.MODE_CREATE_IMAGE_PROMPT, self.MODE_COPY_VIDEO} and not prompt_text:
                     continue
                 if mode_key == self.MODE_CREATE_IMAGE_REFERENCE:
                     chars = payload.get("characters") if isinstance(payload, dict) else None
@@ -3116,6 +3747,8 @@ class StatusPanel(QWidget):
     def _start_mode_group(self, mode_key: str, rows: list[int]) -> bool:
         key = str(mode_key or "").strip() or self.MODE_TEXT_TO_VIDEO
         if key == self.MODE_TEXT_TO_VIDEO:
+            return self._start_text_to_video_rows(rows)
+        if key == self.MODE_COPY_VIDEO:
             return self._start_text_to_video_rows(rows)
         if key == self.MODE_GROK_TEXT_TO_VIDEO:
             return self._start_grok_text_to_video_rows(rows)
@@ -3348,6 +3981,9 @@ class StatusPanel(QWidget):
             if cell is not None:
                 self._refresh_video_badges(row)
                 self._render_media_preview(row, selected_preview)
+
+            if image_path and os.path.isfile(image_path):
+                self._update_character_sync_sheet_preview(row, image_path)
 
         self._refresh_pending_positions()
         self._try_finalize_grok_batch_now()

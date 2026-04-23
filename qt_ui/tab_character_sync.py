@@ -251,6 +251,22 @@ class CharacterSyncTab(QWidget):
             
         self._refresh_cards()
 
+    def add_character(self, name: str, path: str, identity_lock: str = "") -> None:
+        """Programmatic way to add a character, used by automation."""
+        if len(self._items) >= 10:
+            return
+        
+        # If identity_lock passed, we might store it as part of the item or logic
+        # For now, let's just use it in the name or name it via automation
+        displayName = name
+        if identity_lock:
+             # If we want to strictly lock, we can append it or handle it in Sync logic later
+             # For this tool, characters usually just have a name and image
+             pass
+
+        self._items.append({'path': str(path), 'name': str(displayName)})
+        self._refresh_cards()
+
     def _show_max_message(self) -> None:
         QMessageBox.information(self, 'Đủ số lượng', 'Đã đủ số lượng nhân vật tối đa (10 ảnh).')
 

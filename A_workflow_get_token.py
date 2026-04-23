@@ -501,15 +501,31 @@ class TokenCollector:
 
     def _mode_check_xpath(self, mode: str) -> str:
         mapping = {
-            "video": ".//button[@aria-haspopup='menu' and contains(normalize-space(.), 'Video')]",
-            "generate_image": ".//button[@aria-haspopup='menu' and (contains(normalize-space(.), 'Nano Banana') or contains(normalize-space(.), 'Imagen'))]",
+            "video": (
+                ".//button[@type='button' and @role='tab' and @aria-selected='true' and "
+                "(contains(@aria-controls, 'VIDEO') or contains(normalize-space(.), 'Video'))]"
+                " | "
+                ".//button[@aria-haspopup='menu' and contains(normalize-space(.), 'Video')]"
+            ),
+            "generate_image": (
+                ".//button[@type='button' and @role='tab' and @aria-selected='true' and "
+                "(contains(@aria-controls, 'IMAGE') or contains(normalize-space(.), 'Image'))]"
+                " | "
+                ".//button[@aria-haspopup='menu' and (contains(normalize-space(.), 'Nano Banana') or contains(normalize-space(.), 'Imagen'))]"
+            ),
         }
         return mapping.get(mode, "")
 
     def _mode_tab_xpath(self, mode: str) -> str:
         mapping = {
-            "video": ".//button[@type='button' and @role='tab' and contains(normalize-space(.), 'Video')]",
-            "generate_image": ".//button[@type='button' and @role='tab' and contains(normalize-space(.), 'Image')]",
+            "video": (
+                ".//button[@type='button' and @role='tab' and "
+                "(contains(@aria-controls, 'VIDEO') or contains(normalize-space(.), 'Video'))]"
+            ),
+            "generate_image": (
+                ".//button[@type='button' and @role='tab' and "
+                "(contains(@aria-controls, 'IMAGE') or contains(normalize-space(.), 'Image'))]"
+            ),
         }
         return mapping.get(mode, "")
 
@@ -704,6 +720,16 @@ class TokenCollector:
 
         if precheck and await self._verify_mode_selection(target_mode, timeout_ms=1600):
             return True
+
+        # UI mới của Flow dùng tab trực tiếp Video/Image, không cần mở menu mode.
+        direct_tab = await self._first_visible_locator(target_tab_xpath, timeout_ms=1800)
+        if direct_tab is not None:
+            clicked_direct = await self._click_with_fallback(direct_tab, label=f"direct tab {target_mode}")
+            if clicked_direct:
+                self._log(f"🖱️ [{target_mode}] Đã bấm tab trực tiếp")
+                await self.page.wait_for_timeout(900)
+                if await self._verify_mode_selection(target_mode, timeout_ms=3000):
+                    return True
 
         max_mode_attempts = 3
         for attempt in range(1, max_mode_attempts + 1):

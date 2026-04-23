@@ -300,6 +300,91 @@ class CharacterSyncTab(QWidget):
             self._show_max_message()
         self._refresh_cards()
 
+    def clear_characters(self) -> None:
+        self._items = []
+        self._refresh_cards()
+
+    def add_character(self, name: str, path: str, identity_lock: str = "") -> None:
+        if len(self._items) >= 10:
+            return
+        self._items.append(
+            {
+                "path": str(path or "").strip(),
+                "name": str(name or "").strip(),
+                "identity_lock": str(identity_lock or "").strip(),
+                "character_id": str(name or "").strip(),
+            }
+        )
+        self._refresh_cards()
+
+    def replace_characters(self, characters: list[dict]) -> None:
+        self._items = []
+        for item in list(characters or []):
+            if not isinstance(item, dict):
+                continue
+            if len(self._items) >= 10:
+                break
+            self._items.append(
+                {
+                    "path": str(item.get("path") or "").strip(),
+                    "name": str(item.get("name") or "").strip(),
+                    "identity_lock": str(item.get("identity_lock") or "").strip(),
+                    "character_id": str(item.get("character_id") or "").strip(),
+                }
+            )
+        self._refresh_cards()
+
+    def update_character_image(
+        self,
+        image_path: str,
+        *,
+        character_id: str = "",
+        character_name: str = "",
+        identity_lock: str = "",
+    ) -> bool:
+        new_path = str(image_path or "").strip()
+        if not new_path or not os.path.isfile(new_path):
+            return False
+
+        id_key = str(character_id or "").strip().casefold()
+        name_key = str(character_name or "").strip().casefold()
+        lock_text = str(identity_lock or "").strip()
+
+        target_index = -1
+        for idx, item in enumerate(list(self._items or [])):
+            if not isinstance(item, dict):
+                continue
+            item_id = str(item.get("character_id") or "").strip().casefold()
+            item_name = str(item.get("name") or "").strip().casefold()
+            if id_key and item_id == id_key:
+                target_index = idx
+                break
+            if id_key and item_name == id_key:
+                target_index = idx
+                break
+            if name_key and item_name == name_key:
+                target_index = idx
+                break
+
+        if target_index < 0:
+            return False
+
+        item = dict(self._items[target_index] or {})
+        item["path"] = new_path
+        if character_id:
+            item["character_id"] = str(character_id).strip()
+        if character_name:
+            item["name"] = str(character_name).strip()
+        if lock_text:
+            item["identity_lock"] = lock_text
+        self._items[target_index] = item
+        self._refresh_cards()
+        return True
+
+    def set_prompts(self, prompts: list[str]) -> None:
+        text = "\n".join([str(prompt or "").strip() for prompt in (prompts or []) if str(prompt or "").strip()])
+        self.prompts.setPlainText(text)
+
     def _show_max_message(self) -> None:
         QMessageBox.information(self, "Đủ số lượng", "Đã đủ số lượng nhân vật tối đa (10 ảnh).")
 
@@ -337,7 +422,9 @@ class CharacterSyncTab(QWidget):
                 continue
             path = str(item.get("path") or "").strip()
             name = str(item.get("name") or "").strip()
+            identity_lock = str(item.get("identity_lock") or "").strip()
+            character_id = str(item.get("character_id") or "").strip()
             if not path:
                 continue
-            out.append({"path": path, "name": name})
+            out.append({"path": path, "name": name, "identity_lock": identity_lock, "character_id": character_id})
         return out

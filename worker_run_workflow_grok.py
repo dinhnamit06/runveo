@@ -137,10 +137,16 @@ class GrokTextToVideoWorker(QThread):
             raw_prompts = [p for p in self._prompts if p]
             prompts = []
             for p in raw_prompts:
+                actual_p = p
+                # If prompt contains "speaking: \"...\" using VOICE", try to extract
+                if "speaking:" in actual_p.lower():
+                    # Format: prompt | speaking: "script" using Voice
+                    pass # Handled by the workflow if we pass it correctly
+                
                 if self._voice_direction:
-                    prompts.append(f"{self._voice_direction}\n{p}")
+                    prompts.append(f"{self._voice_direction}\n{actual_p}")
                 else:
-                    prompts.append(p)
+                    prompts.append(actual_p)
             
             if not prompts:
                 self._emit_log("❌ GROK: Không có prompt hợp lệ để chạy.")

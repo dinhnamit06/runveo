@@ -2,7 +2,8 @@ from __future__ import annotations
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIntValidator
 from PyQt6.QtWidgets import (QComboBox, QFormLayout, QGroupBox, QLabel, QLineEdit, 
-                             QPlainTextEdit, QVBoxLayout, QWidget)
+                             QPlainTextEdit, QVBoxLayout, QWidget, QCheckBox, QPushButton, QHBoxLayout, QFileDialog)
+from voice_profiles import VOICE_JSON, VOICE_OPTIONS
 
 STYLE_OPTIONS: list[str] = [
     '3d_Pixar', 'Realistic', 'Live_action_cinematic', '2d_Cartoon', '3d_Cartoon',
@@ -96,10 +97,43 @@ class IdeaToVideoTab(QWidget):
         self.dialogue_lang.setCurrentText(lang_default if lang_default in LANGUAGE_OPTIONS else 'Tiếng Việt (vi-VN)')
         self.dialogue_lang.setMinimumWidth(240)
         cfg_layout.addRow('Ngôn ngữ thoại:', self.dialogue_lang)
-        
+
+        # Voice Actor selection
+        voice_items = [VOICE_JSON[k]["label"] for k in VOICE_OPTIONS]
+        self.voice_profile = QComboBox()
+        self.voice_profile.addItems(voice_items)
+        v_default = str(getattr(self._cfg, 'idea_voice_profile', 'None_NoVoice') or 'None_NoVoice')
+        if v_default in VOICE_OPTIONS:
+            self.voice_profile.setCurrentIndex(VOICE_OPTIONS.index(v_default))
+        cfg_layout.addRow('Giọng đọc:', self.voice_profile)
+
+        # Clone Mode UI
+        self.chk_clone_mode = QCheckBox('Chế độ Clone (Bóc băng từ Video)')
+        self.chk_clone_mode.setStyleSheet('font-weight:700; color:#10b981;')
+        cfg_layout.addRow('', self.chk_clone_mode)
+
+        self.video_path_container = QWidget()
+        vp_layout = QHBoxLayout(self.video_path_container)
+        vp_layout.setContentsMargins(0, 0, 0, 0)
+        self.video_path_edit = QLineEdit()
+        self.video_path_edit.setPlaceholderText('Đường dẫn file video (.mp4, .mov)...')
+        self.btn_browse_video = QPushButton('Chọn Video')
+        self.btn_browse_video.setFixedWidth(100)
+        vp_layout.addWidget(self.video_path_edit)
+        vp_layout.addWidget(self.btn_browse_video)
+        self.video_path_container.setVisible(False)
+        cfg_layout.addRow('Video gốc:', self.video_path_container)
+
+        self.chk_auto_run = QCheckBox('Tự động chạy (Render ngay khi bóc xong)')
+        cfg_layout.addRow('', self.chk_auto_run)
+
+        # Connections
         self.scene_count.editingFinished.connect(self._persist_config)
         self.style_combo.currentTextChanged.connect(lambda _: self._persist_config())
         self.dialogue_lang.currentTextChanged.connect(lambda _: self._persist_config())
+        self.voice_profile.currentIndexChanged.connect(lambda _: self._persist_config())
+        self.chk_clone_mode.toggled.connect(self._on_clone_mode_toggled)
+        self.btn_browse_video.clicked.connect(self._browse_video)
         
         root.addWidget(cfg_box)
         
@@ -119,12 +153,16 @@ class IdeaToVideoTab(QWidget):
         except Exception:
             return 1
 
-    def get_settings(self) -> dict[str, str | int]:
+    def get_settings(self) -> dict[str, str | int | bool]:
         return {
             'scene_count': self.get_scene_count(),
             'style': self.style_combo.currentText().strip(),
             'dialogue_language': self.dialogue_lang.currentText().strip(),
-            'idea': self.idea_editor.toPlainText().strip()
+            'idea': self.idea_editor.toPlainText().strip(),
+            'voice_profile': self.voice_profile.currentData() or VOICE_OPTIONS[self.voice_profile.currentIndex()],
+            'clone_mode': self.chk_clone_mode.isChecked(),
+            'video_path': self.video_path_edit.text().strip(),
+            'auto_run': self.chk_auto_run.isChecked()
         }
 
     def _persist_config(self) -> None:
@@ -162,6 +200,24 @@ class IdeaToVideoTab(QWidget):
             lang = self.dialogue_lang.currentText().strip()
             setattr(self._cfg, 'idea_dialogue_language', lang or 'Tiếng Việt (vi-VN)')
             
+            v_idx = self.voice_profile.currentIndex()
+            if 0 <= v_idx < len(VOICE_OPTIONS):
+                setattr(self._cfg, 'idea_voice_profile', VOICE_OPTIONS[v_idx])
+
             self._cfg.save()
         except Exception:
             pass
+
+    def _on_clone_mode_toggled(self, checked: bool) -> None:
+        self.video_path_container.setVisible(checked)
+        self.idea_editor.setVisible(not checked)
+        # Change placeholder or label if needed
+        self._persist_config()
+
+    def _browse_video(self) -> None:
+        file_path, _ = QFileDialog.getOpenFileName(
+            self, "Chọn Video Gốc", "", "Video Files (*.mp4 *.mov *.avi *.mkv)"
+        )
+        if file_path:
+            self.video_path_edit.setText(file_path)
+            self._persist_config()

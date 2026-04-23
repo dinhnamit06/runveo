@@ -1,158 +1,245 @@
 {
   "project_name": "default_project",
-  "updated_at": 1776877844,
+  "updated_at": 1776961053,
   "rows": [
     {
       "row": 0,
       "stt": "001",
       "prompt_id": "1",
-      "prompt": "người đàn ông chào khán giả",
-      "mode_key": "grok_image_to_video",
-      "mode_label": "GROK - Tạo video từ Ảnh",
-      "mode_name": "GROK - Tạo video từ Ảnh",
+      "prompt": "{\n  \"character_id\": \"char_01\",\n  \"identity_lock_en\": \"consistent young East Asian male, calm intellectual expression, short neat black hair\",\n  \"display_name\": \"Young Scholar in White\",\n  \"role\": \"main\",\n  \"face_design_en\": \"oval face, gentle almond-shaped eyes, straight nose, youthful skin, serene and thoughtful expression, age 22\",\n  \"hair_design_en\": \"short cropped black hair, straight texture, clean hairline, modern yet neat traditional styling\",\n  \"body_design_en\": \"height 178cm, slender athletic build, upright and graceful posture, elegant silhouette\",\n  \"wardrobe_en\": \"traditional Hanfu-inspired flowing robe, high-quality white silk with beige linen overlays, subtle embroidery on cuffs\",\n  \"color_palette_en\": \"ivory white, warm beige, cream, soft silver accents\",\n  \"reference_sheet_prompt_en\": \"character reference sheet of a young man in white and beige flowing robes, landscape orientation, four-angle turnaround, front view, left side view, right side view, back view, full-body standing, clean white background, high-detail 3D render, cinematic lighting\",\n  \"turnaround_prompts_en\": {\n    \"front\": \"full-body front view of a young man in a white and beige traditional robe, serene expression, hands at sides\",\n    \"left\": \"left profile view of a young man in a white traditional robe, showing silhouette and fabric folds\",\n    \"right\": \"right profile view of a young man in a white traditional robe, consistent facial features\",\n    \"back\": \"full-body back view of a young man in a white and beige robe, showing hair length and robe drape\"\n  }\n}",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "image_link": "C:/Users/Admin/OneDrive/Pictures/LÀM VD/45-year-old_Asian_man,_202604220947.jpeg|C:/Users/Admin/OneDrive/Pictures/LÀM VD/z7750723405133_3fb84df50c8db0878305b4fc902c8699.jpg",
-        "prompt": "người đàn ông chào khán giả"
+        "aspect_ratio": "16:9",
+        "character_id": "char_01",
+        "character_name": "Young Scholar in White",
+        "description": "{\n  \"character_id\": \"char_01\",\n  \"identity_lock_en\": \"consistent young East Asian male, calm intellectual expression, short neat black hair\",\n  \"display_name\": \"Young Scholar in White\",\n  \"role\": \"main\",\n  \"face_design_en\": \"oval face, gentle almond-shaped eyes, straight nose, youthful skin, serene and thoughtful expression, age 22\",\n  \"hair_design_en\": \"short cropped black hair, straight texture, clean hairline, modern yet neat traditional styling\",\n  \"body_design_en\": \"height 178cm, slender athletic build, upright and graceful posture, elegant silhouette\",\n  \"wardrobe_en\": \"traditional Hanfu-inspired flowing robe, high-quality white silk with beige linen overlays, subtle embroidery on cuffs\",\n  \"color_palette_en\": \"ivory white, warm beige, cream, soft silver accents\",\n  \"reference_sheet_prompt_en\": \"character reference sheet of a young man in white and beige flowing robes, landscape orientation, four-angle turnaround, front view, left side view, right side view, back view, full-body standing, clean white background, high-detail 3D render, cinematic lighting\",\n  \"turnaround_prompts_en\": {\n    \"front\": \"full-body front view of a young man in a white and beige traditional robe, serene expression, hands at sides\",\n    \"left\": \"left profile view of a young man in a white traditional robe, showing silhouette and fabric folds\",\n    \"right\": \"right profile view of a young man in a white traditional robe, consistent facial features\",\n    \"back\": \"full-body back view of a young man in a white and beige robe, showing hair length and robe drape\"\n  }\n}",
+        "source_type": "copy_video_character_sheet"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\001_45-year-old_Asian_man__2026042_ng_i_n_ng_ch_o_kh_n_gi_20260422_115920_068406.mp4"
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\1_1_23042026_230316.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_thumnail\\001_45-year-old_Asian_man__2026042_ng_i_n_ng_ch_o_kh_n_gi_20260422_115920_068406.thumb.jpg"
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\1_1_23042026_230316.jpg"
       }
     },
     {
       "row": 1,
       "stt": "002",
       "prompt_id": "2",
-      "prompt": "người đàn ông chào khán giả",
-      "mode_key": "grok_image_to_video",
-      "mode_label": "GROK - Tạo video từ Ảnh",
-      "mode_name": "GROK - Tạo video từ Ảnh",
+      "prompt": "{\n  \"character_id\": \"char_02\",\n  \"identity_lock_en\": \"consistent elderly Buddhist monk, bald head, prominent white eyebrows, warm smile\",\n  \"display_name\": \"Elderly Zen Master\",\n  \"role\": \"supporting\",\n  \"face_design_en\": \"round weathered face, kind wrinkles around eyes, long bushy white eyebrows, warm friendly smile, age 75\",\n  \"hair_design_en\": \"completely shaved bald head, smooth scalp, no facial hair except for white eyebrows\",\n  \"body_design_en\": \"height 165cm, slightly stout but sturdy build, humble and relaxed posture\",\n  \"wardrobe_en\": \"traditional monastic robes, inner saffron yellow layer, outer textured brown wrap-around robe, heavy cotton material\",\n  \"color_palette_en\": \"saffron orange, dark earth brown, clay red\",\n  \"reference_sheet_prompt_en\": \"character reference sheet of an elderly bald monk in brown and saffron robes, landscape orientation, four-angle turnaround, front view, left side view, right side view, back view, full-body standing, clean white background, high-detail 3D render\",\n  \"turnaround_prompts_en\": {\n    \"front\": \"full-body front view of an elderly bald monk smiling, wearing brown and saffron robes\",\n    \"left\": \"left side view of an elderly monk in monastic robes, showing the layered fabric\",\n    \"right\": \"right side view of an elderly monk, consistent kind facial expression\",\n    \"back\": \"full-body back view of an elderly monk showing the drape of the brown outer robe\"\n  }\n}",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "image_link": "C:/Users/Admin/OneDrive/Pictures/LÀM VD/45-year-old_Asian_man,_202604220947.jpeg|C:/Users/Admin/OneDrive/Pictures/LÀM VD/z7750723405133_3fb84df50c8db0878305b4fc902c8699.jpg",
-        "prompt": "người đàn ông chào khán giả"
+        "aspect_ratio": "16:9",
+        "character_id": "char_02",
+        "character_name": "Elderly Zen Master",
+        "description": "{\n  \"character_id\": \"char_02\",\n  \"identity_lock_en\": \"consistent elderly Buddhist monk, bald head, prominent white eyebrows, warm smile\",\n  \"display_name\": \"Elderly Zen Master\",\n  \"role\": \"supporting\",\n  \"face_design_en\": \"round weathered face, kind wrinkles around eyes, long bushy white eyebrows, warm friendly smile, age 75\",\n  \"hair_design_en\": \"completely shaved bald head, smooth scalp, no facial hair except for white eyebrows\",\n  \"body_design_en\": \"height 165cm, slightly stout but sturdy build, humble and relaxed posture\",\n  \"wardrobe_en\": \"traditional monastic robes, inner saffron yellow layer, outer textured brown wrap-around robe, heavy cotton material\",\n  \"color_palette_en\": \"saffron orange, dark earth brown, clay red\",\n  \"reference_sheet_prompt_en\": \"character reference sheet of an elderly bald monk in brown and saffron robes, landscape orientation, four-angle turnaround, front view, left side view, right side view, back view, full-body standing, clean white background, high-detail 3D render\",\n  \"turnaround_prompts_en\": {\n    \"front\": \"full-body front view of an elderly bald monk smiling, wearing brown and saffron robes\",\n    \"left\": \"left side view of an elderly monk in monastic robes, showing the layered fabric\",\n    \"right\": \"right side view of an elderly monk, consistent kind facial expression\",\n    \"back\": \"full-body back view of an elderly monk showing the drape of the brown outer robe\"\n  }\n}",
+        "source_type": "copy_video_character_sheet"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\001_45-year-old_Asian_man__2026042_ng_i_n_ng_ch_o_kh_n_gi_20260422_120103_763476.mp4"
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\2_1_23042026_230326.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_thumnail\\001_45-year-old_Asian_man__2026042_ng_i_n_ng_ch_o_kh_n_gi_20260422_120103_763476.thumb.jpg"
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\2_1_23042026_230326.jpg"
       }
     },
     {
       "row": 2,
       "stt": "003",
       "prompt_id": "3",
-      "prompt": "người đàn ông chào khán giả, giới thiệu sản phầm phong thuỷ",
-      "mode_key": "grok_image_to_video",
-      "mode_label": "GROK - Tạo video từ Ảnh",
-      "mode_name": "GROK - Tạo video từ Ảnh",
+      "prompt": "{\n  \"character_id\": \"char_03\",\n  \"identity_lock_en\": \"consistent handsome young East Asian male, long black hair tied up, serious expression\",\n  \"display_name\": \"Scholar in Black\",\n  \"role\": \"supporting\",\n  \"face_design_en\": \"sharp jawline, intense dark eyes, thin lips, brooding and contemplative expression, age 25\",\n  \"hair_design_en\": \"long jet black hair, top section tied into a neat traditional bun with a simple silver pin, loose strands framing face\",\n  \"body_design_en\": \"height 182cm, tall and lean build, rigid and formal posture, sharp silhouette\",\n  \"wardrobe_en\": \"formal scholar's robe, heavy black silk, structured shoulders, charcoal grey inner collar\",\n  \"color_palette_en\": \"deep black, charcoal grey, midnight blue, silver\",\n  \"reference_sheet_prompt_en\": \"character reference sheet of a handsome young man with long hair in a black scholar's robe, landscape orientation, four-angle turnaround, front view, left side view, right side view, back view, full-body standing, clean white background, high-detail 3D render\",\n  \"turnaround_prompts_en\": {\n    \"front\": \"full-body front view of a young man in a black scholar's robe, serious expression, hair in a bun\",\n    \"left\": \"left side view of a young man in a black robe, showing long hair and bun profile\",\n    \"right\": \"right side view of a young man in a black robe, sharp facial profile\",\n    \"back\": \"full-body back view of a young man in a black scholar's robe, showing hair bun and robe structure\"\n  }\n}",
+      "mode_key": "create_image_prompt",
+      "mode_label": "VEO3 - Tạo ảnh từ prompt",
+      "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "image_link": "C:/Users/Admin/OneDrive/Pictures/LÀM VD/45-year-old_Asian_man,_202604220947.jpeg|C:/Users/Admin/OneDrive/Pictures/LÀM VD/z7750723405133_3fb84df50c8db0878305b4fc902c8699.jpg",
-        "prompt": "người đàn ông chào khán giả, giới thiệu sản phầm phong thuỷ"
+        "aspect_ratio": "16:9",
+        "character_id": "char_03",
+        "character_name": "Scholar in Black",
+        "description": "{\n  \"character_id\": \"char_03\",\n  \"identity_lock_en\": \"consistent handsome young East Asian male, long black hair tied up, serious expression\",\n  \"display_name\": \"Scholar in Black\",\n  \"role\": \"supporting\",\n  \"face_design_en\": \"sharp jawline, intense dark eyes, thin lips, brooding and contemplative expression, age 25\",\n  \"hair_design_en\": \"long jet black hair, top section tied into a neat traditional bun with a simple silver pin, loose strands framing face\",\n  \"body_design_en\": \"height 182cm, tall and lean build, rigid and formal posture, sharp silhouette\",\n  \"wardrobe_en\": \"formal scholar's robe, heavy black silk, structured shoulders, charcoal grey inner collar\",\n  \"color_palette_en\": \"deep black, charcoal grey, midnight blue, silver\",\n  \"reference_sheet_prompt_en\": \"character reference sheet of a handsome young man with long hair in a black scholar's robe, landscape orientation, four-angle turnaround, front view, left side view, right side view, back view, full-body standing, clean white background, high-detail 3D render\",\n  \"turnaround_prompts_en\": {\n    \"front\": \"full-body front view of a young man in a black scholar's robe, serious expression, hair in a bun\",\n    \"left\": \"left side view of a young man in a black robe, showing long hair and bun profile\",\n    \"right\": \"right side view of a young man in a black robe, sharp facial profile\",\n    \"back\": \"full-body back view of a young man in a black scholar's robe, showing hair bun and robe structure\"\n  }\n}",
+        "source_type": "copy_video_character_sheet"
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\001_45-year-old_Asian_man__2026042_ng_i_n_ng_ch_o_kh_n_gi_g_20260422_120242_562713.mp4"
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\3_1_23042026_230339.jpg"
       },
       "preview_map": {
-        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\001_45-year-old_Asian_man__2026042_ng_i_n_ng_ch_o_kh_n_gi_g_20260422_120242_562713.mp4"
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\3_1_23042026_230339.jpg"
       }
     },
     {
       "row": 3,
       "stt": "004",
       "prompt_id": "4",
-      "prompt": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features (dots for eyes, line for mouth), is walking alone in a dark office. Other stick figures are visible in the background, whispering and holding knives behind their backs. The entire scene is in a sketchy 2D chalkboard style on a dark green chalkboard.",
+      "prompt": "{\n  \"character_id\": \"char_04\",\n  \"identity_lock_en\": \"consistent middle-aged man, weathered sun-kissed skin, tired expression\",\n  \"display_name\": \"Weathered Laborer\",\n  \"role\": \"supporting\",\n  \"face_design_en\": \"deep forehead wrinkles, sun-damaged skin, tired eyes, thin beard stubble, age 50\",\n  \"hair_design_en\": \"messy short black hair with grey streaks, unkempt texture, sweat-matted\",\n  \"body_design_en\": \"height 170cm, sinewy and lean build, slightly hunched back from labor, visible muscle tension\",\n  \"wardrobe_en\": \"simple peasant tunic, coarse hemp fabric, sleeveless grey vest, rolled-up brown trousers, worn straw sandals\",\n  \"color_palette_en\": \"dusty grey, muddy brown, faded hemp, earth tones\",\n  \"reference_sheet_prompt_en\": \"character reference sheet of a middle-aged laborer in simple worn clothing, landscape orientation, four-angle turnaround, front view, left side view, right side view, back view, full-body standing, clean white background, high-detail 3D render\",\n  \"turnaround_prompts_en\": {\n    \"front\": \"full-body front view of a middle-aged laborer in worn grey and brown clothes, tired expression\",\n    \"left\": \"left side view of a laborer showing hunched posture and coarse fabric texture\",\n    \"right\": \"right side view of a laborer, consistent weathered skin details\",\n    \"back\": \"full-body back view of a laborer showing the worn texture of the tunic and trousers\"\n  }\n}",
       "mode_key": "create_image_prompt",
       "mode_label": "VEO3 - Tạo ảnh từ prompt",
       "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "description": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features (dots for eyes, line for mouth), is walking alone in a dark office. Other stick figures are visible in the background, whispering and holding knives behind their backs. The entire scene is in a sketchy 2D chalkboard style on a dark green chalkboard."
+        "aspect_ratio": "16:9",
+        "character_id": "char_04",
+        "character_name": "Weathered Laborer",
+        "description": "{\n  \"character_id\": \"char_04\",\n  \"identity_lock_en\": \"consistent middle-aged man, weathered sun-kissed skin, tired expression\",\n  \"display_name\": \"Weathered Laborer\",\n  \"role\": \"supporting\",\n  \"face_design_en\": \"deep forehead wrinkles, sun-damaged skin, tired eyes, thin beard stubble, age 50\",\n  \"hair_design_en\": \"messy short black hair with grey streaks, unkempt texture, sweat-matted\",\n  \"body_design_en\": \"height 170cm, sinewy and lean build, slightly hunched back from labor, visible muscle tension\",\n  \"wardrobe_en\": \"simple peasant tunic, coarse hemp fabric, sleeveless grey vest, rolled-up brown trousers, worn straw sandals\",\n  \"color_palette_en\": \"dusty grey, muddy brown, faded hemp, earth tones\",\n  \"reference_sheet_prompt_en\": \"character reference sheet of a middle-aged laborer in simple worn clothing, landscape orientation, four-angle turnaround, front view, left side view, right side view, back view, full-body standing, clean white background, high-detail 3D render\",\n  \"turnaround_prompts_en\": {\n    \"front\": \"full-body front view of a middle-aged laborer in worn grey and brown clothes, tired expression\",\n    \"left\": \"left side view of a laborer showing hunched posture and coarse fabric texture\",\n    \"right\": \"right side view of a laborer, consistent weathered skin details\",\n    \"back\": \"full-body back view of a laborer showing the worn texture of the tunic and trousers\"\n  }\n}",
+        "source_type": "copy_video_character_sheet"
       },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\4_1_23042026_230514.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\4_1_23042026_230514.jpg"
+      }
     },
     {
       "row": 4,
       "stt": "005",
       "prompt_id": "5",
-      "prompt": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features, is watching two other stick figures aggressively tearing apart a piece of paper with a large dollar sign on it. The scene is in a sketchy 2D chalkboard style on a dark green chalkboard.",
+      "prompt": "{\n  \"character_id\": \"char_05\",\n  \"identity_lock_en\": \"consistent young Buddhist monk, shaved head, calm and focused expression\",\n  \"display_name\": \"Young Ascetic Monk\",\n  \"role\": \"supporting\",\n  \"face_design_en\": \"symmetrical facial features, large calm eyes, peaceful closed lips, smooth youthful skin, age 20\",\n  \"hair_design_en\": \"clean-shaven bald head, perfectly smooth texture\",\n  \"body_design_en\": \"height 175cm, slim and flexible build, meditative and still posture\",\n  \"wardrobe_en\": \"minimalist monastic robe, dark grey heavy cotton, wrapped tightly around the body, simple cloth belt\",\n  \"color_palette_en\": \"dark slate grey, ash, charcoal, muted blue\",\n  \"reference_sheet_prompt_en\": \"character reference sheet of a young bald monk in dark grey monastic robes, landscape orientation, four-angle turnaround, front view, left side view, right side view, back view, full-body standing, clean white background, high-detail 3D render\",\n  \"turnaround_prompts_en\": {\n    \"front\": \"full-body front view of a young bald monk in dark grey robes, hands in prayer position, calm expression\",\n    \"left\": \"left side view of a young monk in grey robes, showing the wrap-around style\",\n    \"right\": \"right side view of a young monk, showing the smooth scalp and calm profile\",\n    \"back\": \"full-body back view of a young monk in dark grey robes, simple and clean silhouette\"\n  }\n}",
       "mode_key": "create_image_prompt",
       "mode_label": "VEO3 - Tạo ảnh từ prompt",
       "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "description": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features, is watching two other stick figures aggressively tearing apart a piece of paper with a large dollar sign on it. The scene is in a sketchy 2D chalkboard style on a dark green chalkboard."
+        "aspect_ratio": "16:9",
+        "character_id": "char_05",
+        "character_name": "Young Ascetic Monk",
+        "description": "{\n  \"character_id\": \"char_05\",\n  \"identity_lock_en\": \"consistent young Buddhist monk, shaved head, calm and focused expression\",\n  \"display_name\": \"Young Ascetic Monk\",\n  \"role\": \"supporting\",\n  \"face_design_en\": \"symmetrical facial features, large calm eyes, peaceful closed lips, smooth youthful skin, age 20\",\n  \"hair_design_en\": \"clean-shaven bald head, perfectly smooth texture\",\n  \"body_design_en\": \"height 175cm, slim and flexible build, meditative and still posture\",\n  \"wardrobe_en\": \"minimalist monastic robe, dark grey heavy cotton, wrapped tightly around the body, simple cloth belt\",\n  \"color_palette_en\": \"dark slate grey, ash, charcoal, muted blue\",\n  \"reference_sheet_prompt_en\": \"character reference sheet of a young bald monk in dark grey monastic robes, landscape orientation, four-angle turnaround, front view, left side view, right side view, back view, full-body standing, clean white background, high-detail 3D render\",\n  \"turnaround_prompts_en\": {\n    \"front\": \"full-body front view of a young bald monk in dark grey robes, hands in prayer position, calm expression\",\n    \"left\": \"left side view of a young monk in grey robes, showing the wrap-around style\",\n    \"right\": \"right side view of a young monk, showing the smooth scalp and calm profile\",\n    \"back\": \"full-body back view of a young monk in dark grey robes, simple and clean silhouette\"\n  }\n}",
+        "source_type": "copy_video_character_sheet"
       },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\5_1_23042026_230523.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\5_1_23042026_230523.jpg"
+      }
     },
     {
       "row": 5,
       "stt": "006",
       "prompt_id": "6",
-      "prompt": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features, is hunched over, carrying a massive, impossibly tall stack of chalk-drawn folders on his back, looking utterly exhausted. Other stick figures sit nearby, casually drinking coffee, in a sketchy 2D chalkboard style on a dark green chalkboard.",
+      "prompt": "{\n  \"character_id\": \"char_06\",\n  \"identity_lock_en\": \"consistent beautiful young East Asian woman, long flowing black hair, optimistic expression\",\n  \"display_name\": \"Ethereal Maiden\",\n  \"role\": \"supporting\",\n  \"face_design_en\": \"heart-shaped face, bright sparkling eyes, rosy cheeks, gentle and hopeful smile, age 19\",\n  \"hair_design_en\": \"very long straight black hair reaching the waist, naturally flowing, no ornaments\",\n  \"body_design_en\": \"height 163cm, petite and graceful build, light and airy movement, soft silhouette\",\n  \"wardrobe_en\": \"simple light-colored dress, ethereal silk material, pale blue and white gradients, translucent sleeves\",\n  \"color_palette_en\": \"pale sky blue, soft white, lavender, pearl\",\n  \"reference_sheet_prompt_en\": \"character reference sheet of a young woman in a light blue and white dress, landscape orientation, four-angle turnaround, front view, left side view, right side view, back view, full-body standing, clean white background, high-detail 3D render\",\n  \"turnaround_prompts_en\": {\n    \"front\": \"full-body front view of a young woman in a flowing light-colored dress, long black hair, smiling\",\n    \"left\": \"left side view of a young woman, showing the flow of the dress and hair\",\n    \"right\": \"right side view of a young woman, consistent graceful profile\",\n    \"back\": \"full-body back view of a young woman showing the full length of her black hair and dress drape\"\n  }\n}",
       "mode_key": "create_image_prompt",
       "mode_label": "VEO3 - Tạo ảnh từ prompt",
       "mode_name": "VEO3 - Tạo ảnh từ prompt",
       "mode_payload": {
-        "description": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features, is hunched over, carrying a massive, impossibly tall stack of chalk-drawn folders on his back, looking utterly exhausted. Other stick figures sit nearby, casually drinking coffee, in a sketchy 2D chalkboard style on a dark green chalkboard."
+        "aspect_ratio": "16:9",
+        "character_id": "char_06",
+        "character_name": "Ethereal Maiden",
+        "description": "{\n  \"character_id\": \"char_06\",\n  \"identity_lock_en\": \"consistent beautiful young East Asian woman, long flowing black hair, optimistic expression\",\n  \"display_name\": \"Ethereal Maiden\",\n  \"role\": \"supporting\",\n  \"face_design_en\": \"heart-shaped face, bright sparkling eyes, rosy cheeks, gentle and hopeful smile, age 19\",\n  \"hair_design_en\": \"very long straight black hair reaching the waist, naturally flowing, no ornaments\",\n  \"body_design_en\": \"height 163cm, petite and graceful build, light and airy movement, soft silhouette\",\n  \"wardrobe_en\": \"simple light-colored dress, ethereal silk material, pale blue and white gradients, translucent sleeves\",\n  \"color_palette_en\": \"pale sky blue, soft white, lavender, pearl\",\n  \"reference_sheet_prompt_en\": \"character reference sheet of a young woman in a light blue and white dress, landscape orientation, four-angle turnaround, front view, left side view, right side view, back view, full-body standing, clean white background, high-detail 3D render\",\n  \"turnaround_prompts_en\": {\n    \"front\": \"full-body front view of a young woman in a flowing light-colored dress, long black hair, smiling\",\n    \"left\": \"left side view of a young woman, showing the flow of the dress and hair\",\n    \"right\": \"right side view of a young woman, consistent graceful profile\",\n    \"back\": \"full-body back view of a young woman showing the full length of her black hair and dress drape\"\n  }\n}",
+        "source_type": "copy_video_character_sheet"
       },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\6_1_23042026_230525.jpg"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\6_1_23042026_230525.jpg"
+      }
     },
     {
       "row": 6,
       "stt": "007",
       "prompt_id": "7",
-      "prompt": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features, is walking away calmly after putting his hands in his pockets. He is turning his back away from a screaming, angry stick figure. The scene is in a sketchy 2D chalkboard style on a dark green chalkboard.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "SCENE_01. Shot long shot, low-angle, vertical 9:16 framing, cinematic wide-angle lens. Style: Realistic 3D digital art style with soft lighting, high detail, and atmospheric perspective. Characters and objects are illustrated with Consistent soft lighting from the sun, detailed textures on the rocks and fabric. Movements are Slow-motion cinematic movement. Character consistency lock: Character 'Young Scholar in White': consistent young East Asian male, calm intellectual expression, short neat black hair. Scene action: A young man stands on a jagged mountain peak, looking out over a vast sea of swirling clouds during sunrise. Environment and background: High mountain peaks emerging from a thick layer of clouds, illuminated by the bright morning sun. Mood and atmosphere: Inspirational and tranquil. Motion details: Slow movement of the clouds below and subtle swaying of the man's robe.",
+      "mode_key": "copy_video",
+      "mode_label": "VEO3 - Sao chép video",
+      "mode_name": "VEO3 - Sao chép video",
       "mode_payload": {
-        "description": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features, is walking away calmly after putting his hands in his pockets. He is turning his back away from a screaming, angry stick figure. The scene is in a sketchy 2D chalkboard style on a dark green chalkboard."
+        "camera_angle": "low-angle",
+        "character_ids": [
+          "char_01"
+        ],
+        "detected_source_language": "vi-VN",
+        "dialogue_original": "Khi bạn sắp trở nên tốt hơn, bạn sẽ xem được video này.",
+        "dialogue_target": "Khi bạn sắp trở nên tốt hơn, bạn sẽ xem được video này.",
+        "environment_en": "High mountain peaks emerging from a thick layer of clouds, illuminated by the bright morning sun.",
+        "framing": "vertical 9:16 framing",
+        "identity_context_en": "Character 'Young Scholar in White': consistent young East Asian male, calm intellectual expression, short neat black hair",
+        "lens_feel": "cinematic wide-angle lens",
+        "mood_en": "Inspirational and tranquil",
+        "motion_en": "Slow movement of the clouds below and subtle swaying of the man's robe.",
+        "motion_style_en": "Slow-motion cinematic movement.",
+        "prompt": "SCENE_01. Shot long shot, low-angle, vertical 9:16 framing, cinematic wide-angle lens. Style: Realistic 3D digital art style with soft lighting, high detail, and atmospheric perspective. Characters and objects are illustrated with Consistent soft lighting from the sun, detailed textures on the rocks and fabric. Movements are Slow-motion cinematic movement. Character consistency lock: Character 'Young Scholar in White': consistent young East Asian male, calm intellectual expression, short neat black hair. Scene action: A young man stands on a jagged mountain peak, looking out over a vast sea of swirling clouds during sunrise. Environment and background: High mountain peaks emerging from a thick layer of clouds, illuminated by the bright morning sun. Mood and atmosphere: Inspirational and tranquil. Motion details: Slow movement of the clouds below and subtle swaying of the man's robe.",
+        "render_consistency_en": "Consistent soft lighting from the sun, detailed textures on the rocks and fabric.",
+        "scene_action_en": "A young man stands on a jagged mountain peak, looking out over a vast sea of swirling clouds during sunrise.",
+        "scene_id": "scene_01",
+        "shot_type": "long shot",
+        "source_type": "copy_video",
+        "source_video_path": "C:/Tải về/bcb7bb6f-bcf2-4803-9392-89d5bf0dae52.mp4",
+        "style_block_en": "Realistic 3D digital art style with soft lighting, high detail, and atmospheric perspective.",
+        "target_language": "vi-VN",
+        "video_prompt_en": "A high-quality 3D render of a man in a beige robe standing on a cliff edge, overlooking a sea of clouds at sunrise, serene atmosphere, soft golden light.",
+        "voice_actor_key": "Nam_Tram_Duc",
+        "voice_profile": "Extremely deep Vietnamese male bass with gravel texture, weighted authority, low register presence, and commanding cinematic gravity."
       },
-      "status_code": "CANCELED",
-      "status_text": "Hủy",
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\video\\7_1_23042026_230440.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\7_1_23042026_230444.jpg"
+      }
     },
     {
       "row": 7,
       "stt": "008",
       "prompt_id": "8",
-      "prompt": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features, is sitting cross-legged in a meditative pose. Chaotic chalk scribbles and noise lines surround him, but he is glowing slightly, in a sketchy 2D chalkboard style on a dark green chalkboard.",
-      "mode_key": "create_image_prompt",
-      "mode_label": "VEO3 - Tạo ảnh từ prompt",
-      "mode_name": "VEO3 - Tạo ảnh từ prompt",
+      "prompt": "SCENE_02. Shot medium shot, eye-level, vertical 9:16 framing, soft focus portrait lens. Style: Realistic 3D digital art style with vibrant natural colors and soft lighting. Characters and objects are illustrated with Detailed skin textures and fabric folds, consistent with a peaceful natural setting. Movements are Subtle and natural movements. Character consistency lock: Character 'Elderly Zen Master': consistent elderly Buddhist monk, bald head, prominent white eyebrows, warm smile. Scene action: An elderly monk sits cross-legged on a stone in a bamboo forest, smiling warmly and gesturing with one hand. Environment and background: Lush green bamboo forest with soft dappled sunlight filtering through the leaves. Mood and atmosphere: Peaceful and encouraging. Motion details: Slight movement of the monk's hand and gentle swaying of bamboo leaves in the background.",
+      "mode_key": "copy_video",
+      "mode_label": "VEO3 - Sao chép video",
+      "mode_name": "VEO3 - Sao chép video",
       "mode_payload": {
-        "description": "A minimalist white chalk stick-figure of an office worker, with a simple round head and basic expressive facial features, is sitting cross-legged in a meditative pose. Chaotic chalk scribbles and noise lines surround him, but he is glowing slightly, in a sketchy 2D chalkboard style on a dark green chalkboard."
+        "camera_angle": "eye-level",
+        "character_ids": [
+          "char_02"
+        ],
+        "detected_source_language": "vi-VN",
+        "dialogue_original": "Nếu đã xem được, hãy bình luận xuống dưới: Tôi rất tốt.",
+        "dialogue_target": "Nếu đã xem được, hãy bình luận xuống dưới: Tôi rất tốt.",
+        "environment_en": "Lush green bamboo forest with soft dappled sunlight filtering through the leaves.",
+        "framing": "vertical 9:16 framing",
+        "identity_context_en": "Character 'Elderly Zen Master': consistent elderly Buddhist monk, bald head, prominent white eyebrows, warm smile",
+        "lens_feel": "soft focus portrait lens",
+        "mood_en": "Peaceful and encouraging",
+        "motion_en": "Slight movement of the monk's hand and gentle swaying of bamboo leaves in the background.",
+        "motion_style_en": "Subtle and natural movements.",
+        "prompt": "SCENE_02. Shot medium shot, eye-level, vertical 9:16 framing, soft focus portrait lens. Style: Realistic 3D digital art style with vibrant natural colors and soft lighting. Characters and objects are illustrated with Detailed skin textures and fabric folds, consistent with a peaceful natural setting. Movements are Subtle and natural movements. Character consistency lock: Character 'Elderly Zen Master': consistent elderly Buddhist monk, bald head, prominent white eyebrows, warm smile. Scene action: An elderly monk sits cross-legged on a stone in a bamboo forest, smiling warmly and gesturing with one hand. Environment and background: Lush green bamboo forest with soft dappled sunlight filtering through the leaves. Mood and atmosphere: Peaceful and encouraging. Motion details: Slight movement of the monk's hand and gentle swaying of bamboo leaves in the background.",
+        "render_consistency_en": "Detailed skin textures and fabric folds, consistent with a peaceful natural setting.",
+        "scene_action_en": "An elderly monk sits cross-legged on a stone in a bamboo forest, smiling warmly and gesturing with one hand.",
+        "scene_id": "scene_02",
+        "shot_type": "medium shot",
+        "source_type": "copy_video",
+        "source_video_path": "C:/Tải về/bcb7bb6f-bcf2-4803-9392-89d5bf0dae52.mp4",
+        "style_block_en": "Realistic 3D digital art style with vibrant natural colors and soft lighting.",
+        "target_language": "vi-VN",
+        "video_prompt_en": "A kind elderly monk in a brown robe sitting in a bamboo forest, smiling warmly, soft sunlight, highly detailed 3D art.",
+        "voice_actor_key": "Nam_Tram_Duc",
+        "voice_profile": "Extremely deep Vietnamese male bass with gravel texture, weighted authority, low register presence, and commanding cinematic gravity."
       },
       "status_code": "CANCELED",
       "status_text": "Hủy",
@@ -165,128 +252,1142 @@
       "row": 8,
       "stt": "009",
       "prompt_id": "9",
-      "prompt": "{\"scene_id\": \"1\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Lily\", \"species\": \"Fictional Girl\", \"gender\": \"Female\", \"age\": \"Young Child\", \"voice_personality\": \"Sweet, cheerful, and inquisitive; Female; vi-VN; South Vietnamese accent, clear and friendly sound type\", \"body_build\": \"Small and agile\", \"face_shape\": \"Round with large, expressive blue eyes, a small nose, a gentle smile, and rounded ears.\", \"hair\": \"Short, bouncy pigtails, bright red\", \"skin_or_fur_color\": \"Fair\", \"signature_feature\": \"Sparkling blue eyes and a curious smile\", \"outfit_top\": \"A yellow t-shirt with a smiling sun graphic, made of soft cotton.\", \"outfit_bottom\": \"Blue denim shorts with a slightly faded wash.\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"White sneakers with red laces, slightly scuffed from play.\", \"props\": [\"A small, worn teddy bear named 'Beary' with button eyes and a stitched smile.\"], \"body_metrics\": \"u=cm; abs.height=unspecified; abs.head=unspecified; abs.shoulder=unspecified; abs.torso=unspecified; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=unspecified; cons=child-safe-no-metrics,lock-proportions,no-auto-rescale\", \"position\": \"center-left\", \"orientation\": \"facing_camera_slightly_angled_right\", \"pose\": \"sitting at table, holding teddy bear\", \"foot_placement\": \"feet flat on floor, slightly apart\", \"hand_detail\": \"left hand holding teddy bear, right hand resting on table\", \"expression\": \"excited, curious, with wide, bright eyes and a slight smile.\", \"action_flow\": {\"pre_action\": \"Lily is calmly sitting.\", \"main_action\": \"Lily looks towards the front with anticipation, holding her teddy bear.\", \"post_action\": \"Lily maintains her excited expression.\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}, \"CHAR_2\": {\"id\": \"CHAR_2\", \"name\": \"Leo\", \"species\": \"Fictional Boy\", \"gender\": \"Male\", \"age\": \"Young Child\", \"voice_personality\": \"Energetic, friendly, and slightly mischievous; Male; vi-VN; Northern Vietnamese accent, playful sound type\", \"body_build\": \"Lean and energetic\", \"face_shape\": \"Slightly square with bright, eager eyes, a small nose, a dimpled grin, and prominent ears.\", \"hair\": \"Spiky brown hair that always seems to be pointing in different directions\", \"skin_or_fur_color\": \"Light brown\", \"signature_feature\": \"A gap between his two front teeth and a dimple when he grins\", \"outfit_top\": \"A green t-shirt with a cartoon rocket ship on it, vibrant and durable fabric.\", \"outfit_bottom\": \"Khaki cargo pants with multiple pockets.\", \"helmet_or_hat\": \"A blue baseball cap worn backwards.\", \"shoes_or_footwear\": \"Red slip-on shoes, showing minor signs of wear.\", \"props\": [\"A colorful toy airplane with spinning propellers.\"], \"body_metrics\": \"u=cm; abs.height=unspecified; abs.head=unspecified; abs.shoulder=unspecified; abs.torso=unspecified; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=unspecified; cons=child-safe-no-metrics,lock-proportions,no-auto-rescale\", \"position\": \"center-right\", \"orientation\": \"facing_camera_slightly_angled_left\", \"pose\": \"standing, energetic, holding toy airplane\", \"foot_placement\": \"feet slightly apart, one foot forward\", \"hand_detail\": \"right hand holding toy airplane, left hand gesturing slightly\", \"expression\": \"eager, happy, with a wide grin and sparkling eyes.\", \"action_flow\": {\"pre_action\": \"Leo is standing energetically.\", \"main_action\": \"Leo looks towards the front with excitement, holding his toy airplane.\", \"post_action\": \"Leo maintains his enthusiastic posture.\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Sunny Meadow Classroom\", \"setting\": \"An indoor learning space designed to feel like an outdoor meadow.\", \"scenery\": \"Walls are painted a bright sky blue with fluffy white clouds. One wall features a large, stylized illustration of a vibrant green meadow with colorful wildflowers. A large, friendly-looking tree graphic is integrated into the scenery. Large, open windows reveal a gentle, sunny landscape outside. Ceiling has soft, globe-like lights.\", \"props\": \"Child-sized colorful tables and chairs. A whiteboard or interactive screen at the front. Shelves filled with colorful books and learning toys. A cozy rug in the center of the room. A large, soft drawing easel.\", \"lighting\": \"Bright, cheerful, and even daylight. Soft, warm glow emanating from the ceiling lights, simulating a sunny afternoon.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slight pan\", \"focus\": \"characters\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"gentle classroom hum\", \"distant birds chirping\"], \"fx\": [\"soft rustling of papers\"], \"music\": \"Upbeat and cheerful learning music\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Sweet, cheerful, and inquisitive; Female; vi-VN; South Vietnamese accent, clear and friendly sound type\", \"language\": \"vi-VN\", \"line\": \"Hôm nay mình sẽ học gì mới ạ?\"}, {\"speaker\": \"CHAR_2\", \"voice\": \"Energetic, friendly, and slightly mischievous; Male; vi-VN; Northern Vietnamese accent, playful sound type\", \"language\": \"vi-VN\", \"line\": \"Con nóng lòng muốn biết quá đi thôi!\"}], \"lip_sync_director_note\": \"Lily: 'Hôm nay mình sẽ học gì mới ạ?' - Mouth opens wide for 'Hôm', slight movement for 'nay', 'mình', 'sẽ', 'học'. Eyes bright. Leo: 'Con nóng lòng muốn biết quá đi thôi!' - Mouth opens for 'Con', 'nóng', 'lòng', 'muốn', 'biết', 'quá', 'đi', 'thôi'. Enthusiastic nods and gestures. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"In a vibrant classroom, Lily and Leo are seated, eagerly anticipating a new lesson. They express their excitement to learn new things.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
-      "mode_key": "text_to_video",
-      "mode_label": "VEO3 - Tạo video từ văn bản",
-      "mode_name": "VEO3 - Tạo video từ văn bản",
+      "prompt": "SCENE_03. Shot full shot, eye-level, vertical 9:16 framing, cinematic lens. Style: Realistic 3D digital art style with deeper shadows and cool tones. Characters and objects are illustrated with High contrast between the black robe and the green background. Movements are Steady, slow walking motion. Character consistency lock: Character 'Scholar in Black': consistent handsome young East Asian male, long black hair tied up, serious expression. Scene action: A young man in a black robe walks slowly through a bamboo forest, looking contemplative and somewhat somber. Environment and background: Dense bamboo forest with a slightly darker, more moody atmosphere. Mood and atmosphere: Reflective and serious. Motion details: Slow walking pace of the man.",
+      "mode_key": "copy_video",
+      "mode_label": "VEO3 - Sao chép video",
+      "mode_name": "VEO3 - Sao chép video",
       "mode_payload": {
-        "prompt": "{\"scene_id\": \"1\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Lily\", \"species\": \"Fictional Girl\", \"gender\": \"Female\", \"age\": \"Young Child\", \"voice_personality\": \"Sweet, cheerful, and inquisitive; Female; vi-VN; South Vietnamese accent, clear and friendly sound type\", \"body_build\": \"Small and agile\", \"face_shape\": \"Round with large, expressive blue eyes, a small nose, a gentle smile, and rounded ears.\", \"hair\": \"Short, bouncy pigtails, bright red\", \"skin_or_fur_color\": \"Fair\", \"signature_feature\": \"Sparkling blue eyes and a curious smile\", \"outfit_top\": \"A yellow t-shirt with a smiling sun graphic, made of soft cotton.\", \"outfit_bottom\": \"Blue denim shorts with a slightly faded wash.\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"White sneakers with red laces, slightly scuffed from play.\", \"props\": [\"A small, worn teddy bear named 'Beary' with button eyes and a stitched smile.\"], \"body_metrics\": \"u=cm; abs.height=unspecified; abs.head=unspecified; abs.shoulder=unspecified; abs.torso=unspecified; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=unspecified; cons=child-safe-no-metrics,lock-proportions,no-auto-rescale\", \"position\": \"center-left\", \"orientation\": \"facing_camera_slightly_angled_right\", \"pose\": \"sitting at table, holding teddy bear\", \"foot_placement\": \"feet flat on floor, slightly apart\", \"hand_detail\": \"left hand holding teddy bear, right hand resting on table\", \"expression\": \"excited, curious, with wide, bright eyes and a slight smile.\", \"action_flow\": {\"pre_action\": \"Lily is calmly sitting.\", \"main_action\": \"Lily looks towards the front with anticipation, holding her teddy bear.\", \"post_action\": \"Lily maintains her excited expression.\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}, \"CHAR_2\": {\"id\": \"CHAR_2\", \"name\": \"Leo\", \"species\": \"Fictional Boy\", \"gender\": \"Male\", \"age\": \"Young Child\", \"voice_personality\": \"Energetic, friendly, and slightly mischievous; Male; vi-VN; Northern Vietnamese accent, playful sound type\", \"body_build\": \"Lean and energetic\", \"face_shape\": \"Slightly square with bright, eager eyes, a small nose, a dimpled grin, and prominent ears.\", \"hair\": \"Spiky brown hair that always seems to be pointing in different directions\", \"skin_or_fur_color\": \"Light brown\", \"signature_feature\": \"A gap between his two front teeth and a dimple when he grins\", \"outfit_top\": \"A green t-shirt with a cartoon rocket ship on it, vibrant and durable fabric.\", \"outfit_bottom\": \"Khaki cargo pants with multiple pockets.\", \"helmet_or_hat\": \"A blue baseball cap worn backwards.\", \"shoes_or_footwear\": \"Red slip-on shoes, showing minor signs of wear.\", \"props\": [\"A colorful toy airplane with spinning propellers.\"], \"body_metrics\": \"u=cm; abs.height=unspecified; abs.head=unspecified; abs.shoulder=unspecified; abs.torso=unspecified; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=unspecified; cons=child-safe-no-metrics,lock-proportions,no-auto-rescale\", \"position\": \"center-right\", \"orientation\": \"facing_camera_slightly_angled_left\", \"pose\": \"standing, energetic, holding toy airplane\", \"foot_placement\": \"feet slightly apart, one foot forward\", \"hand_detail\": \"right hand holding toy airplane, left hand gesturing slightly\", \"expression\": \"eager, happy, with a wide grin and sparkling eyes.\", \"action_flow\": {\"pre_action\": \"Leo is standing energetically.\", \"main_action\": \"Leo looks towards the front with excitement, holding his toy airplane.\", \"post_action\": \"Leo maintains his enthusiastic posture.\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Sunny Meadow Classroom\", \"setting\": \"An indoor learning space designed to feel like an outdoor meadow.\", \"scenery\": \"Walls are painted a bright sky blue with fluffy white clouds. One wall features a large, stylized illustration of a vibrant green meadow with colorful wildflowers. A large, friendly-looking tree graphic is integrated into the scenery. Large, open windows reveal a gentle, sunny landscape outside. Ceiling has soft, globe-like lights.\", \"props\": \"Child-sized colorful tables and chairs. A whiteboard or interactive screen at the front. Shelves filled with colorful books and learning toys. A cozy rug in the center of the room. A large, soft drawing easel.\", \"lighting\": \"Bright, cheerful, and even daylight. Soft, warm glow emanating from the ceiling lights, simulating a sunny afternoon.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slight pan\", \"focus\": \"characters\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"gentle classroom hum\", \"distant birds chirping\"], \"fx\": [\"soft rustling of papers\"], \"music\": \"Upbeat and cheerful learning music\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Sweet, cheerful, and inquisitive; Female; vi-VN; South Vietnamese accent, clear and friendly sound type\", \"language\": \"vi-VN\", \"line\": \"Hôm nay mình sẽ học gì mới ạ?\"}, {\"speaker\": \"CHAR_2\", \"voice\": \"Energetic, friendly, and slightly mischievous; Male; vi-VN; Northern Vietnamese accent, playful sound type\", \"language\": \"vi-VN\", \"line\": \"Con nóng lòng muốn biết quá đi thôi!\"}], \"lip_sync_director_note\": \"Lily: 'Hôm nay mình sẽ học gì mới ạ?' - Mouth opens wide for 'Hôm', slight movement for 'nay', 'mình', 'sẽ', 'học'. Eyes bright. Leo: 'Con nóng lòng muốn biết quá đi thôi!' - Mouth opens for 'Con', 'nóng', 'lòng', 'muốn', 'biết', 'quá', 'đi', 'thôi'. Enthusiastic nods and gestures. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"In a vibrant classroom, Lily and Leo are seated, eagerly anticipating a new lesson. They express their excitement to learn new things.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
-      },
-      "status_code": "FAILED",
-      "status_text": "Lỗi (mã lỗi: TOKEN | message: Token timeout)",
-      "output_count": 1,
-      "selected_output_index": 1,
-      "media_map": {},
-      "preview_map": {}
-    },
-    {
-      "row": 9,
-      "stt": "010",
-      "prompt_id": "10",
-      "prompt": "{\"scene_id\": \"1\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Lily\", \"species\": \"Fictional Girl\", \"gender\": \"Female\", \"age\": \"Young Child\", \"voice_personality\": \"Sweet, cheerful, and inquisitive; Female; vi-VN; South Vietnamese accent, clear and friendly sound type\", \"body_build\": \"Small and agile\", \"face_shape\": \"Round with large, expressive blue eyes, a small nose, a gentle smile, and rounded ears.\", \"hair\": \"Short, bouncy pigtails, bright red\", \"skin_or_fur_color\": \"Fair\", \"signature_feature\": \"Sparkling blue eyes and a curious smile\", \"outfit_top\": \"A yellow t-shirt with a smiling sun graphic, made of soft cotton.\", \"outfit_bottom\": \"Blue denim shorts with a slightly faded wash.\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"White sneakers with red laces, slightly scuffed from play.\", \"props\": [\"A small, worn teddy bear named 'Beary' with button eyes and a stitched smile.\"], \"body_metrics\": \"u=cm; abs.height=unspecified; abs.head=unspecified; abs.shoulder=unspecified; abs.torso=unspecified; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=unspecified; cons=child-safe-no-metrics,lock-proportions,no-auto-rescale\", \"position\": \"center-left\", \"orientation\": \"facing_camera_slightly_angled_right\", \"pose\": \"sitting at table, holding teddy bear\", \"foot_placement\": \"feet flat on floor, slightly apart\", \"hand_detail\": \"left hand holding teddy bear, right hand resting on table\", \"expression\": \"excited, curious, with wide, bright eyes and a slight smile.\", \"action_flow\": {\"pre_action\": \"Lily is calmly sitting.\", \"main_action\": \"Lily looks towards the front with anticipation, holding her teddy bear.\", \"post_action\": \"Lily maintains her excited expression.\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}, \"CHAR_2\": {\"id\": \"CHAR_2\", \"name\": \"Leo\", \"species\": \"Fictional Boy\", \"gender\": \"Male\", \"age\": \"Young Child\", \"voice_personality\": \"Energetic, friendly, and slightly mischievous; Male; vi-VN; Northern Vietnamese accent, playful sound type\", \"body_build\": \"Lean and energetic\", \"face_shape\": \"Slightly square with bright, eager eyes, a small nose, a dimpled grin, and prominent ears.\", \"hair\": \"Spiky brown hair that always seems to be pointing in different directions\", \"skin_or_fur_color\": \"Light brown\", \"signature_feature\": \"A gap between his two front teeth and a dimple when he grins\", \"outfit_top\": \"A green t-shirt with a cartoon rocket ship on it, vibrant and durable fabric.\", \"outfit_bottom\": \"Khaki cargo pants with multiple pockets.\", \"helmet_or_hat\": \"A blue baseball cap worn backwards.\", \"shoes_or_footwear\": \"Red slip-on shoes, showing minor signs of wear.\", \"props\": [\"A colorful toy airplane with spinning propellers.\"], \"body_metrics\": \"u=cm; abs.height=unspecified; abs.head=unspecified; abs.shoulder=unspecified; abs.torso=unspecified; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=unspecified; cons=child-safe-no-metrics,lock-proportions,no-auto-rescale\", \"position\": \"center-right\", \"orientation\": \"facing_camera_slightly_angled_left\", \"pose\": \"standing, energetic, holding toy airplane\", \"foot_placement\": \"feet slightly apart, one foot forward\", \"hand_detail\": \"right hand holding toy airplane, left hand gesturing slightly\", \"expression\": \"eager, happy, with a wide grin and sparkling eyes.\", \"action_flow\": {\"pre_action\": \"Leo is standing energetically.\", \"main_action\": \"Leo looks towards the front with excitement, holding his toy airplane.\", \"post_action\": \"Leo maintains his enthusiastic posture.\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Sunny Meadow Classroom\", \"setting\": \"An indoor learning space designed to feel like an outdoor meadow.\", \"scenery\": \"Walls are painted a bright sky blue with fluffy white clouds. One wall features a large, stylized illustration of a vibrant green meadow with colorful wildflowers. A large, friendly-looking tree graphic is integrated into the scenery. Large, open windows reveal a gentle, sunny landscape outside. Ceiling has soft, globe-like lights.\", \"props\": \"Child-sized colorful tables and chairs. A whiteboard or interactive screen at the front. Shelves filled with colorful books and learning toys. A cozy rug in the center of the room. A large, soft drawing easel.\", \"lighting\": \"Bright, cheerful, and even daylight. Soft, warm glow emanating from the ceiling lights, simulating a sunny afternoon.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slight pan\", \"focus\": \"characters\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"gentle classroom hum\", \"distant birds chirping\"], \"fx\": [\"soft rustling of papers\"], \"music\": \"Upbeat and cheerful learning music\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Sweet, cheerful, and inquisitive; Female; vi-VN; South Vietnamese accent, clear and friendly sound type\", \"language\": \"vi-VN\", \"line\": \"Hôm nay mình sẽ học gì mới ạ?\"}, {\"speaker\": \"CHAR_2\", \"voice\": \"Energetic, friendly, and slightly mischievous; Male; vi-VN; Northern Vietnamese accent, playful sound type\", \"language\": \"vi-VN\", \"line\": \"Con nóng lòng muốn biết quá đi thôi!\"}], \"lip_sync_director_note\": \"Lily: 'Hôm nay mình sẽ học gì mới ạ?' - Mouth opens wide for 'Hôm', slight movement for 'nay', 'mình', 'sẽ', 'học'. Eyes bright. Leo: 'Con nóng lòng muốn biết quá đi thôi!' - Mouth opens for 'Con', 'nóng', 'lòng', 'muốn', 'biết', 'quá', 'đi', 'thôi'. Enthusiastic nods and gestures. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"In a vibrant classroom, Lily and Leo are seated, eagerly anticipating a new lesson. They express their excitement to learn new things.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}",
-      "mode_key": "grok_text_to_video",
-      "mode_label": "GROK - Tạo video từ văn bản",
-      "mode_name": "GROK - Tạo video từ văn bản",
-      "mode_payload": {
-        "prompt": "{\"scene_id\": \"1\", \"duration_sec\": 8, \"character_lock\": {\"CHAR_1\": {\"id\": \"CHAR_1\", \"name\": \"Lily\", \"species\": \"Fictional Girl\", \"gender\": \"Female\", \"age\": \"Young Child\", \"voice_personality\": \"Sweet, cheerful, and inquisitive; Female; vi-VN; South Vietnamese accent, clear and friendly sound type\", \"body_build\": \"Small and agile\", \"face_shape\": \"Round with large, expressive blue eyes, a small nose, a gentle smile, and rounded ears.\", \"hair\": \"Short, bouncy pigtails, bright red\", \"skin_or_fur_color\": \"Fair\", \"signature_feature\": \"Sparkling blue eyes and a curious smile\", \"outfit_top\": \"A yellow t-shirt with a smiling sun graphic, made of soft cotton.\", \"outfit_bottom\": \"Blue denim shorts with a slightly faded wash.\", \"helmet_or_hat\": \"None\", \"shoes_or_footwear\": \"White sneakers with red laces, slightly scuffed from play.\", \"props\": [\"A small, worn teddy bear named 'Beary' with button eyes and a stitched smile.\"], \"body_metrics\": \"u=cm; abs.height=unspecified; abs.head=unspecified; abs.shoulder=unspecified; abs.torso=unspecified; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=unspecified; cons=child-safe-no-metrics,lock-proportions,no-auto-rescale\", \"position\": \"center-left\", \"orientation\": \"facing_camera_slightly_angled_right\", \"pose\": \"sitting at table, holding teddy bear\", \"foot_placement\": \"feet flat on floor, slightly apart\", \"hand_detail\": \"left hand holding teddy bear, right hand resting on table\", \"expression\": \"excited, curious, with wide, bright eyes and a slight smile.\", \"action_flow\": {\"pre_action\": \"Lily is calmly sitting.\", \"main_action\": \"Lily looks towards the front with anticipation, holding her teddy bear.\", \"post_action\": \"Lily maintains her excited expression.\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}, \"CHAR_2\": {\"id\": \"CHAR_2\", \"name\": \"Leo\", \"species\": \"Fictional Boy\", \"gender\": \"Male\", \"age\": \"Young Child\", \"voice_personality\": \"Energetic, friendly, and slightly mischievous; Male; vi-VN; Northern Vietnamese accent, playful sound type\", \"body_build\": \"Lean and energetic\", \"face_shape\": \"Slightly square with bright, eager eyes, a small nose, a dimpled grin, and prominent ears.\", \"hair\": \"Spiky brown hair that always seems to be pointing in different directions\", \"skin_or_fur_color\": \"Light brown\", \"signature_feature\": \"A gap between his two front teeth and a dimple when he grins\", \"outfit_top\": \"A green t-shirt with a cartoon rocket ship on it, vibrant and durable fabric.\", \"outfit_bottom\": \"Khaki cargo pants with multiple pockets.\", \"helmet_or_hat\": \"A blue baseball cap worn backwards.\", \"shoes_or_footwear\": \"Red slip-on shoes, showing minor signs of wear.\", \"props\": [\"A colorful toy airplane with spinning propellers.\"], \"body_metrics\": \"u=cm; abs.height=unspecified; abs.head=unspecified; abs.shoulder=unspecified; abs.torso=unspecified; abs.tail=unspecified; abs.paw=unspecified; anch.bottle500=unspecified; cons=child-safe-no-metrics,lock-proportions,no-auto-rescale\", \"position\": \"center-right\", \"orientation\": \"facing_camera_slightly_angled_left\", \"pose\": \"standing, energetic, holding toy airplane\", \"foot_placement\": \"feet slightly apart, one foot forward\", \"hand_detail\": \"right hand holding toy airplane, left hand gesturing slightly\", \"expression\": \"eager, happy, with a wide grin and sparkling eyes.\", \"action_flow\": {\"pre_action\": \"Leo is standing energetically.\", \"main_action\": \"Leo looks towards the front with excitement, holding his toy airplane.\", \"post_action\": \"Leo maintains his enthusiastic posture.\"}, \"proportion_rule\": \"maintain consistent body thickness across all scenes, no bulk exaggeration, no chest enlargement, no perspective distortion\", \"body_constraint\": \"no fat, no chubby look, no exaggerated torso width, maintain athletic slim build\"}}, \"background_lock\": {\"BACKGROUND_1\": {\"id\": \"BACKGROUND_1\", \"name\": \"Sunny Meadow Classroom\", \"setting\": \"An indoor learning space designed to feel like an outdoor meadow.\", \"scenery\": \"Walls are painted a bright sky blue with fluffy white clouds. One wall features a large, stylized illustration of a vibrant green meadow with colorful wildflowers. A large, friendly-looking tree graphic is integrated into the scenery. Large, open windows reveal a gentle, sunny landscape outside. Ceiling has soft, globe-like lights.\", \"props\": \"Child-sized colorful tables and chairs. A whiteboard or interactive screen at the front. Shelves filled with colorful books and learning toys. A cozy rug in the center of the room. A large, soft drawing easel.\", \"lighting\": \"Bright, cheerful, and even daylight. Soft, warm glow emanating from the ceiling lights, simulating a sunny afternoon.\"}}, \"camera\": {\"framing\": \"medium shot\", \"angle\": \"eye-level\", \"movement\": \"slight pan\", \"focus\": \"characters\", \"lens\": \"50mm natural perspective, no wide-angle distortion\"}, \"foley_and_ambience\": {\"ambience\": [\"gentle classroom hum\", \"distant birds chirping\"], \"fx\": [\"soft rustling of papers\"], \"music\": \"Upbeat and cheerful learning music\"}, \"dialogue\": [{\"speaker\": \"CHAR_1\", \"voice\": \"Sweet, cheerful, and inquisitive; Female; vi-VN; South Vietnamese accent, clear and friendly sound type\", \"language\": \"vi-VN\", \"line\": \"Hôm nay mình sẽ học gì mới ạ?\"}, {\"speaker\": \"CHAR_2\", \"voice\": \"Energetic, friendly, and slightly mischievous; Male; vi-VN; Northern Vietnamese accent, playful sound type\", \"language\": \"vi-VN\", \"line\": \"Con nóng lòng muốn biết quá đi thôi!\"}], \"lip_sync_director_note\": \"Lily: 'Hôm nay mình sẽ học gì mới ạ?' - Mouth opens wide for 'Hôm', slight movement for 'nay', 'mình', 'sẽ', 'học'. Eyes bright. Leo: 'Con nóng lòng muốn biết quá đi thôi!' - Mouth opens for 'Con', 'nóng', 'lòng', 'muốn', 'biết', 'quá', 'đi', 'thôi'. Enthusiastic nods and gestures. Keep body proportions consistent across scenes; avoid torso/chest enlargement.\", \"summary\": \"In a vibrant classroom, Lily and Leo are seated, eagerly anticipating a new lesson. They express their excitement to learn new things.\", \"visual_style\": \"High-quality 3D animated film style inspired by modern Western animated cinema, soft rounded and friendly character designs, slightly exaggerated facial expressions for emotional clarity, clean and smooth surfaces, richly detailed yet whimsical environments, cinematic lighting with warm golden-hour tones, soft shadows and gentle depth of field, non-photorealistic, stylized realism, emotionally expressive, heartwarming tone, professional studio-quality animation, no text overlays.\"}"
+        "camera_angle": "eye-level",
+        "character_ids": [
+          "char_03"
+        ],
+        "detected_source_language": "vi-VN",
+        "dialogue_original": "Người xưa có câu: Miệng càng độc, mệnh càng khổ.",
+        "dialogue_target": "Người xưa có câu: Miệng càng độc, mệnh càng khổ.",
+        "environment_en": "Dense bamboo forest with a slightly darker, more moody atmosphere.",
+        "framing": "vertical 9:16 framing",
+        "identity_context_en": "Character 'Scholar in Black': consistent handsome young East Asian male, long black hair tied up, serious expression",
+        "lens_feel": "cinematic lens",
+        "mood_en": "Reflective and serious",
+        "motion_en": "Slow walking pace of the man.",
+        "motion_style_en": "Steady, slow walking motion.",
+        "prompt": "SCENE_03. Shot full shot, eye-level, vertical 9:16 framing, cinematic lens. Style: Realistic 3D digital art style with deeper shadows and cool tones. Characters and objects are illustrated with High contrast between the black robe and the green background. Movements are Steady, slow walking motion. Character consistency lock: Character 'Scholar in Black': consistent handsome young East Asian male, long black hair tied up, serious expression. Scene action: A young man in a black robe walks slowly through a bamboo forest, looking contemplative and somewhat somber. Environment and background: Dense bamboo forest with a slightly darker, more moody atmosphere. Mood and atmosphere: Reflective and serious. Motion details: Slow walking pace of the man.",
+        "render_consistency_en": "High contrast between the black robe and the green background.",
+        "scene_action_en": "A young man in a black robe walks slowly through a bamboo forest, looking contemplative and somewhat somber.",
+        "scene_id": "scene_03",
+        "shot_type": "full shot",
+        "source_type": "copy_video",
+        "source_video_path": "C:/Tải về/bcb7bb6f-bcf2-4803-9392-89d5bf0dae52.mp4",
+        "style_block_en": "Realistic 3D digital art style with deeper shadows and cool tones.",
+        "target_language": "vi-VN",
+        "video_prompt_en": "A young man in a black traditional robe walking through a dense bamboo forest, serious expression, cinematic lighting with shadows.",
+        "voice_actor_key": "Nam_Tram_Duc",
+        "voice_profile": "Extremely deep Vietnamese male bass with gravel texture, weighted authority, low register presence, and commanding cinematic gravity."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\001_scene_id_1_duration_sec_8_ch_20260422_145505_382130.mp4"
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\video\\9_1_23042026_230741.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_thumnail\\001_scene_id_1_duration_sec_8_ch_20260422_145505_382130.thumb.jpg"
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\9_1_23042026_230750.jpg"
+      }
+    },
+    {
+      "row": 9,
+      "stt": "010",
+      "prompt_id": "10",
+      "prompt": "SCENE_04. Shot medium shot, eye-level, vertical 9:16 framing, realistic lens. Style: Gritter, more realistic 3D art style with warm, earthy tones. Characters and objects are illustrated with Detailed textures of the dusty path and the worn-out clothing. Movements are Heavy, labored movement. Character consistency lock: Character 'Weathered Laborer': consistent middle-aged man, weathered sun-kissed skin, tired expression. Scene action: An old man carries heavy water buckets on a shoulder pole along a dusty dirt road, looking weary. Environment and background: A dry, dusty countryside road with sparse vegetation under a hot sun. Mood and atmosphere: Hardship and struggle. Motion details: Slow, heavy footsteps and the swaying of the water buckets.",
+      "mode_key": "copy_video",
+      "mode_label": "VEO3 - Sao chép video",
+      "mode_name": "VEO3 - Sao chép video",
+      "mode_payload": {
+        "camera_angle": "eye-level",
+        "character_ids": [
+          "char_04"
+        ],
+        "detected_source_language": "vi-VN",
+        "dialogue_original": "Bình thường tuyệt đối đừng luôn than vãn và phàn nàn.",
+        "dialogue_target": "Bình thường tuyệt đối đừng luôn than vãn và phàn nàn.",
+        "environment_en": "A dry, dusty countryside road with sparse vegetation under a hot sun.",
+        "framing": "vertical 9:16 framing",
+        "identity_context_en": "Character 'Weathered Laborer': consistent middle-aged man, weathered sun-kissed skin, tired expression",
+        "lens_feel": "realistic lens",
+        "mood_en": "Hardship and struggle",
+        "motion_en": "Slow, heavy footsteps and the swaying of the water buckets.",
+        "motion_style_en": "Heavy, labored movement.",
+        "prompt": "SCENE_04. Shot medium shot, eye-level, vertical 9:16 framing, realistic lens. Style: Gritter, more realistic 3D art style with warm, earthy tones. Characters and objects are illustrated with Detailed textures of the dusty path and the worn-out clothing. Movements are Heavy, labored movement. Character consistency lock: Character 'Weathered Laborer': consistent middle-aged man, weathered sun-kissed skin, tired expression. Scene action: An old man carries heavy water buckets on a shoulder pole along a dusty dirt road, looking weary. Environment and background: A dry, dusty countryside road with sparse vegetation under a hot sun. Mood and atmosphere: Hardship and struggle. Motion details: Slow, heavy footsteps and the swaying of the water buckets.",
+        "render_consistency_en": "Detailed textures of the dusty path and the worn-out clothing.",
+        "scene_action_en": "An old man carries heavy water buckets on a shoulder pole along a dusty dirt road, looking weary.",
+        "scene_id": "scene_04",
+        "shot_type": "medium shot",
+        "source_type": "copy_video",
+        "source_video_path": "C:/Tải về/bcb7bb6f-bcf2-4803-9392-89d5bf0dae52.mp4",
+        "style_block_en": "Gritter, more realistic 3D art style with warm, earthy tones.",
+        "target_language": "vi-VN",
+        "video_prompt_en": "An old farmer carrying heavy water buckets on a shoulder pole, walking on a dusty road, looking tired, realistic 3D render.",
+        "voice_actor_key": "Nam_Tram_Duc",
+        "voice_profile": "Extremely deep Vietnamese male bass with gravel texture, weighted authority, low register presence, and commanding cinematic gravity."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\video\\10_1_23042026_230834.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\10_1_23042026_230842.jpg"
       }
     },
     {
       "row": 10,
       "stt": "011",
       "prompt_id": "11",
-      "prompt": "\"A cinematic shot of a majestic eagle soaring over snow-capped mountains at sunset. The lighting is golden and dramatic, highlighting the eagle's feathers.\"",
-      "mode_key": "grok_text_to_video",
-      "mode_label": "GROK - Tạo video từ văn bản",
-      "mode_name": "GROK - Tạo video từ văn bản",
+      "prompt": "SCENE_05. Shot long shot, eye-level, vertical 9:16 framing, epic cinematic lens. Style: Dramatic 3D art with high contrast between light and dark, featuring supernatural elements. Characters and objects are illustrated with Sharp details in the water and the swirling ink-like smoke. Movements are Dynamic and powerful motion. Character consistency lock: Character 'Scholar in Black': consistent handsome young East Asian male, long black hair tied up, serious expression. Scene action: A man in white stands on a rock by the ocean as a massive wave of black ink and smoke erupts behind him, contrasting with the clear sky. Environment and background: Rocky shore by a crashing ocean under a bright sky, with supernatural dark energy swirling. Mood and atmosphere: Dramatic and symbolic. Motion details: Violent swirling of the black smoke and crashing of ocean waves.",
+      "mode_key": "copy_video",
+      "mode_label": "VEO3 - Sao chép video",
+      "mode_name": "VEO3 - Sao chép video",
       "mode_payload": {
-        "prompt": "\"A cinematic shot of a majestic eagle soaring over snow-capped mountains at sunset. The lighting is golden and dramatic, highlighting the eagle's feathers.\""
+        "camera_angle": "eye-level",
+        "character_ids": [
+          "char_03"
+        ],
+        "detected_source_language": "vi-VN",
+        "dialogue_original": "Nếu miệng bạn là bão tố phong ba, thì mệnh bạn khó có được trời quang mây tạnh.",
+        "dialogue_target": "Nếu miệng bạn là bão tố phong ba, thì mệnh bạn khó có được trời quang mây tạnh.",
+        "environment_en": "Rocky shore by a crashing ocean under a bright sky, with supernatural dark energy swirling.",
+        "framing": "vertical 9:16 framing",
+        "identity_context_en": "Character 'Scholar in Black': consistent handsome young East Asian male, long black hair tied up, serious expression",
+        "lens_feel": "epic cinematic lens",
+        "mood_en": "Dramatic and symbolic",
+        "motion_en": "Violent swirling of the black smoke and crashing of ocean waves.",
+        "motion_style_en": "Dynamic and powerful motion.",
+        "prompt": "SCENE_05. Shot long shot, eye-level, vertical 9:16 framing, epic cinematic lens. Style: Dramatic 3D art with high contrast between light and dark, featuring supernatural elements. Characters and objects are illustrated with Sharp details in the water and the swirling ink-like smoke. Movements are Dynamic and powerful motion. Character consistency lock: Character 'Scholar in Black': consistent handsome young East Asian male, long black hair tied up, serious expression. Scene action: A man in white stands on a rock by the ocean as a massive wave of black ink and smoke erupts behind him, contrasting with the clear sky. Environment and background: Rocky shore by a crashing ocean under a bright sky, with supernatural dark energy swirling. Mood and atmosphere: Dramatic and symbolic. Motion details: Violent swirling of the black smoke and crashing of ocean waves.",
+        "render_consistency_en": "Sharp details in the water and the swirling ink-like smoke.",
+        "scene_action_en": "A man in white stands on a rock by the ocean as a massive wave of black ink and smoke erupts behind him, contrasting with the clear sky.",
+        "scene_id": "scene_05",
+        "shot_type": "long shot",
+        "source_type": "copy_video",
+        "source_video_path": "C:/Tải về/bcb7bb6f-bcf2-4803-9392-89d5bf0dae52.mp4",
+        "style_block_en": "Dramatic 3D art with high contrast between light and dark, featuring supernatural elements.",
+        "target_language": "vi-VN",
+        "video_prompt_en": "A man in a white robe on a rocky shore, a massive storm of black smoke behind him, bright ocean in front, dramatic 3D composition.",
+        "voice_actor_key": "Nam_Tram_Duc",
+        "voice_profile": "Extremely deep Vietnamese male bass with gravel texture, weighted authority, low register presence, and commanding cinematic gravity."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\001_Narrator_Professional_male_voice_deep_20260423_000717_338202.mp4"
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\video\\11_1_23042026_230858.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_thumnail\\001_Narrator_Professional_male_voice_deep_20260423_000717_338202.thumb.jpg"
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\11_1_23042026_230912.jpg"
       }
     },
     {
       "row": 11,
       "stt": "012",
       "prompt_id": "12",
-      "prompt": "\"A cinematic shot of a majestic eagle soaring over snow-capped mountains at sunset. The lighting is golden and dramatic, highlighting the eagle's feathers.\"",
-      "mode_key": "grok_text_to_video",
-      "mode_label": "GROK - Tạo video từ văn bản",
-      "mode_name": "GROK - Tạo video từ văn bản",
+      "prompt": "SCENE_06. Shot medium shot, eye-level, vertical 9:16 framing, macro lens feel. Style: Dark fantasy 3D art with cool tones and glowing highlights. Characters and objects are illustrated with Emphasis on the texture of the vines and the soft glow of the moon. Movements are Very slow, almost static motion to emphasize being trapped. Character consistency lock: Character 'Young Ascetic Monk': consistent young Buddhist monk, shaved head, calm and focused expression. Scene action: A monk sits in meditation in a dark cave, bound by dark, thorny vines that seem to grow from his own negative energy. Environment and background: A dark, dimly lit cave with a full moon visible in the background. Mood and atmosphere: Ominous and restrictive. Motion details: The monk stays still while the thorny vines subtly tighten around him.",
+      "mode_key": "copy_video",
+      "mode_label": "VEO3 - Sao chép video",
+      "mode_name": "VEO3 - Sao chép video",
       "mode_payload": {
-        "prompt": "\"A cinematic shot of a majestic eagle soaring over snow-capped mountains at sunset. The lighting is golden and dramatic, highlighting the eagle's feathers.\""
+        "camera_angle": "eye-level",
+        "character_ids": [
+          "char_05"
+        ],
+        "detected_source_language": "vi-VN",
+        "dialogue_original": "Than vãn thực chất là một lời nguyền, bạn đang dùng lời nói để yểm bùa lên vận mệnh của chính mình.",
+        "dialogue_target": "Than vãn thực chất là một lời nguyền, bạn đang dùng lời nói để yểm bùa lên vận mệnh của chính mình.",
+        "environment_en": "A dark, dimly lit cave with a full moon visible in the background.",
+        "framing": "vertical 9:16 framing",
+        "identity_context_en": "Character 'Young Ascetic Monk': consistent young Buddhist monk, shaved head, calm and focused expression",
+        "lens_feel": "macro lens feel",
+        "mood_en": "Ominous and restrictive",
+        "motion_en": "The monk stays still while the thorny vines subtly tighten around him.",
+        "motion_style_en": "Very slow, almost static motion to emphasize being trapped.",
+        "prompt": "SCENE_06. Shot medium shot, eye-level, vertical 9:16 framing, macro lens feel. Style: Dark fantasy 3D art with cool tones and glowing highlights. Characters and objects are illustrated with Emphasis on the texture of the vines and the soft glow of the moon. Movements are Very slow, almost static motion to emphasize being trapped. Character consistency lock: Character 'Young Ascetic Monk': consistent young Buddhist monk, shaved head, calm and focused expression. Scene action: A monk sits in meditation in a dark cave, bound by dark, thorny vines that seem to grow from his own negative energy. Environment and background: A dark, dimly lit cave with a full moon visible in the background. Mood and atmosphere: Ominous and restrictive. Motion details: The monk stays still while the thorny vines subtly tighten around him.",
+        "render_consistency_en": "Emphasis on the texture of the vines and the soft glow of the moon.",
+        "scene_action_en": "A monk sits in meditation in a dark cave, bound by dark, thorny vines that seem to grow from his own negative energy.",
+        "scene_id": "scene_06",
+        "shot_type": "medium shot",
+        "source_type": "copy_video",
+        "source_video_path": "C:/Tải về/bcb7bb6f-bcf2-4803-9392-89d5bf0dae52.mp4",
+        "style_block_en": "Dark fantasy 3D art with cool tones and glowing highlights.",
+        "target_language": "vi-VN",
+        "video_prompt_en": "A monk meditating in a dark cave, entangled by dark thorny vines, full moon in background, surreal 3D art.",
+        "voice_actor_key": "Nam_Tram_Duc",
+        "voice_profile": "Extremely deep Vietnamese male bass with gravel texture, weighted authority, low register presence, and commanding cinematic gravity."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\001_Voice_Elderly_female_kind_and_nurturin_20260423_000857_655577.mp4"
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\video\\12_1_23042026_230932.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_thumnail\\001_Voice_Elderly_female_kind_and_nurturin_20260423_000857_655577.thumb.jpg"
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\12_1_23042026_230946.jpg"
       }
     },
     {
       "row": 12,
       "stt": "013",
       "prompt_id": "13",
-      "prompt": "\"A cinematic shot of a majestic eagle soaring over snow-capped mountains at sunset. The lighting is golden and dramatic, highlighting the eagle's feathers.\"",
-      "mode_key": "grok_text_to_video",
-      "mode_label": "GROK - Tạo video từ văn bản",
-      "mode_name": "GROK - Tạo video từ văn bản",
+      "prompt": "SCENE_07. Shot long shot, high-angle, vertical 9:16 framing, wide lens. Style: Realistic 3D art with muted colors and atmospheric lighting. Characters and objects are illustrated with Detailed architecture of the ancient gate and courtyard. Movements are Fluid movement of the black smoke trail. Character consistency lock: Character 'Young Scholar in White': consistent young East Asian male, calm intellectual expression, short neat black hair. Scene action: A man in a white robe walks through an ancient, dilapidated courtyard as a trail of black smoke follows his footsteps. Environment and background: Ancient Chinese courtyard with crumbling walls and overgrown weeds. Mood and atmosphere: Desolate and haunting. Motion details: The man walks away from the camera as the black smoke slithers behind him like a snake.",
+      "mode_key": "copy_video",
+      "mode_label": "VEO3 - Sao chép video",
+      "mode_name": "VEO3 - Sao chép video",
       "mode_payload": {
-        "prompt": "\"A cinematic shot of a majestic eagle soaring over snow-capped mountains at sunset. The lighting is golden and dramatic, highlighting the eagle's feathers.\""
+        "camera_angle": "high-angle",
+        "character_ids": [
+          "char_01"
+        ],
+        "detected_source_language": "vi-VN",
+        "dialogue_original": "Cả ngày tự ti, than trách thực chất là nghiệp khẩu đang vô tình chiêu rước những điều không may mắn.",
+        "dialogue_target": "Cả ngày tự ti, than trách thực chất là nghiệp khẩu đang vô tình chiêu rước những điều không may mắn.",
+        "environment_en": "Ancient Chinese courtyard with crumbling walls and overgrown weeds.",
+        "framing": "vertical 9:16 framing",
+        "identity_context_en": "Character 'Young Scholar in White': consistent young East Asian male, calm intellectual expression, short neat black hair",
+        "lens_feel": "wide lens",
+        "mood_en": "Desolate and haunting",
+        "motion_en": "The man walks away from the camera as the black smoke slithers behind him like a snake.",
+        "motion_style_en": "Fluid movement of the black smoke trail.",
+        "prompt": "SCENE_07. Shot long shot, high-angle, vertical 9:16 framing, wide lens. Style: Realistic 3D art with muted colors and atmospheric lighting. Characters and objects are illustrated with Detailed architecture of the ancient gate and courtyard. Movements are Fluid movement of the black smoke trail. Character consistency lock: Character 'Young Scholar in White': consistent young East Asian male, calm intellectual expression, short neat black hair. Scene action: A man in a white robe walks through an ancient, dilapidated courtyard as a trail of black smoke follows his footsteps. Environment and background: Ancient Chinese courtyard with crumbling walls and overgrown weeds. Mood and atmosphere: Desolate and haunting. Motion details: The man walks away from the camera as the black smoke slithers behind him like a snake.",
+        "render_consistency_en": "Detailed architecture of the ancient gate and courtyard.",
+        "scene_action_en": "A man in a white robe walks through an ancient, dilapidated courtyard as a trail of black smoke follows his footsteps.",
+        "scene_id": "scene_07",
+        "shot_type": "long shot",
+        "source_type": "copy_video",
+        "source_video_path": "C:/Tải về/bcb7bb6f-bcf2-4803-9392-89d5bf0dae52.mp4",
+        "style_block_en": "Realistic 3D art with muted colors and atmospheric lighting.",
+        "target_language": "vi-VN",
+        "video_prompt_en": "A man in white walking through a ruined ancient courtyard, a trail of black smoke following him, eerie atmosphere, 3D render.",
+        "voice_actor_key": "Nam_Tram_Duc",
+        "voice_profile": "Extremely deep Vietnamese male bass with gravel texture, weighted authority, low register presence, and commanding cinematic gravity."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\001_Voice_Elderly_female_kind_and_nurturin_20260423_001023_028140.mp4"
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\video\\13_1_23042026_231012.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_thumnail\\001_Voice_Elderly_female_kind_and_nurturin_20260423_001023_028140.thumb.jpg"
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\13_1_23042026_231037.jpg"
       }
     },
     {
       "row": 13,
       "stt": "014",
       "prompt_id": "14",
-      "prompt": "\"A modern kitchen setup with a high-end coffee machine brewing a fresh espresso. Close-up on the steam and rich crema filling the glass cup.\"",
-      "mode_key": "grok_text_to_video",
-      "mode_label": "GROK - Tạo video từ văn bản",
-      "mode_name": "GROK - Tạo video từ văn bản",
+      "prompt": "SCENE_08. Shot medium shot, eye-level, vertical 9:16 framing, ethereal lens. Style: Ethereal 3D art with glowing particle effects and soft bokeh. Characters and objects are illustrated with Beautiful lighting effects and delicate textures on the flowers. Movements are Fluid and magical growth animation. Character consistency lock: Character 'Ethereal Maiden': consistent beautiful young East Asian woman, long flowing black hair, optimistic expression. Scene action: A young woman in a forest blows out a breath that turns into a beautiful flowering branch with glowing particles. Environment and background: Magical forest at night with soft light filtering through the trees. Mood and atmosphere: Magical and hopeful. Motion details: The flowering branch grows and glows as she breathes out.",
+      "mode_key": "copy_video",
+      "mode_label": "VEO3 - Sao chép video",
+      "mode_name": "VEO3 - Sao chép video",
       "mode_payload": {
-        "prompt": "\"A modern kitchen setup with a high-end coffee machine brewing a fresh espresso. Close-up on the steam and rich crema filling the glass cup.\""
+        "camera_angle": "eye-level",
+        "character_ids": [
+          "char_06"
+        ],
+        "detected_source_language": "vi-VN",
+        "dialogue_original": "Vì vậy nếu muốn bản thân trở nên tốt hơn, nhất định phải nói nhiều lời tích cực.",
+        "dialogue_target": "Vì vậy nếu muốn bản thân trở nên tốt hơn, nhất định phải nói nhiều lời tích cực.",
+        "environment_en": "Magical forest at night with soft light filtering through the trees.",
+        "framing": "vertical 9:16 framing",
+        "identity_context_en": "Character 'Ethereal Maiden': consistent beautiful young East Asian woman, long flowing black hair, optimistic expression",
+        "lens_feel": "ethereal lens",
+        "mood_en": "Magical and hopeful",
+        "motion_en": "The flowering branch grows and glows as she breathes out.",
+        "motion_style_en": "Fluid and magical growth animation.",
+        "prompt": "SCENE_08. Shot medium shot, eye-level, vertical 9:16 framing, ethereal lens. Style: Ethereal 3D art with glowing particle effects and soft bokeh. Characters and objects are illustrated with Beautiful lighting effects and delicate textures on the flowers. Movements are Fluid and magical growth animation. Character consistency lock: Character 'Ethereal Maiden': consistent beautiful young East Asian woman, long flowing black hair, optimistic expression. Scene action: A young woman in a forest blows out a breath that turns into a beautiful flowering branch with glowing particles. Environment and background: Magical forest at night with soft light filtering through the trees. Mood and atmosphere: Magical and hopeful. Motion details: The flowering branch grows and glows as she breathes out.",
+        "render_consistency_en": "Beautiful lighting effects and delicate textures on the flowers.",
+        "scene_action_en": "A young woman in a forest blows out a breath that turns into a beautiful flowering branch with glowing particles.",
+        "scene_id": "scene_08",
+        "shot_type": "medium shot",
+        "source_type": "copy_video",
+        "source_video_path": "C:/Tải về/bcb7bb6f-bcf2-4803-9392-89d5bf0dae52.mp4",
+        "style_block_en": "Ethereal 3D art with glowing particle effects and soft bokeh.",
+        "target_language": "vi-VN",
+        "video_prompt_en": "A woman breathing out a glowing branch of flowers in a dark forest, magical sparkles, ethereal 3D art.",
+        "voice_actor_key": "Nam_Tram_Duc",
+        "voice_profile": "Extremely deep Vietnamese male bass with gravel texture, weighted authority, low register presence, and commanding cinematic gravity."
       },
       "status_code": "SUCCESSFUL",
       "status_text": "Hoàn thành",
       "output_count": 1,
       "selected_output_index": 1,
       "media_map": {
-        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_video\\002_Voice_Elderly_female_kind_and_nurturin_20260423_001022_191231.mp4"
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\video\\14_1_23042026_231045.mp4"
       },
       "preview_map": {
-        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\grok_thumnail\\002_Voice_Elderly_female_kind_and_nurturin_20260423_001022_191231.thumb.jpg"
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\14_1_23042026_231050.jpg"
+      }
+    },
+    {
+      "row": 14,
+      "stt": "015",
+      "prompt_id": "15",
+      "prompt": "SCENE_09. Shot close-up, low-angle, vertical 9:16 framing, dreamy lens. Style: High-detail 3D character art with soft, warm lighting. Characters and objects are illustrated with Detailed facial features and skin rendering. Movements are Gentle, life-like movements. Character consistency lock: Character 'Ethereal Maiden': consistent beautiful young East Asian woman, long flowing black hair, optimistic expression. Scene action: The young woman looks up at the glowing flowers she created, her face illuminated by their soft light. Environment and background: The same magical forest setting, focusing on her expression. Mood and atmosphere: Serene and optimistic. Motion details: Subtle blinking and gentle movement of the flowers.",
+      "mode_key": "copy_video",
+      "mode_label": "VEO3 - Sao chép video",
+      "mode_name": "VEO3 - Sao chép video",
+      "mode_payload": {
+        "camera_angle": "low-angle",
+        "character_ids": [
+          "char_06"
+        ],
+        "detected_source_language": "vi-VN",
+        "dialogue_original": "Ví dụ: Tôi có thể bình tĩnh, mọi thứ sẽ dần dần tốt đẹp.",
+        "dialogue_target": "Ví dụ: Tôi có thể bình tĩnh, mọi thứ sẽ dần dần tốt đẹp.",
+        "environment_en": "The same magical forest setting, focusing on her expression.",
+        "framing": "vertical 9:16 framing",
+        "identity_context_en": "Character 'Ethereal Maiden': consistent beautiful young East Asian woman, long flowing black hair, optimistic expression",
+        "lens_feel": "dreamy lens",
+        "mood_en": "Serene and optimistic",
+        "motion_en": "Subtle blinking and gentle movement of the flowers.",
+        "motion_style_en": "Gentle, life-like movements.",
+        "prompt": "SCENE_09. Shot close-up, low-angle, vertical 9:16 framing, dreamy lens. Style: High-detail 3D character art with soft, warm lighting. Characters and objects are illustrated with Detailed facial features and skin rendering. Movements are Gentle, life-like movements. Character consistency lock: Character 'Ethereal Maiden': consistent beautiful young East Asian woman, long flowing black hair, optimistic expression. Scene action: The young woman looks up at the glowing flowers she created, her face illuminated by their soft light. Environment and background: The same magical forest setting, focusing on her expression. Mood and atmosphere: Serene and optimistic. Motion details: Subtle blinking and gentle movement of the flowers.",
+        "render_consistency_en": "Detailed facial features and skin rendering.",
+        "scene_action_en": "The young woman looks up at the glowing flowers she created, her face illuminated by their soft light.",
+        "scene_id": "scene_09",
+        "shot_type": "close-up",
+        "source_type": "copy_video",
+        "source_video_path": "C:/Tải về/bcb7bb6f-bcf2-4803-9392-89d5bf0dae52.mp4",
+        "style_block_en": "High-detail 3D character art with soft, warm lighting.",
+        "target_language": "vi-VN",
+        "video_prompt_en": "Close up of a young woman looking at glowing flowers in a forest, peaceful expression, soft light on face, 3D render.",
+        "voice_actor_key": "Nam_Tram_Duc",
+        "voice_profile": "Extremely deep Vietnamese male bass with gravel texture, weighted authority, low register presence, and commanding cinematic gravity."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\video\\15_1_23042026_231211.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\15_1_23042026_231215.jpg"
+      }
+    },
+    {
+      "row": 15,
+      "stt": "016",
+      "prompt_id": "16",
+      "prompt": "SCENE_10. Shot medium shot, eye-level, vertical 9:16 framing, clear reflection lens. Style: Clean 3D art with a focus on reflections and natural scenery. Characters and objects are illustrated with Perfectly mirrored reflection in the water. Movements are Very subtle, calm movement. Character consistency lock: Character 'Young Scholar in White': consistent young East Asian male, calm intellectual expression, short neat black hair. Scene action: A man in a black robe stands in a shallow lake, his reflection in the water looking back at him with a peaceful smile. Environment and background: A calm lake reflecting snowy mountains and a waterfall in the background. Mood and atmosphere: Balanced and harmonious. Motion details: Slight ripples on the water's surface.",
+      "mode_key": "copy_video",
+      "mode_label": "VEO3 - Sao chép video",
+      "mode_name": "VEO3 - Sao chép video",
+      "mode_payload": {
+        "camera_angle": "eye-level",
+        "character_ids": [
+          "char_01"
+        ],
+        "detected_source_language": "vi-VN",
+        "dialogue_original": "Ngôn ngữ giống như một tấm gương, nó sẽ phản chiếu và ảnh hưởng đến tâm trạng của bạn.",
+        "dialogue_target": "Ngôn ngữ giống như một tấm gương, nó sẽ phản chiếu và ảnh hưởng đến tâm trạng của bạn.",
+        "environment_en": "A calm lake reflecting snowy mountains and a waterfall in the background.",
+        "framing": "vertical 9:16 framing",
+        "identity_context_en": "Character 'Young Scholar in White': consistent young East Asian male, calm intellectual expression, short neat black hair",
+        "lens_feel": "clear reflection lens",
+        "mood_en": "Balanced and harmonious",
+        "motion_en": "Slight ripples on the water's surface.",
+        "motion_style_en": "Very subtle, calm movement.",
+        "prompt": "SCENE_10. Shot medium shot, eye-level, vertical 9:16 framing, clear reflection lens. Style: Clean 3D art with a focus on reflections and natural scenery. Characters and objects are illustrated with Perfectly mirrored reflection in the water. Movements are Very subtle, calm movement. Character consistency lock: Character 'Young Scholar in White': consistent young East Asian male, calm intellectual expression, short neat black hair. Scene action: A man in a black robe stands in a shallow lake, his reflection in the water looking back at him with a peaceful smile. Environment and background: A calm lake reflecting snowy mountains and a waterfall in the background. Mood and atmosphere: Balanced and harmonious. Motion details: Slight ripples on the water's surface.",
+        "render_consistency_en": "Perfectly mirrored reflection in the water.",
+        "scene_action_en": "A man in a black robe stands in a shallow lake, his reflection in the water looking back at him with a peaceful smile.",
+        "scene_id": "scene_10",
+        "shot_type": "medium shot",
+        "source_type": "copy_video",
+        "source_video_path": "C:/Tải về/bcb7bb6f-bcf2-4803-9392-89d5bf0dae52.mp4",
+        "style_block_en": "Clean 3D art with a focus on reflections and natural scenery.",
+        "target_language": "vi-VN",
+        "video_prompt_en": "A man standing in a still lake, his reflection smiling back at him, mountains and waterfall in background, 3D art with mirror reflection.",
+        "voice_actor_key": "Nam_Tram_Duc",
+        "voice_profile": "Extremely deep Vietnamese male bass with gravel texture, weighted authority, low register presence, and commanding cinematic gravity."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\video\\16_1_23042026_231228.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\16_1_23042026_231233.jpg"
+      }
+    },
+    {
+      "row": 16,
+      "stt": "017",
+      "prompt_id": "17",
+      "prompt": "SCENE_11. Shot long shot, eye-level, vertical 9:16 framing, wide lens. Style: Realistic 3D art with natural lighting and colors. Characters and objects are illustrated with Clear details on the bridge and the surrounding environment. Movements are Simple walking animation and floating smoke effect. Character consistency lock: Character 'Young Scholar in White': consistent young East Asian male, calm intellectual expression, short neat black hair. Scene action: A young man walks across a stone bridge over a dry riverbed, as a wisp of white smoke floats away from him into the sky. Environment and background: A rural landscape with a bridge over a dried-up river, with soft sunlight. Mood and atmosphere: Liberating and light. Motion details: The man walks forward while the smoke wisp rises and disperses.",
+      "mode_key": "copy_video",
+      "mode_label": "VEO3 - Sao chép video",
+      "mode_name": "VEO3 - Sao chép video",
+      "mode_payload": {
+        "camera_angle": "eye-level",
+        "character_ids": [
+          "char_01"
+        ],
+        "detected_source_language": "vi-VN",
+        "dialogue_original": "Khi bạn không còn nói những lời than vãn, phiền não sẽ mất đi cái cớ để quấn lấy bạn.",
+        "dialogue_target": "Khi bạn không còn nói những lời than vãn, phiền não sẽ mất đi cái cớ để quấn lấy bạn.",
+        "environment_en": "A rural landscape with a bridge over a dried-up river, with soft sunlight.",
+        "framing": "vertical 9:16 framing",
+        "identity_context_en": "Character 'Young Scholar in White': consistent young East Asian male, calm intellectual expression, short neat black hair",
+        "lens_feel": "wide lens",
+        "mood_en": "Liberating and light",
+        "motion_en": "The man walks forward while the smoke wisp rises and disperses.",
+        "motion_style_en": "Simple walking animation and floating smoke effect.",
+        "prompt": "SCENE_11. Shot long shot, eye-level, vertical 9:16 framing, wide lens. Style: Realistic 3D art with natural lighting and colors. Characters and objects are illustrated with Clear details on the bridge and the surrounding environment. Movements are Simple walking animation and floating smoke effect. Character consistency lock: Character 'Young Scholar in White': consistent young East Asian male, calm intellectual expression, short neat black hair. Scene action: A young man walks across a stone bridge over a dry riverbed, as a wisp of white smoke floats away from him into the sky. Environment and background: A rural landscape with a bridge over a dried-up river, with soft sunlight. Mood and atmosphere: Liberating and light. Motion details: The man walks forward while the smoke wisp rises and disperses.",
+        "render_consistency_en": "Clear details on the bridge and the surrounding environment.",
+        "scene_action_en": "A young man walks across a stone bridge over a dry riverbed, as a wisp of white smoke floats away from him into the sky.",
+        "scene_id": "scene_11",
+        "shot_type": "long shot",
+        "source_type": "copy_video",
+        "source_video_path": "C:/Tải về/bcb7bb6f-bcf2-4803-9392-89d5bf0dae52.mp4",
+        "style_block_en": "Realistic 3D art with natural lighting and colors.",
+        "target_language": "vi-VN",
+        "video_prompt_en": "A man walking on a stone bridge, white smoke rising from his head into the clear sky, rural landscape, 3D render.",
+        "voice_actor_key": "Nam_Tram_Duc",
+        "voice_profile": "Extremely deep Vietnamese male bass with gravel texture, weighted authority, low register presence, and commanding cinematic gravity."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\video\\17_1_23042026_231259.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\17_1_23042026_231303.jpg"
+      }
+    },
+    {
+      "row": 17,
+      "stt": "018",
+      "prompt_id": "18",
+      "prompt": "SCENE_12. Shot medium shot, eye-level, vertical 9:16 framing, inner-glow lens. Style: Cinematic 3D art with strong contrast and a divine glow effect. Characters and objects are illustrated with Warm light illuminating the monk's face and hands. Movements are Slow pulsing light effect. Character consistency lock: Character 'Young Ascetic Monk': consistent young Buddhist monk, shaved head, calm and focused expression. Scene action: A monk meditates in a dark forest shrine, his heart area glowing with a warm, golden light. Environment and background: A traditional stone shrine deep in a misty forest at night. Mood and atmosphere: Spiritual and blissful. Motion details: Pulsing of the golden light from the monk's chest.",
+      "mode_key": "copy_video",
+      "mode_label": "VEO3 - Sao chép video",
+      "mode_name": "VEO3 - Sao chép video",
+      "mode_payload": {
+        "camera_angle": "eye-level",
+        "character_ids": [
+          "char_05"
+        ],
+        "detected_source_language": "vi-VN",
+        "dialogue_original": "Mong bạn từ nay về sau khẩu nghiệp thanh tịnh, tâm sinh hoan hỉ.",
+        "dialogue_target": "Mong bạn từ nay về sau khẩu nghiệp thanh tịnh, tâm sinh hoan hỉ.",
+        "environment_en": "A traditional stone shrine deep in a misty forest at night.",
+        "framing": "vertical 9:16 framing",
+        "identity_context_en": "Character 'Young Ascetic Monk': consistent young Buddhist monk, shaved head, calm and focused expression",
+        "lens_feel": "inner-glow lens",
+        "mood_en": "Spiritual and blissful",
+        "motion_en": "Pulsing of the golden light from the monk's chest.",
+        "motion_style_en": "Slow pulsing light effect.",
+        "prompt": "SCENE_12. Shot medium shot, eye-level, vertical 9:16 framing, inner-glow lens. Style: Cinematic 3D art with strong contrast and a divine glow effect. Characters and objects are illustrated with Warm light illuminating the monk's face and hands. Movements are Slow pulsing light effect. Character consistency lock: Character 'Young Ascetic Monk': consistent young Buddhist monk, shaved head, calm and focused expression. Scene action: A monk meditates in a dark forest shrine, his heart area glowing with a warm, golden light. Environment and background: A traditional stone shrine deep in a misty forest at night. Mood and atmosphere: Spiritual and blissful. Motion details: Pulsing of the golden light from the monk's chest.",
+        "render_consistency_en": "Warm light illuminating the monk's face and hands.",
+        "scene_action_en": "A monk meditates in a dark forest shrine, his heart area glowing with a warm, golden light.",
+        "scene_id": "scene_12",
+        "shot_type": "medium shot",
+        "source_type": "copy_video",
+        "source_video_path": "C:/Tải về/bcb7bb6f-bcf2-4803-9392-89d5bf0dae52.mp4",
+        "style_block_en": "Cinematic 3D art with strong contrast and a divine glow effect.",
+        "target_language": "vi-VN",
+        "video_prompt_en": "A monk meditating in a forest shrine, a golden light glowing from his chest, spiritual atmosphere, detailed 3D art.",
+        "voice_actor_key": "Nam_Tram_Duc",
+        "voice_profile": "Extremely deep Vietnamese male bass with gravel texture, weighted authority, low register presence, and commanding cinematic gravity."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\video\\18_1_23042026_231317.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\18_1_23042026_231320.jpg"
+      }
+    },
+    {
+      "row": 18,
+      "stt": "019",
+      "prompt_id": "19",
+      "prompt": "SCENE_13. Shot extreme long shot, aerial, vertical 9:16 framing, majestic wide lens. Style: High-detail 3D landscape art with vibrant greens and blues. Characters and objects are illustrated with Detailed terrain and water textures. Movements are Smooth drone-like camera movement. Character consistency lock: Character 'Young Scholar in White': consistent young East Asian male, calm intellectual expression, short neat black hair; Character 'Elderly Zen Master': consistent elderly Buddhist monk, bald head, prominent white eyebrows, warm smile; Character 'Scholar in Black': consistent handsome young East Asian male, long black hair tied up, serious expression; Character 'Weathered Laborer': consistent middle-aged man, weathered sun-kissed skin, tired expression; Character 'Young Ascetic Monk': consistent young Buddhist monk, shaved head, calm and focused expression; Character 'Ethereal Maiden': consistent beautiful young East Asian woman, long flowing black hair, optimistic expression. Scene action: An aerial view of a lush green valley with terraced rice fields and a winding river between karst mountains. Environment and background: A breathtakingly beautiful landscape of green fields, mountains, and a clear river. Mood and atmosphere: Majestic and abundant. Motion details: Slow panning camera over the valley.",
+      "mode_key": "copy_video",
+      "mode_label": "VEO3 - Sao chép video",
+      "mode_name": "VEO3 - Sao chép video",
+      "mode_payload": {
+        "camera_angle": "aerial",
+        "character_ids": [
+          "char_01",
+          "char_02",
+          "char_03",
+          "char_04",
+          "char_05",
+          "char_06"
+        ],
+        "detected_source_language": "vi-VN",
+        "dialogue_original": "Vận mệnh tự thành một vùng đất trù phú và tươi đẹp.",
+        "dialogue_target": "Vận mệnh tự thành một vùng đất trù phú và tươi đẹp.",
+        "environment_en": "A breathtakingly beautiful landscape of green fields, mountains, and a clear river.",
+        "framing": "vertical 9:16 framing",
+        "identity_context_en": "Character 'Young Scholar in White': consistent young East Asian male, calm intellectual expression, short neat black hair; Character 'Elderly Zen Master': consistent elderly Buddhist monk, bald head, prominent white eyebrows, warm smile; Character 'Scholar in Black': consistent handsome young East Asian male, long black hair tied up, serious expression; Character 'Weathered Laborer': consistent middle-aged man, weathered sun-kissed skin, tired expression; Character 'Young Ascetic Monk': consistent young Buddhist monk, shaved head, calm and focused expression; Character 'Ethereal Maiden': consistent beautiful young East Asian woman, long flowing black hair, optimistic expression",
+        "lens_feel": "majestic wide lens",
+        "mood_en": "Majestic and abundant",
+        "motion_en": "Slow panning camera over the valley.",
+        "motion_style_en": "Smooth drone-like camera movement.",
+        "prompt": "SCENE_13. Shot extreme long shot, aerial, vertical 9:16 framing, majestic wide lens. Style: High-detail 3D landscape art with vibrant greens and blues. Characters and objects are illustrated with Detailed terrain and water textures. Movements are Smooth drone-like camera movement. Character consistency lock: Character 'Young Scholar in White': consistent young East Asian male, calm intellectual expression, short neat black hair; Character 'Elderly Zen Master': consistent elderly Buddhist monk, bald head, prominent white eyebrows, warm smile; Character 'Scholar in Black': consistent handsome young East Asian male, long black hair tied up, serious expression; Character 'Weathered Laborer': consistent middle-aged man, weathered sun-kissed skin, tired expression; Character 'Young Ascetic Monk': consistent young Buddhist monk, shaved head, calm and focused expression; Character 'Ethereal Maiden': consistent beautiful young East Asian woman, long flowing black hair, optimistic expression. Scene action: An aerial view of a lush green valley with terraced rice fields and a winding river between karst mountains. Environment and background: A breathtakingly beautiful landscape of green fields, mountains, and a clear river. Mood and atmosphere: Majestic and abundant. Motion details: Slow panning camera over the valley.",
+        "render_consistency_en": "Detailed terrain and water textures.",
+        "scene_action_en": "An aerial view of a lush green valley with terraced rice fields and a winding river between karst mountains.",
+        "scene_id": "scene_13",
+        "shot_type": "extreme long shot",
+        "source_type": "copy_video",
+        "source_video_path": "C:/Tải về/bcb7bb6f-bcf2-4803-9392-89d5bf0dae52.mp4",
+        "style_block_en": "High-detail 3D landscape art with vibrant greens and blues.",
+        "target_language": "vi-VN",
+        "video_prompt_en": "Aerial view of a beautiful green valley with terraced fields and a river, majestic mountains, paradise landscape, 3D render.",
+        "voice_actor_key": "Nam_Tram_Duc",
+        "voice_profile": "Extremely deep Vietnamese male bass with gravel texture, weighted authority, low register presence, and commanding cinematic gravity."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\video\\19_1_23042026_231432.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\19_1_23042026_231437.jpg"
+      }
+    },
+    {
+      "row": 19,
+      "stt": "020",
+      "prompt_id": "20",
+      "prompt": "A high-quality 3D render of a man in a beige robe standing on a cliff edge, overlooking a sea of clouds at sunrise, serene atmosphere, soft golden light., Khi bạn sắp trở nên tốt hơn, bạn sẽ xem được video này.",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "Young Scholar in White",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\1_1_23042026_230316.jpg"
+          },
+          {
+            "name": "Elderly Zen Master",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\2_1_23042026_230326.jpg"
+          },
+          {
+            "name": "Scholar in Black",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\3_1_23042026_230339.jpg"
+          },
+          {
+            "name": "Weathered Laborer",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\4_1_23042026_230514.jpg"
+          },
+          {
+            "name": "Young Ascetic Monk",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\5_1_23042026_230523.jpg"
+          },
+          {
+            "name": "Ethereal Maiden",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\6_1_23042026_230525.jpg"
+          }
+        ],
+        "prompt": "A high-quality 3D render of a man in a beige robe standing on a cliff edge, overlooking a sea of clouds at sunrise, serene atmosphere, soft golden light., Khi bạn sắp trở nên tốt hơn, bạn sẽ xem được video này."
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: NO_CHARACTER | message: Prompt không nhắc đến nhân vật nào)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 20,
+      "stt": "021",
+      "prompt_id": "21",
+      "prompt": "A kind elderly monk in a brown robe sitting in a bamboo forest, smiling warmly, soft sunlight, highly detailed 3D art., Nếu đã xem được, hãy bình luận xuống dưới: Tôi rất tốt.",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "Young Scholar in White",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\1_1_23042026_230316.jpg"
+          },
+          {
+            "name": "Elderly Zen Master",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\2_1_23042026_230326.jpg"
+          },
+          {
+            "name": "Scholar in Black",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\3_1_23042026_230339.jpg"
+          },
+          {
+            "name": "Weathered Laborer",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\4_1_23042026_230514.jpg"
+          },
+          {
+            "name": "Young Ascetic Monk",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\5_1_23042026_230523.jpg"
+          },
+          {
+            "name": "Ethereal Maiden",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\6_1_23042026_230525.jpg"
+          }
+        ],
+        "prompt": "A kind elderly monk in a brown robe sitting in a bamboo forest, smiling warmly, soft sunlight, highly detailed 3D art., Nếu đã xem được, hãy bình luận xuống dưới: Tôi rất tốt."
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: NO_CHARACTER | message: Prompt không nhắc đến nhân vật nào)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 21,
+      "stt": "022",
+      "prompt_id": "22",
+      "prompt": "A young man in a black traditional robe walking through a dense bamboo forest, serious expression, cinematic lighting with shadows., Người xưa có câu: Miệng càng độc, mệnh càng khổ.",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "Young Scholar in White",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\1_1_23042026_230316.jpg"
+          },
+          {
+            "name": "Elderly Zen Master",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\2_1_23042026_230326.jpg"
+          },
+          {
+            "name": "Scholar in Black",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\3_1_23042026_230339.jpg"
+          },
+          {
+            "name": "Weathered Laborer",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\4_1_23042026_230514.jpg"
+          },
+          {
+            "name": "Young Ascetic Monk",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\5_1_23042026_230523.jpg"
+          },
+          {
+            "name": "Ethereal Maiden",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\6_1_23042026_230525.jpg"
+          }
+        ],
+        "prompt": "A young man in a black traditional robe walking through a dense bamboo forest, serious expression, cinematic lighting with shadows., Người xưa có câu: Miệng càng độc, mệnh càng khổ."
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: NO_CHARACTER | message: Prompt không nhắc đến nhân vật nào)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 22,
+      "stt": "023",
+      "prompt_id": "23",
+      "prompt": "An old farmer carrying heavy water buckets on a shoulder pole, walking on a dusty road, looking tired, realistic 3D render., Bình thường tuyệt đối đừng luôn than vãn và phàn nàn.",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "Young Scholar in White",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\1_1_23042026_230316.jpg"
+          },
+          {
+            "name": "Elderly Zen Master",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\2_1_23042026_230326.jpg"
+          },
+          {
+            "name": "Scholar in Black",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\3_1_23042026_230339.jpg"
+          },
+          {
+            "name": "Weathered Laborer",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\4_1_23042026_230514.jpg"
+          },
+          {
+            "name": "Young Ascetic Monk",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\5_1_23042026_230523.jpg"
+          },
+          {
+            "name": "Ethereal Maiden",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\6_1_23042026_230525.jpg"
+          }
+        ],
+        "prompt": "An old farmer carrying heavy water buckets on a shoulder pole, walking on a dusty road, looking tired, realistic 3D render., Bình thường tuyệt đối đừng luôn than vãn và phàn nàn."
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: NO_CHARACTER | message: Prompt không nhắc đến nhân vật nào)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 23,
+      "stt": "024",
+      "prompt_id": "24",
+      "prompt": "A man in a white robe on a rocky shore, a massive storm of black smoke behind him, bright ocean in front, dramatic 3D composition., Nếu miệng bạn là bão tố phong ba, thì mệnh bạn khó có được trời quang mây tạnh.",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "Young Scholar in White",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\1_1_23042026_230316.jpg"
+          },
+          {
+            "name": "Elderly Zen Master",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\2_1_23042026_230326.jpg"
+          },
+          {
+            "name": "Scholar in Black",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\3_1_23042026_230339.jpg"
+          },
+          {
+            "name": "Weathered Laborer",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\4_1_23042026_230514.jpg"
+          },
+          {
+            "name": "Young Ascetic Monk",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\5_1_23042026_230523.jpg"
+          },
+          {
+            "name": "Ethereal Maiden",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\6_1_23042026_230525.jpg"
+          }
+        ],
+        "prompt": "A man in a white robe on a rocky shore, a massive storm of black smoke behind him, bright ocean in front, dramatic 3D composition., Nếu miệng bạn là bão tố phong ba, thì mệnh bạn khó có được trời quang mây tạnh."
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: NO_CHARACTER | message: Prompt không nhắc đến nhân vật nào)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 24,
+      "stt": "025",
+      "prompt_id": "25",
+      "prompt": "A monk meditating in a dark cave, entangled by dark thorny vines, full moon in background, surreal 3D art., Than vãn thực chất là một lời nguyền, bạn đang dùng lời nói để yểm bùa lên vận mệnh của chính mình.",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "Young Scholar in White",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\1_1_23042026_230316.jpg"
+          },
+          {
+            "name": "Elderly Zen Master",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\2_1_23042026_230326.jpg"
+          },
+          {
+            "name": "Scholar in Black",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\3_1_23042026_230339.jpg"
+          },
+          {
+            "name": "Weathered Laborer",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\4_1_23042026_230514.jpg"
+          },
+          {
+            "name": "Young Ascetic Monk",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\5_1_23042026_230523.jpg"
+          },
+          {
+            "name": "Ethereal Maiden",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\6_1_23042026_230525.jpg"
+          }
+        ],
+        "prompt": "A monk meditating in a dark cave, entangled by dark thorny vines, full moon in background, surreal 3D art., Than vãn thực chất là một lời nguyền, bạn đang dùng lời nói để yểm bùa lên vận mệnh của chính mình."
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: NO_CHARACTER | message: Prompt không nhắc đến nhân vật nào)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 25,
+      "stt": "026",
+      "prompt_id": "26",
+      "prompt": "A man in white walking through a ruined ancient courtyard, a trail of black smoke following him, eerie atmosphere, 3D render., Cả ngày tự ti, than trách thực chất là nghiệp khẩu đang vô tình chiêu rước những điều không may mắn.",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "Young Scholar in White",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\1_1_23042026_230316.jpg"
+          },
+          {
+            "name": "Elderly Zen Master",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\2_1_23042026_230326.jpg"
+          },
+          {
+            "name": "Scholar in Black",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\3_1_23042026_230339.jpg"
+          },
+          {
+            "name": "Weathered Laborer",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\4_1_23042026_230514.jpg"
+          },
+          {
+            "name": "Young Ascetic Monk",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\5_1_23042026_230523.jpg"
+          },
+          {
+            "name": "Ethereal Maiden",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\6_1_23042026_230525.jpg"
+          }
+        ],
+        "prompt": "A man in white walking through a ruined ancient courtyard, a trail of black smoke following him, eerie atmosphere, 3D render., Cả ngày tự ti, than trách thực chất là nghiệp khẩu đang vô tình chiêu rước những điều không may mắn."
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: NO_CHARACTER | message: Prompt không nhắc đến nhân vật nào)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 26,
+      "stt": "027",
+      "prompt_id": "27",
+      "prompt": "A woman breathing out a glowing branch of flowers in a dark forest, magical sparkles, ethereal 3D art., Vì vậy nếu muốn bản thân trở nên tốt hơn, nhất định phải nói nhiều lời tích cực.",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "Young Scholar in White",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\1_1_23042026_230316.jpg"
+          },
+          {
+            "name": "Elderly Zen Master",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\2_1_23042026_230326.jpg"
+          },
+          {
+            "name": "Scholar in Black",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\3_1_23042026_230339.jpg"
+          },
+          {
+            "name": "Weathered Laborer",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\4_1_23042026_230514.jpg"
+          },
+          {
+            "name": "Young Ascetic Monk",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\5_1_23042026_230523.jpg"
+          },
+          {
+            "name": "Ethereal Maiden",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\6_1_23042026_230525.jpg"
+          }
+        ],
+        "prompt": "A woman breathing out a glowing branch of flowers in a dark forest, magical sparkles, ethereal 3D art., Vì vậy nếu muốn bản thân trở nên tốt hơn, nhất định phải nói nhiều lời tích cực."
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: NO_CHARACTER | message: Prompt không nhắc đến nhân vật nào)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 27,
+      "stt": "028",
+      "prompt_id": "28",
+      "prompt": "Close up of a young woman looking at glowing flowers in a forest, peaceful expression, soft light on face, 3D render., Ví dụ: Tôi có thể bình tĩnh, mọi thứ sẽ dần dần tốt đẹp.",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "Young Scholar in White",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\1_1_23042026_230316.jpg"
+          },
+          {
+            "name": "Elderly Zen Master",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\2_1_23042026_230326.jpg"
+          },
+          {
+            "name": "Scholar in Black",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\3_1_23042026_230339.jpg"
+          },
+          {
+            "name": "Weathered Laborer",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\4_1_23042026_230514.jpg"
+          },
+          {
+            "name": "Young Ascetic Monk",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\5_1_23042026_230523.jpg"
+          },
+          {
+            "name": "Ethereal Maiden",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\6_1_23042026_230525.jpg"
+          }
+        ],
+        "prompt": "Close up of a young woman looking at glowing flowers in a forest, peaceful expression, soft light on face, 3D render., Ví dụ: Tôi có thể bình tĩnh, mọi thứ sẽ dần dần tốt đẹp."
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: NO_CHARACTER | message: Prompt không nhắc đến nhân vật nào)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 28,
+      "stt": "029",
+      "prompt_id": "29",
+      "prompt": "A man standing in a still lake, his reflection smiling back at him, mountains and waterfall in background, 3D art with mirror reflection., Ngôn ngữ giống như một tấm gương, nó sẽ phản chiếu và ảnh hưởng đến tâm trạng của bạn.",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "Young Scholar in White",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\1_1_23042026_230316.jpg"
+          },
+          {
+            "name": "Elderly Zen Master",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\2_1_23042026_230326.jpg"
+          },
+          {
+            "name": "Scholar in Black",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\3_1_23042026_230339.jpg"
+          },
+          {
+            "name": "Weathered Laborer",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\4_1_23042026_230514.jpg"
+          },
+          {
+            "name": "Young Ascetic Monk",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\5_1_23042026_230523.jpg"
+          },
+          {
+            "name": "Ethereal Maiden",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\6_1_23042026_230525.jpg"
+          }
+        ],
+        "prompt": "A man standing in a still lake, his reflection smiling back at him, mountains and waterfall in background, 3D art with mirror reflection., Ngôn ngữ giống như một tấm gương, nó sẽ phản chiếu và ảnh hưởng đến tâm trạng của bạn."
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: NO_CHARACTER | message: Prompt không nhắc đến nhân vật nào)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 29,
+      "stt": "030",
+      "prompt_id": "30",
+      "prompt": "A man walking on a stone bridge, white smoke rising from his head into the clear sky, rural landscape, 3D render., Khi bạn không còn nói những lời than vãn, phiền não sẽ mất đi cái cớ để quấn lấy bạn.",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "Young Scholar in White",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\1_1_23042026_230316.jpg"
+          },
+          {
+            "name": "Elderly Zen Master",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\2_1_23042026_230326.jpg"
+          },
+          {
+            "name": "Scholar in Black",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\3_1_23042026_230339.jpg"
+          },
+          {
+            "name": "Weathered Laborer",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\4_1_23042026_230514.jpg"
+          },
+          {
+            "name": "Young Ascetic Monk",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\5_1_23042026_230523.jpg"
+          },
+          {
+            "name": "Ethereal Maiden",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\6_1_23042026_230525.jpg"
+          }
+        ],
+        "prompt": "A man walking on a stone bridge, white smoke rising from his head into the clear sky, rural landscape, 3D render., Khi bạn không còn nói những lời than vãn, phiền não sẽ mất đi cái cớ để quấn lấy bạn."
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: NO_CHARACTER | message: Prompt không nhắc đến nhân vật nào)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 30,
+      "stt": "031",
+      "prompt_id": "31",
+      "prompt": "A monk meditating in a forest shrine, a golden light glowing from his chest, spiritual atmosphere, detailed 3D art., Mong bạn từ nay về sau khẩu nghiệp thanh tịnh, tâm sinh hoan hỉ.",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "Young Scholar in White",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\1_1_23042026_230316.jpg"
+          },
+          {
+            "name": "Elderly Zen Master",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\2_1_23042026_230326.jpg"
+          },
+          {
+            "name": "Scholar in Black",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\3_1_23042026_230339.jpg"
+          },
+          {
+            "name": "Weathered Laborer",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\4_1_23042026_230514.jpg"
+          },
+          {
+            "name": "Young Ascetic Monk",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\5_1_23042026_230523.jpg"
+          },
+          {
+            "name": "Ethereal Maiden",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\6_1_23042026_230525.jpg"
+          }
+        ],
+        "prompt": "A monk meditating in a forest shrine, a golden light glowing from his chest, spiritual atmosphere, detailed 3D art., Mong bạn từ nay về sau khẩu nghiệp thanh tịnh, tâm sinh hoan hỉ."
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: NO_CHARACTER | message: Prompt không nhắc đến nhân vật nào)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 31,
+      "stt": "032",
+      "prompt_id": "32",
+      "prompt": "Aerial view of a beautiful green valley with terraced fields and a river, majestic mountains, paradise landscape, 3D render., Vận mệnh tự thành một vùng đất trù phú và tươi đẹp.",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "Young Scholar in White",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\1_1_23042026_230316.jpg"
+          },
+          {
+            "name": "Elderly Zen Master",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\2_1_23042026_230326.jpg"
+          },
+          {
+            "name": "Scholar in Black",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\3_1_23042026_230339.jpg"
+          },
+          {
+            "name": "Weathered Laborer",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\4_1_23042026_230514.jpg"
+          },
+          {
+            "name": "Young Ascetic Monk",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\5_1_23042026_230523.jpg"
+          },
+          {
+            "name": "Ethereal Maiden",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\6_1_23042026_230525.jpg"
+          }
+        ],
+        "prompt": "Aerial view of a beautiful green valley with terraced fields and a river, majestic mountains, paradise landscape, 3D render., Vận mệnh tự thành một vùng đất trù phú và tươi đẹp."
+      },
+      "status_code": "FAILED",
+      "status_text": "Lỗi (mã lỗi: NO_CHARACTER | message: Prompt không nhắc đến nhân vật nào)",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {},
+      "preview_map": {}
+    },
+    {
+      "row": 32,
+      "stt": "033",
+      "prompt_id": "33",
+      "prompt": "SCENE_12. Shot medium shot, eye-level, vertical 9:16 framing, inner-glow lens. Style: Cinematic 3D art with strong contrast and a divine glow effect. Characters and objects are illustrated with Warm light illuminating the monk's face and hands. Movements are Slow pulsing light effect. Character consistency lock: Character 'Young Ascetic Monk': consistent young Buddhist monk, shaved head, calm and focused expression. Scene action: A monk meditates in a dark forest shrine, his heart area glowing with a warm, golden light. Environment and background: A traditional stone shrine deep in a misty forest at night. Mood and atmosphere: Spiritual and blissful. Motion details: Pulsing of the golden light from the monk's chest.",
+      "mode_key": "character_sync",
+      "mode_label": "VEO3 - Video đồng nhất nhân vật",
+      "mode_name": "VEO3 - Video đồng nhất nhân vật",
+      "mode_payload": {
+        "characters": [
+          {
+            "name": "Young Scholar in White",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\1_1_23042026_230316.jpg"
+          },
+          {
+            "name": "Elderly Zen Master",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\2_1_23042026_230326.jpg"
+          },
+          {
+            "name": "Scholar in Black",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\3_1_23042026_230339.jpg"
+          },
+          {
+            "name": "Weathered Laborer",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\4_1_23042026_230514.jpg"
+          },
+          {
+            "name": "Young Ascetic Monk",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\5_1_23042026_230523.jpg"
+          },
+          {
+            "name": "Ethereal Maiden",
+            "path": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\6_1_23042026_230525.jpg"
+          }
+        ],
+        "prompt": "SCENE_12. Shot medium shot, eye-level, vertical 9:16 framing, inner-glow lens. Style: Cinematic 3D art with strong contrast and a divine glow effect. Characters and objects are illustrated with Warm light illuminating the monk's face and hands. Movements are Slow pulsing light effect. Character consistency lock: Character 'Young Ascetic Monk': consistent young Buddhist monk, shaved head, calm and focused expression. Scene action: A monk meditates in a dark forest shrine, his heart area glowing with a warm, golden light. Environment and background: A traditional stone shrine deep in a misty forest at night. Mood and atmosphere: Spiritual and blissful. Motion details: Pulsing of the golden light from the monk's chest."
+      },
+      "status_code": "SUCCESSFUL",
+      "status_text": "Hoàn thành",
+      "output_count": 1,
+      "selected_output_index": 1,
+      "media_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\video\\33_1_23042026_231719.mp4"
+      },
+      "preview_map": {
+        "1": "C:\\Users\\Admin\\Desktop\\CÁC TOOL TÂM ĐẮC\\RUN_VEO_4.0_V2.2.6.exe_extracted\\downloads\\image\\33_1_23042026_231722.jpg"
       }
     }
   ]

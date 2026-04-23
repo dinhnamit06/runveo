@@ -37,8 +37,11 @@ class PromptEditor(QPlainTextEdit):
         # Larger font for prompts (requested).
         try:
             f = self.font()
-            if int(f.pointSize() or 0) > 0:
-                f.setPointSize(int(f.pointSize()) + 2)
+            if f.pointSize() > 0:
+                f.setPointSize(f.pointSize() + 2)
+                self.setFont(f)
+            elif f.pixelSize() > 0:
+                f.setPixelSize(f.pixelSize() + 3)
                 self.setFont(f)
         except Exception:
             pass

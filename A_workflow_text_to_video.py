@@ -446,8 +446,35 @@ class TextToVideoWorkflow(QThread):
 
 							# ✅ CÓ TOKEN RỒI, KHỞI TẠO PAYLOAD
 							actual_prompt = prompt_text
-							voice_profile_text = self.project_data.get("voice_profile", "")
-							if voice_profile_text:
+							has_prompt_voice = isinstance(prompt, dict) and ("voice_profile" in prompt)
+							prompt_voice_profile = str(prompt.get("voice_profile") or "").strip() if isinstance(prompt, dict) else ""
+							voice_profile_text = prompt_voice_profile if has_prompt_voice else self.project_data.get("voice_profile", "")
+							prompt_dialogue = ""
+							prompt_video_description = prompt_text
+							prompt_identity_context = ""
+							if isinstance(prompt, dict):
+								prompt_dialogue = str(prompt.get("dialogue_target") or prompt.get("dialogue") or "").strip()
+								prompt_video_description = str(prompt.get("video_prompt_en") or prompt_text or "").strip()
+								prompt_identity_context = str(prompt.get("identity_context_en") or "").strip()
+
+							if isinstance(prompt, dict) and str(prompt.get("source_type") or "").strip() == "copy_video":
+								actual_prompt = str(prompt.get("prompt") or prompt_text or "").strip()
+								if not actual_prompt:
+									base_prompt = ", ".join(
+										[part for part in [prompt_identity_context, prompt_video_description] if str(part or "").strip()]
+									).strip(", ")
+									actual_prompt = base_prompt or prompt_text
+								if prompt_dialogue:
+									actual_prompt = actual_prompt.rstrip()
+									if actual_prompt and actual_prompt[-1] not in ".!?":
+										actual_prompt += "."
+									if voice_profile_text:
+										actual_prompt = f'{actual_prompt} speaking: "{prompt_dialogue}" strictly using {voice_profile_text}'
+									else:
+										actual_prompt = f'{actual_prompt} speaking: "{prompt_dialogue}"'
+							elif "speaking:" in prompt_text.lower() and "using" in prompt_text.lower():
+								pass
+							elif voice_profile_text:
 								actual_prompt = f"{voice_profile_text}\n{prompt_text}"
 
 							payload = t2v_api.build_create_payload(
@@ -1095,7 +1122,13 @@ class TextToVideoWorkflow(QThread):
 			prompt_id = item.get("id")
 			prompt_text = item.get("description") or item.get("prompt") or ""
 			if prompt_id and prompt_text:
-				prompts_list.append({"id": prompt_id, "prompt": prompt_text})
+				prompt_entry = {"id": prompt_id, "prompt": prompt_text}
+				if isinstance(item, dict):
+					for key, value in item.items():
+						if key in {"id", "description", "prompt"}:
+							continue
+						prompt_entry[key] = value
+				prompts_list.append(prompt_entry)
 		return prompts_list
 
 	def _load_auth_config(self):
