@@ -48,6 +48,7 @@ from settings_manager import SettingsManager, WORKFLOWS_DIR, BASE_DIR, DATA_GENE
 from branding_config import OWNER_ZALO_URL
 from voice_profiles import VOICE_JSON, VOICE_OPTIONS, get_voice_profile_text, normalize_locale
 from gemini_automation import GeminiAutomation
+from content_source import build_source_to_video_idea, fetch_url_text, limit_source_text, read_pdf_text
 
 
 def _win_hidden_kwargs() -> dict:
@@ -189,6 +190,11 @@ class _IdeaToVideoWorker(QThread):
         scene_count: int,
         style: str,
         language: str,
+        source_mode: str = "manual",
+        source_kind: str = "auto",
+        source_url: str = "",
+        source_pdf_path: str = "",
+        output_mode: str = "video",
         parent: QWidget | None = None,
     ):
         super().__init__(parent)
@@ -197,6 +203,11 @@ class _IdeaToVideoWorker(QThread):
         self._scene_count = int(scene_count or 1)
         self._style = str(style or "3d_Pixar")
         self._language = str(language or "Tiếng Việt (vi-VN)")
+        self._source_mode = str(source_mode or "manual").strip()
+        self._source_kind = str(source_kind or "auto").strip()
+        self._source_url = str(source_url or "").strip()
+        self._source_pdf_path = str(source_pdf_path or "").strip()
+        self._output_mode = "storytelling_image" if str(output_mode or "").strip() == "storytelling_image" else "video"
         self._stop_requested = False
 
     def stop(self) -> None:
@@ -212,9 +223,39 @@ class _IdeaToVideoWorker(QThread):
         try:
             from idea_to_video import idea_to_video_workflow
 
+            effective_idea = self._idea_text
+            if self._source_mode == "pdf":
+                _log(f"📄 Đang đọc nội dung từ PDF: {self._source_pdf_path}")
+                source_text = read_pdf_text(self._source_pdf_path)
+                _log(f"✅ Đã đọc nội dung PDF: {len(source_text)} ký tự")
+                effective_idea = build_source_to_video_idea(
+                    source_text=source_text,
+                    source_mode="pdf",
+                    source_kind=self._source_kind,
+                    source_url=self._source_pdf_path,
+                    extra_note=self._idea_text,
+                )
+            elif self._source_mode == "link":
+                _log(f"🔗 Đang đọc nội dung từ link: {self._source_url}")
+                source_text = fetch_url_text(self._source_url)
+                _log(f"✅ Đã đọc nội dung nguồn: {len(source_text)} ký tự")
+                effective_idea = build_source_to_video_idea(
+                    source_text=source_text,
+                    source_mode="link",
+                    source_kind=self._source_kind,
+                    source_url=self._source_url,
+                    extra_note=self._idea_text,
+                )
+            elif self._source_kind != "auto":
+                effective_idea = build_source_to_video_idea(
+                    source_text=limit_source_text(self._idea_text),
+                    source_mode="manual",
+                    source_kind=self._source_kind,
+                )
+
             result = idea_to_video_workflow(
                 self._project_name,
-                self._idea_text,
+                effective_idea,
                 scene_count=self._scene_count,
                 style=self._style,
                 language=self._language,
@@ -223,21 +264,42 @@ class _IdeaToVideoWorker(QThread):
             )
             if not isinstance(result, dict):
                 result = {"success": False, "message": "Kết quả Idea to Video không hợp lệ."}
+            result["_output_mode"] = self._output_mode
             self.completed.emit(result)
         except BaseException as exc:
             self.completed.emit({"success": False, "message": f"Lỗi Idea to Video: {exc}"})
+
+def _clamp_copy_strength(value) -> int:
+    try:
+        strength = int(value)
+    except Exception:
+        strength = 100
+    return max(50, min(100, strength))
+
 
 class _GeminiCloneWorker(QThread):
     log_message = pyqtSignal(str)
     completed = pyqtSignal(dict)
 
-    def __init__(self, video_path: str, profile_path: str, target_language: str, bootstrap_url: str = "", style: str = "Tự động nhận diện", parent=None):
+    def __init__(
+        self,
+        video_path: str,
+        profile_path: str,
+        target_language: str,
+        bootstrap_url: str = "",
+        style: str = "Tự động nhận diện",
+        copy_strength: int = 100,
+        user_edit_instruction: str = "",
+        parent=None,
+    ):
         super().__init__(parent)
         self.video_path = video_path
         self.profile_path = profile_path
         self.target_language = str(target_language or "en-US")
         self.bootstrap_url = str(bootstrap_url or "")
         self.style = str(style or "Tự động nhận diện")
+        self.copy_strength = _clamp_copy_strength(copy_strength)
+        self.user_edit_instruction = str(user_edit_instruction or "").strip()
 
     def run(self):
         loop = asyncio.new_event_loop()
@@ -254,7 +316,13 @@ class _GeminiCloneWorker(QThread):
             self.log_message.emit(f"🎬 Đang phân tích video: {os.path.basename(self.video_path)}...")
             result = loop.run_until_complete(
                 asyncio.wait_for(
-                    auto.analyze_video_v2(self.video_path, target_language=self.target_language, style=self.style),
+                    auto.analyze_video_v2(
+                        self.video_path,
+                        target_language=self.target_language,
+                        style=self.style,
+                        copy_strength=self.copy_strength,
+                        user_edit_instruction=self.user_edit_instruction,
+                    ),
                     timeout=360,
                 )
             )
@@ -290,6 +358,44 @@ class _GeminiCloneWorker(QThread):
             loop.close()
 
 import asyncio
+
+
+class _StorytellingExportWorker(QThread):
+    log_message = pyqtSignal(str)
+    completed = pyqtSignal(dict)
+
+    def __init__(
+        self,
+        items: list[dict],
+        output_dir: str,
+        voice_key: str,
+        tts_provider: str,
+        aspect_ratio: str,
+        parent: QWidget | None = None,
+    ):
+        super().__init__(parent)
+        self._items = list(items or [])
+        self._output_dir = str(output_dir or "")
+        self._voice_key = str(voice_key or "None_NoVoice")
+        self._tts_provider = str(tts_provider or "auto")
+        self._aspect_ratio = str(aspect_ratio or "9:16")
+
+    def run(self) -> None:
+        try:
+            from storytelling_exporter import export_storytelling_video
+
+            out_path = export_storytelling_video(
+                self._items,
+                self._output_dir,
+                voice_key=self._voice_key,
+                tts_provider=self._tts_provider,
+                aspect_ratio=self._aspect_ratio,
+                log_callback=self.log_message.emit,
+            )
+            self.completed.emit({"success": True, "path": out_path})
+        except BaseException as exc:
+            self.completed.emit({"success": False, "message": str(exc)})
+
 
 class StatusPanel(QWidget):
     COL_CHECK = 0
@@ -989,13 +1095,354 @@ class StatusPanel(QWidget):
             self._set_status_code(int(r), "PENDING")
         self._refresh_pending_positions()
 
+    def _is_storytelling_row(self, row: int) -> bool:
+        payload = self._row_mode_payload(int(row))
+        return str(payload.get("source_type") or "").strip() == "storytelling_image"
+
+    def _parse_storytelling_prompt_object(self, prompt_text: str) -> dict:
+        raw = str(prompt_text or "").strip().lstrip("\ufeff")
+        if not raw:
+            return {}
+        if raw.startswith("```"):
+            parts = raw.split("```")
+            if len(parts) >= 2:
+                raw = parts[1].strip()
+                if raw.lower().startswith("json"):
+                    raw = raw[4:].strip()
+        try:
+            parsed = json.loads(raw)
+            return parsed if isinstance(parsed, dict) else {}
+        except Exception:
+            return {}
+
+    def _clean_storytelling_narration_line(self, value: str) -> str:
+        text = re.sub(r"\s+", " ", str(value or "")).strip()
+        text = re.sub(r"^\[[^\]]{1,60}:\s*", "", text).strip()
+        text = text.strip("[] \t\r\n")
+        return text.strip(" \"'")
+
+    def _prompt_value_to_phrase(self, value, max_chars: int = 260) -> str:
+        if value in (None, "", [], {}):
+            return ""
+        if isinstance(value, list):
+            text = ", ".join(
+                part for part in (self._prompt_value_to_phrase(item, max_chars=max_chars) for item in value)
+                if part
+            )
+        elif isinstance(value, dict):
+            parts: list[str] = []
+            for key, item in value.items():
+                item_text = self._prompt_value_to_phrase(item, max_chars=max_chars)
+                if item_text:
+                    parts.append(f"{key}: {item_text}")
+            text = ", ".join(parts)
+        else:
+            text = str(value or "")
+        text = re.sub(r"\s+", " ", text).strip()
+        if len(text) > max_chars:
+            text = text[:max_chars].rstrip(" ,.;:") + "..."
+        return text
+
+    def _compact_prompt_json_value(self, value, max_chars: int = 1400) -> str:
+        if value in (None, "", [], {}):
+            return ""
+        try:
+            text = json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+        except Exception:
+            text = str(value)
+        text = re.sub(r"\s+", " ", text).strip()
+        if len(text) > max_chars:
+            text = text[:max_chars].rstrip(" ,.;:") + "..."
+        return text
+
+    def _describe_idea_character_lock(self, value, max_chars: int = 1600) -> str:
+        if not isinstance(value, dict):
+            return self._compact_prompt_json_value(value, max_chars=max_chars)
+
+        chunks: list[str] = []
+        fields = [
+            "name", "species", "gender", "age", "body_build", "body_metrics",
+            "face_shape", "hair", "skin_or_fur_color", "signature_feature",
+            "outfit_top", "outfit_bottom", "helmet_or_hat", "shoes_or_footwear",
+            "props", "position", "orientation", "pose", "expression", "action_flow",
+        ]
+        for key, data in value.items():
+            if not isinstance(data, dict):
+                text = self._prompt_value_to_phrase(data, max_chars=220)
+                if text:
+                    chunks.append(f"{key}: {text}")
+                continue
+            label = str(data.get("name") or data.get("id") or key).strip()
+            details: list[str] = []
+            for field in fields:
+                field_text = self._prompt_value_to_phrase(data.get(field), max_chars=220)
+                if field_text:
+                    details.append(f"{field.replace('_', ' ')}: {field_text}")
+            if details:
+                chunks.append(f"{label}: " + ", ".join(details))
+
+        text = "; ".join(chunks).strip()
+        if len(text) > max_chars:
+            text = text[:max_chars].rstrip(" ,.;:") + "..."
+        return text
+
+    def _describe_idea_background_lock(self, value, max_chars: int = 1200) -> str:
+        if not isinstance(value, dict):
+            return self._compact_prompt_json_value(value, max_chars=max_chars)
+
+        chunks: list[str] = []
+        fields = ["name", "setting", "scenery", "props", "lighting", "weather", "mood", "layout"]
+        for key, data in value.items():
+            if not isinstance(data, dict):
+                text = self._prompt_value_to_phrase(data, max_chars=220)
+                if text:
+                    chunks.append(f"{key}: {text}")
+                continue
+            label = str(data.get("name") or data.get("id") or key).strip()
+            details = [
+                f"{field.replace('_', ' ')}: {self._prompt_value_to_phrase(data.get(field), max_chars=220)}"
+                for field in fields
+                if self._prompt_value_to_phrase(data.get(field), max_chars=220)
+            ]
+            if details:
+                chunks.append(f"{label}: " + ", ".join(details))
+
+        text = "; ".join(chunks).strip()
+        if len(text) > max_chars:
+            text = text[:max_chars].rstrip(" ,.;:") + "..."
+        return text
+
+    def _describe_idea_camera(self, value, max_chars: int = 650) -> str:
+        if not isinstance(value, dict):
+            return self._prompt_value_to_phrase(value, max_chars=max_chars)
+        parts: list[str] = []
+        for key in ("framing", "angle", "movement", "focus", "lens"):
+            text = self._prompt_value_to_phrase(value.get(key), max_chars=180)
+            if text:
+                parts.append(f"{key}: {text}")
+        fallback = self._compact_prompt_json_value(value, max_chars=max_chars)
+        text = "; ".join(parts).strip() or fallback
+        if len(text) > max_chars:
+            text = text[:max_chars].rstrip(" ,.;:") + "..."
+        return text
+
+    def _idea_dialogue_lines(self, prompt_obj: dict) -> list[dict]:
+        lines: list[dict] = []
+        dialogue = prompt_obj.get("dialogue") if isinstance(prompt_obj, dict) else None
+        if not isinstance(dialogue, list):
+            return lines
+        for line in dialogue:
+            if isinstance(line, dict):
+                line_text = str(line.get("line") or line.get("text") or line.get("content") or line.get("dialogue") or "").strip()
+                speaker = str(line.get("speaker") or "NARRATOR").strip() or "NARRATOR"
+                voice = str(line.get("voice") or "").strip()
+            else:
+                line_text = str(line or "").strip()
+                speaker = "NARRATOR"
+                voice = ""
+            line_text = self._clean_storytelling_narration_line(line_text)
+            if line_text:
+                lines.append({"speaker": speaker, "voice": voice, "line": line_text})
+        return lines
+
+    def _describe_idea_foley(self, value) -> tuple[str, str]:
+        if not isinstance(value, dict):
+            text = self._prompt_value_to_phrase(value, max_chars=700)
+            return text, ""
+        ambience = self._prompt_value_to_phrase(value.get("ambience"), max_chars=360)
+        fx = self._prompt_value_to_phrase(value.get("fx"), max_chars=360)
+        music = self._prompt_value_to_phrase(value.get("music"), max_chars=220)
+        parts = []
+        if ambience:
+            parts.append(f"ambience: {ambience}")
+        if fx:
+            parts.append(f"sound effects: {fx}")
+        return "; ".join(parts).strip(), music
+
+    def _idea_video_prompt_from_prompt_text(
+        self,
+        prompt_text: str,
+        index: int = 1,
+        voice_profile_text: str = "",
+    ) -> str:
+        prompt_obj = self._parse_storytelling_prompt_object(prompt_text)
+        if not prompt_obj:
+            base = re.sub(r"\s+", " ", str(prompt_text or "")).strip()
+            strict = (
+                "STRICT RULE: ZERO visible text in the video. No letters, numbers, subtitles, "
+                "captions, logos, watermarks, or UI elements anywhere in the frame. "
+                "STRICT AUDIO RULE: narrator audio is voice-over only; do not show the narrator "
+                "and do not create lip-sync unless a visible speaking character is explicitly requested. "
+                "STRICTLY NO BGM; generate NO music or soundtrack unless the prompt explicitly lists one."
+            )
+            return "\n".join(part for part in [base, strict] if part).strip()
+
+        visual_style = str(prompt_obj.get("visual_style") or "").strip()
+        summary = str(prompt_obj.get("summary") or "").strip()
+        character_lock = self._describe_idea_character_lock(prompt_obj.get("character_lock"))
+        background_lock = self._describe_idea_background_lock(prompt_obj.get("background_lock"))
+        camera = self._describe_idea_camera(prompt_obj.get("camera"))
+        foley, music = self._describe_idea_foley(prompt_obj.get("foley_and_ambience"))
+        dialogue_lines = self._idea_dialogue_lines(prompt_obj)
+        narration_text = " ".join(line["line"] for line in dialogue_lines).strip() or summary
+        narration_text = re.sub(r"\s+", " ", narration_text).strip()
+        narration_for_prompt = narration_text.replace('"', "'")
+        voice_hint = ""
+        if dialogue_lines:
+            voice_hint = str(dialogue_lines[0].get("voice") or "").strip()
+        if str(voice_profile_text or "").strip():
+            voice_hint = str(voice_profile_text or "").strip()
+        audio_voice = f"NARRATOR ({voice_hint}, voice-over)" if voice_hint else "NARRATOR (clear natural voice-over)"
+        scene_id = str(prompt_obj.get("scene_id") or index).strip() or str(index)
+
+        video_parts = []
+        if visual_style:
+            video_parts.append(visual_style.rstrip(".") + ".")
+        if summary:
+            video_parts.append(summary.rstrip(".") + ".")
+        if character_lock:
+            video_parts.append(f"Characters and consistency lock: {character_lock}.")
+        if background_lock:
+            video_parts.append(f"Setting/background: {background_lock}.")
+        if camera:
+            video_parts.append(f"Camera: {camera}.")
+        video_parts.append(
+            "Create a complete 8-second story beat with a clear beginning, middle, and ending; "
+            "keep motion natural, emotionally readable, and consistent with the source story."
+        )
+
+        audio_parts = []
+        if narration_for_prompt:
+            audio_parts.append(f'Audio: {audio_voice} says "{narration_for_prompt}".')
+        else:
+            audio_parts.append("Audio: no voice.")
+        if foley:
+            audio_parts.append(f"ASMR: {foley}.")
+        if music and music.lower() not in {"none", "no", "no music", "silent", "silence", "n/a"}:
+            audio_parts.append(f"BGM: {music}.")
+        else:
+            audio_parts.append("BGM: no music.")
+
+        strict_rules = [
+            "STRICT AUDIO RULE: NARRATOR is voice-over only. Never render the narrator visually and never trigger lip-sync for narrator dialogue.",
+            "STRICT LIP-SYNC RULE: unless a visible character is explicitly tagged as speaking in the scene, all visible characters keep their mouths closed with ZERO lip movement.",
+            "STRICT CHARACTER RULE: characters must match the character consistency lock exactly; do not redesign faces, bodies, outfits, colors, or signature props.",
+            "STRICT RULE: ZERO visible text in the video. No letters, numbers, subtitles, captions, logos, watermarks, or UI elements anywhere in the frame.",
+            "STRICTLY NO BGM; generate NO music or soundtrack unless BGM above explicitly asks for music. Only sounds listed in ASMR may exist.",
+        ]
+
+        return (
+            f"SCENE {scene_id}\n"
+            "VIDEO PROMPT:\n"
+            f"{' '.join(part for part in video_parts if part).strip()}\n"
+            "AUDIO / TTS:\n"
+            f"{' '.join(part for part in audio_parts if part).strip()}\n"
+            f"{' '.join(strict_rules)}"
+        ).strip()
+
+    def _storytelling_item_from_prompt(self, prompt_text: str, index: int) -> dict:
+        prompt_obj = self._parse_storytelling_prompt_object(prompt_text)
+        if not prompt_obj:
+            return {
+                "description": str(prompt_text or "").strip(),
+                "narration": "",
+                "source_type": "storytelling_image",
+                "aspect_ratio": str(getattr(self._cfg, "video_aspect_ratio", "9:16") or "9:16"),
+                "storytelling_index": int(index),
+            }
+
+        def compact_json(value, max_chars: int = 1800) -> str:
+            if value in (None, "", [], {}):
+                return ""
+            try:
+                text = json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+            except Exception:
+                text = str(value)
+            if len(text) > max_chars:
+                return text[:max_chars].rstrip() + "..."
+            return text
+
+        dialogue_lines: list[str] = []
+        dialogue = prompt_obj.get("dialogue")
+        if isinstance(dialogue, list):
+            for line in dialogue:
+                if isinstance(line, dict):
+                    line_text = str(line.get("line") or line.get("text") or line.get("content") or line.get("dialogue") or "").strip()
+                else:
+                    line_text = str(line or "").strip()
+                line_text = self._clean_storytelling_narration_line(line_text)
+                if line_text:
+                    dialogue_lines.append(line_text)
+
+        summary = str(prompt_obj.get("summary") or "").strip()
+        narration = " ".join(dialogue_lines).strip() or summary
+
+        parts = [
+            "Create one cinematic storytelling still image only; do not create a video.",
+            "No visible text, subtitles, captions, watermark, logo, UI, or written letters in the frame.",
+        ]
+        visual_style = str(prompt_obj.get("visual_style") or "").strip()
+        if visual_style:
+            parts.append(f"Output style: {visual_style}.")
+        if summary:
+            parts.append(f"Story moment: {summary}.")
+
+        character_lock = compact_json(prompt_obj.get("character_lock"))
+        if character_lock:
+            parts.append(f"Character consistency: {character_lock}.")
+        background_lock = compact_json(prompt_obj.get("background_lock"))
+        if background_lock:
+            parts.append(f"Setting/background: {background_lock}.")
+        camera = compact_json(prompt_obj.get("camera"), max_chars=700)
+        if camera:
+            parts.append(f"Camera/composition: {camera}.")
+        foley = compact_json(prompt_obj.get("foley_and_ambience"), max_chars=700)
+        if foley:
+            parts.append(f"Mood and atmosphere: {foley}.")
+        parts.append("Make the image expressive enough to support a narrated story scene with clear emotion and readable action.")
+
+        return {
+            "description": " ".join(part for part in parts if part).strip(),
+            "narration": narration.strip(),
+            "source_type": "storytelling_image",
+            "aspect_ratio": str(getattr(self._cfg, "video_aspect_ratio", "9:16") or "9:16"),
+            "storytelling_index": int(index),
+        }
+
     def _clean_copy_video_prompt_part(self, value: str) -> str:
         text = re.sub(r"\s+", " ", str(value or "")).strip()
         text = re.sub(r"^(scene action:|action:)\s*", "", text, flags=re.IGNORECASE)
         return text.rstrip(" .,;:")
 
-    def _build_copy_video_scene_prompt(self, scene: dict, identity_context_en: str) -> str:
+    def _copy_strength_instruction(self, copy_strength: int) -> str:
+        strength = _clamp_copy_strength(copy_strength)
+        if strength <= 60:
+            return (
+                "inspired adaptation only; keep the core idea, core video style, and emotional arc, "
+                "but use original character, environment, action, prop, and shot details"
+            )
+        if strength <= 75:
+            return (
+                "medium adaptation; preserve the main story beats, pacing, and style while changing "
+                "specific visual details enough to feel original"
+            )
+        if strength < 100:
+            return (
+                "close adaptation; preserve most scene beats, camera language, and style with light "
+                "variation in wording and secondary details"
+            )
+        return "faithful recreation; preserve the source structure, scene order, actions, camera language, and style"
+
+    def _build_copy_video_scene_prompt(
+        self,
+        scene: dict,
+        identity_context_en: str,
+        copy_strength: int = 100,
+        user_edit_instruction: str = "",
+    ) -> str:
         scene_id = self._clean_copy_video_prompt_part(scene.get("scene_id") or "scene_001").lower()
+        copy_strength = _clamp_copy_strength(copy_strength)
+        narrative_role = self._clean_copy_video_prompt_part(scene.get("narrative_role") or "")
 
         shot_type = self._clean_copy_video_prompt_part(scene.get("shot_type") or "medium shot")
         camera_angle = self._clean_copy_video_prompt_part(scene.get("camera_angle") or "eye-level")
@@ -1025,14 +1472,25 @@ class StatusPanel(QWidget):
         environment_en = self._clean_copy_video_prompt_part(scene.get("environment_en") or "")
         mood_en = self._clean_copy_video_prompt_part(scene.get("mood_en") or "")
         motion_en = self._clean_copy_video_prompt_part(scene.get("motion_en") or "")
+        custom_instruction = self._clean_copy_video_prompt_part(
+            scene.get("custom_instruction_en")
+            or scene.get("user_edit_instruction_en")
+            or scene.get("adaptation_instruction_en")
+            or user_edit_instruction
+        )
 
         parts: list[str] = [
             f"{scene_id.upper()}. Shot {shot_type}, {camera_angle}, {framing}, {lens_feel}.",
+            f"Copy direction ({copy_strength}%): {self._copy_strength_instruction(copy_strength)}.",
             f"Style: {style_block}.",
             f"Characters and objects are illustrated with {consistency_block}.",
             f"Movements are {motion_style_block}.",
         ]
 
+        if narrative_role:
+            parts.append(f"Narrative role: {narrative_role}.")
+        if custom_instruction:
+            parts.append(f"User edit instruction to apply consistently: {custom_instruction}.")
         if identity_block:
             parts.append(f"Character consistency lock: {identity_block}.")
         if scene_action_en:
@@ -1072,12 +1530,21 @@ class StatusPanel(QWidget):
         voice_actor_key: str,
         target_language: str,
         source_video_path: str,
+        video_model: str = "VEO 3",
     ) -> dict | None:
         self._ensure_status_snapshot_loaded()
         if not isinstance(copy_data, dict):
             return None
 
         characters = copy_data.get("characters") if isinstance(copy_data.get("characters"), list) else []
+        copy_strength = _clamp_copy_strength(copy_data.get("copy_strength_percent") or copy_data.get("copy_strength") or 100)
+        user_edit_instruction = str(
+            copy_data.get("user_edit_instruction_en")
+            or copy_data.get("user_edit_instruction")
+            or copy_data.get("custom_instruction_en")
+            or copy_data.get("custom_instruction")
+            or ""
+        ).strip()
         identity_map: dict[str, str] = {}
         for item in characters:
             if not isinstance(item, dict):
@@ -1099,7 +1566,12 @@ class StatusPanel(QWidget):
             character_ids = [str(x).strip() for x in (scene.get("character_ids") or []) if str(x).strip()]
             identity_lines = [identity_map.get(character_id, "") for character_id in character_ids if identity_map.get(character_id, "")]
             identity_context_en = "; ".join([value for value in identity_lines if value])
-            prompt_text = self._build_copy_video_scene_prompt(scene, identity_context_en)
+            prompt_text = self._build_copy_video_scene_prompt(
+                scene,
+                identity_context_en,
+                copy_strength,
+                user_edit_instruction,
+            )
             if not prompt_text:
                 continue
 
@@ -1113,6 +1585,15 @@ class StatusPanel(QWidget):
                 "dialogue_original": dialogue_original,
                 "dialogue_target": dialogue_target,
                 "video_prompt_en": video_prompt_en,
+                "copy_strength_percent": copy_strength,
+                "user_edit_instruction": user_edit_instruction,
+                "narrative_role": str(scene.get("narrative_role") or "").strip(),
+                "custom_instruction_en": str(
+                    scene.get("custom_instruction_en")
+                    or scene.get("user_edit_instruction_en")
+                    or scene.get("adaptation_instruction_en")
+                    or ""
+                ).strip(),
                 "identity_context_en": identity_context_en,
                 "shot_type": str(scene.get("shot_type") or "medium shot").strip(),
                 "camera_angle": str(scene.get("camera_angle") or "eye-level").strip(),
@@ -1152,7 +1633,14 @@ class StatusPanel(QWidget):
         self._snapshot_output_count_for_rows(rows)
         self._update_empty_state()
         self._mark_rows_pending(rows)
-        return {"mode_key": self.MODE_COPY_VIDEO, "rows": rows, "label": "VEO3 - Sao chép video"}
+        
+        mode_key = self.MODE_GROK_TEXT_TO_VIDEO if video_model == "GROK" else self.MODE_COPY_VIDEO
+        label = "GROK - Sao chép video" if video_model == "GROK" else "VEO3 - Sao chép video"
+        
+        for r in rows:
+            self._set_row_mode_meta(r, mode_key, payload=self._table_data.get(r, {}))
+            
+        return {"mode_key": mode_key, "rows": rows, "label": label}
 
     def enqueue_grok_text_to_video(self, prompts: list[str]) -> dict | None:
         self._ensure_status_snapshot_loaded()
@@ -1285,6 +1773,15 @@ class StatusPanel(QWidget):
             character_name = str(raw.get("character_name") or "").strip()
             if character_name:
                 payload["character_name"] = character_name
+            narration = str(raw.get("narration") or "").strip()
+            if narration:
+                payload["narration"] = narration
+            storytelling_index = raw.get("storytelling_index")
+            if storytelling_index is not None:
+                try:
+                    payload["storytelling_index"] = int(storytelling_index)
+                except Exception:
+                    payload["storytelling_index"] = str(storytelling_index)
             self._set_row_mode_meta(row, self.MODE_CREATE_IMAGE_PROMPT, payload=payload)
             rows.append(row)
 
@@ -1294,7 +1791,10 @@ class StatusPanel(QWidget):
             return None
 
         self._sync_stt_and_prompt_ids()
-        self._snapshot_output_count_for_rows(rows)
+        if any(self._is_storytelling_row(int(r)) for r in rows):
+            self._set_output_count_for_rows(rows, 1)
+        else:
+            self._snapshot_output_count_for_rows(rows)
         self._update_empty_state()
         self._mark_rows_pending(rows)
         return {"mode_key": self.MODE_CREATE_IMAGE_PROMPT, "rows": rows, "label": "VEO3 - Tạo ảnh từ prompt"}
@@ -1370,6 +1870,57 @@ class StatusPanel(QWidget):
         self._update_empty_state()
         self._mark_rows_pending(rows)
         return {"mode_key": self.MODE_CHARACTER_SYNC, "rows": rows, "label": "VEO3 - Đồng bộ nhân vật"}
+
+    def enqueue_grok_character_sync(self, prompts: list[str], characters: list[dict]) -> dict | None:
+        self._ensure_status_snapshot_loaded()
+        clean_prompts = [str(p or "").strip() for p in (prompts or []) if str(p or "").strip()]
+        clean_characters: list[dict] = []
+        for ch in characters or []:
+            if not isinstance(ch, dict):
+                continue
+            name = str(ch.get("name") or "").strip()
+            path = str(ch.get("path") or "").strip()
+            if name and path:
+                clean_characters.append({"name": name, "path": path})
+
+        if not clean_prompts:
+            QMessageBox.warning(self, "Thiếu prompt", "Không có prompt hợp lệ để chạy GROK Đồng bộ nhân vật.")
+            return None
+        if not clean_characters:
+            QMessageBox.warning(self, "Thiếu ảnh nhân vật", "Không có ảnh nhân vật hợp lệ để chạy GROK Đồng bộ nhân vật.")
+            return None
+
+        rows: list[int] = []
+        for prompt_text in clean_prompts:
+            found_paths = []
+            lowered = prompt_text.lower()
+            for ch in clean_characters:
+                name = ch["name"]
+                escaped = re.escape(name.lower())
+                pattern = r"(?<![\w])" + escaped + r"(?![\w])"
+                m = re.search(pattern, lowered, flags=re.IGNORECASE)
+                if m or name.lower() in lowered:
+                    if ch["path"] not in found_paths:
+                        found_paths.append(ch["path"])
+            
+            image_link = "|".join(found_paths)
+            if not image_link:
+                image_link = clean_characters[0]["path"]
+
+            row = self.table.rowCount()
+            self._add_row(row, prompt_text)
+            self._set_row_mode_meta(
+                row,
+                self.MODE_GROK_IMAGE_TO_VIDEO,
+                payload={"prompt": prompt_text, "image_link": image_link},
+            )
+            rows.append(row)
+
+        self._sync_stt_and_prompt_ids()
+        self._snapshot_output_count_for_rows(rows)
+        self._update_empty_state()
+        self._mark_rows_pending(rows)
+        return {"mode_key": self.MODE_GROK_IMAGE_TO_VIDEO, "rows": rows, "label": "GROK - Đồng bộ nhân vật"}
 
     def start_queued_job(self, mode_key: str, rows: list[int]) -> bool:
         self._global_stop_requested = False
@@ -2784,18 +3335,39 @@ class StatusPanel(QWidget):
             QMessageBox.information(self, "Đang chạy", "Workflow đang chạy, hãy dừng trước khi chạy mới.")
             return
 
-        idea_text = str((idea_settings or {}).get("idea") or "").strip()
-        if not idea_text:
+        idea_settings = idea_settings or {}
+        idea_text = str(idea_settings.get("idea") or "").strip()
+        source_mode = str(idea_settings.get("source_mode") or "manual").strip()
+        source_kind = str(idea_settings.get("source_kind") or "auto").strip()
+        source_url = str(idea_settings.get("source_url") or "").strip()
+        source_pdf_path = str(idea_settings.get("source_pdf_path") or "").strip()
+        if source_mode == "link" and not source_url:
+            QMessageBox.warning(self, "Thiếu link", "Vui lòng dán link báo/truyện chữ/truyện tranh hoặc link PDF.")
+            return
+        if source_mode == "pdf" and not source_pdf_path:
+            QMessageBox.warning(self, "Thiếu file PDF", "Vui lòng chọn file PDF nguồn.")
+            return
+        if source_mode not in {"link", "pdf"} and not idea_text:
             QMessageBox.warning(self, "Thiếu kịch bản", "Vui lòng nhập nội dung ở ô Kịch bản/ Ý tưởng.")
             return
 
-        scene_count = int((idea_settings or {}).get("scene_count") or 1)
-        style = str((idea_settings or {}).get("style") or "3d_Pixar")
-        language = str((idea_settings or {}).get("dialogue_language") or "Tiếng Việt (vi-VN)")
+        scene_count = int(idea_settings.get("scene_count") or 1)
+        style = str(idea_settings.get("style") or "3d_Pixar")
+        language = str(idea_settings.get("dialogue_language") or "Tiếng Việt (vi-VN)")
+        output_mode = "storytelling_image" if str(idea_settings.get("output_mode") or "").strip() == "storytelling_image" else "video"
+        try:
+            setattr(self._cfg, "idea_voice_profile", str(idea_settings.get("voice_profile") or "None_NoVoice"))
+            setattr(self._cfg, "idea_tts_provider", str(idea_settings.get("tts_provider") or "auto"))
+            tts_voice = str(idea_settings.get("tts_voice") or "").strip()
+            if tts_voice:
+                setattr(self._cfg, "idea_tts_voice", tts_voice)
+        except Exception:
+            pass
 
         project_name = self._resolve_project_name()
 
-        self._append_run_log(f"🚀 Khởi động Idea to Video | project={project_name} | scenes={scene_count} | style={style}")
+        mode_label = "Ảnh storytelling" if output_mode == "storytelling_image" else "Video"
+        self._append_run_log(f"🚀 Khởi động Idea to Video | project={project_name} | scenes={scene_count} | style={style} | output={mode_label}")
         self._append_run_log("⏳ Đang tạo prompt từ ý tưởng...")
         self._update_empty_state()
         self._idea_worker = _IdeaToVideoWorker(
@@ -2804,6 +3376,11 @@ class StatusPanel(QWidget):
             scene_count=scene_count,
             style=style,
             language=language,
+            source_mode=source_mode,
+            source_kind=source_kind,
+            source_url=source_url,
+            source_pdf_path=source_pdf_path,
+            output_mode=output_mode,
             parent=self,
         )
         self._idea_worker.log_message.connect(self._append_run_log)
@@ -2811,7 +3388,17 @@ class StatusPanel(QWidget):
         self._idea_worker.start()
         self.runStateChanged.emit(True)
 
-    def start_copy_video(self, video_path: str, target_language: str, voice_actor_key: str, auto_run: bool, style: str = "Tự động nhận diện") -> None:
+    def start_copy_video(
+        self,
+        video_path: str,
+        target_language: str,
+        voice_actor_key: str,
+        auto_run: bool,
+        style: str = "Tự động nhận diện",
+        copy_strength: int = 100,
+        user_edit_instruction: str = "",
+        video_model: str = "VEO 3",
+    ) -> None:
         if not video_path or not os.path.exists(video_path):
             QMessageBox.warning(self, "Loi", f"Khong tim thay video: {video_path}")
             return
@@ -2822,14 +3409,27 @@ class StatusPanel(QWidget):
         if not profile_dir:
             profile_dir = os.path.expanduser("~\\AppData\\Local\\Google\\Chrome\\User Data\\Default")
         bootstrap_url = str(account.get("URL_GEN_TOKEN") or "https://labs.google/fx/vi/tools/flow").strip()
+        copy_strength = _clamp_copy_strength(copy_strength)
+        user_edit_instruction = str(user_edit_instruction or "").strip()
         self._append_run_log(
-            f"ðŸš€ Khoi dong Copy Video | video={os.path.basename(video_path)} | target={normalize_locale(target_language) or 'en-US'}"
+            f"🚀 Khởi động Copy Video | video={os.path.basename(video_path)} | target={normalize_locale(target_language) or 'en-US'} | copy={copy_strength}%"
         )
+        if user_edit_instruction:
+            self._append_run_log("📝 Có ý tưởng chỉnh sửa riêng; Gemini sẽ áp dụng vào bản sao chép.")
         self._update_empty_state()
-        self._clone_worker = _GeminiCloneWorker(video_path, profile_dir, target_language, bootstrap_url, style, self)
+        self._clone_worker = _GeminiCloneWorker(
+            video_path,
+            profile_dir,
+            target_language,
+            bootstrap_url,
+            style,
+            copy_strength,
+            user_edit_instruction,
+            self,
+        )
         self._clone_worker.log_message.connect(self._append_run_log)
         self._clone_worker.completed.connect(
-            lambda res, voice_key=str(voice_actor_key or "None_NoVoice"), lang=str(target_language or "en-US"), src=str(video_path or ""), ar=bool(auto_run): self._on_copy_video_complete(res, voice_key, lang, ar, src)
+            lambda res, voice_key=str(voice_actor_key or "None_NoVoice"), lang=str(target_language or "en-US"), src=str(video_path or ""), ar=bool(auto_run), strength=copy_strength, edit=user_edit_instruction, vmodel=video_model: self._on_copy_video_complete(res, voice_key, lang, ar, src, strength, edit, vmodel)
         )
         self._clone_worker.start()
         self.runStateChanged.emit(True)
@@ -2841,50 +3441,65 @@ class StatusPanel(QWidget):
         target_language: str,
         auto_run: bool,
         source_video_path: str,
+        copy_strength: int = 100,
+        user_edit_instruction: str = "",
+        video_model: str = "VEO 3",
     ) -> None:
         self._clone_worker = None
         if not result.get("success"):
-            self._append_run_log(f"âŒ Loi Copy Video: {result.get('message')}")
+            self._append_run_log(f"❌ Lỗi Copy Video: {result.get('message')}")
             self.runStateChanged.emit(False)
             return
 
         data = result.get("data", {})
         if not isinstance(data, dict):
-            self._append_run_log("âŒ Gemini khong tra ve JSON hop le.")
+            self._append_run_log("❌ Gemini không trả về JSON hợp lệ.")
             self.runStateChanged.emit(False)
             return
 
         self._append_run_log(
-            f"âœ… Gemini da phan tich xong: {len(data.get('characters') or [])} nhan vat, {len(data.get('scenes') or [])} scene."
+            f"✅ Gemini đã phân tích xong: {len(data.get('characters') or [])} nhân vật, {len(data.get('scenes') or [])} scene."
         )
+        data["copy_strength_percent"] = _clamp_copy_strength(data.get("copy_strength_percent") or copy_strength)
+        user_edit_instruction = str(
+            data.get("user_edit_instruction_en")
+            or data.get("user_edit_instruction")
+            or user_edit_instruction
+            or ""
+        ).strip()
+        if user_edit_instruction:
+            data["user_edit_instruction"] = user_edit_instruction
         character_design = data.get("character_design", {}) if isinstance(data.get("character_design"), dict) else {}
         designed_characters = character_design.get("characters") if isinstance(character_design.get("characters"), list) else []
         if designed_characters:
             self._append_run_log(f"🎨 Đã làm giàu hồ sơ nhân vật: {len(designed_characters)} nhân vật.")
         image_payload = self._enqueue_copy_video_character_sheet_prompts(data)
         if image_payload:
-            self._append_run_log(f"🖼️ Đã tạo {len(image_payload.get('rows') or [])} prompt ảnh sheet 4 góc cho nhân vật.")
+            self._append_run_log(f"🖼️ Đã tạo {len(image_payload.get('rows') or [])} prompt ảnh nhân vật. Chờ tạo xong sẽ đổ video.")
+
         self._populate_character_sync_from_copy_video(data, source_video_path)
         payload = self.enqueue_copy_video_scenes(
             copy_data=data,
             voice_actor_key=voice_actor_key,
             target_language=target_language,
             source_video_path=source_video_path,
+            video_model=video_model,
         )
-        if not payload:
-            self.runStateChanged.emit(False)
-            return
+        if payload:
+            self._append_run_log("🎬 Đã tạo prompt video.")
 
         if auto_run:
-            self._append_run_log("âš¡ Auto-run Copy Video: dua vao queue render ngay.")
-            try:
-                jobs = []
-                if image_payload:
-                    jobs.append(image_payload)
+            self._append_run_log("⚡ Auto-run Copy Video: đưa vào queue render ngay.")
+            jobs = []
+            if image_payload:
+                jobs.append(image_payload)
+            if payload:
                 jobs.append(payload)
-                self.queueJobsRequested.emit(jobs)
-            except Exception:
-                pass
+            if jobs:
+                try:
+                    self.queueJobsRequested.emit(jobs)
+                except Exception:
+                    pass
 
         self.runStateChanged.emit(False)
 
@@ -2900,8 +3515,11 @@ class StatusPanel(QWidget):
 
         characters = copy_data.get("characters") if isinstance(copy_data.get("characters"), list) else []
         scenes = copy_data.get("scenes") if isinstance(copy_data.get("scenes"), list) else []
+        copy_strength = _clamp_copy_strength(copy_data.get("copy_strength_percent") or copy_data.get("copy_strength") or 100)
+        use_source_frames = copy_strength > 60
         reference_dir = Path(DATA_GENERAL_DIR) / "copy_video_refs"
-        reference_dir.mkdir(parents=True, exist_ok=True)
+        if use_source_frames:
+            reference_dir.mkdir(parents=True, exist_ok=True)
         duration_sec = self._probe_video_duration_seconds(source_video_path)
         total_scenes = max(1, len(scenes))
 
@@ -2927,9 +3545,11 @@ class StatusPanel(QWidget):
             display_name = str(character.get("display_name") or character_id).strip() or character_id
             if not character_id:
                 continue
-            timestamp = self._estimate_copy_video_timestamp(character_id, scenes, duration_sec, total_scenes, idx)
-            output_path = reference_dir / f"{Path(source_video_path).stem}_{character_id}.png"
-            frame_path = self._extract_video_frame(source_video_path, float(timestamp), output_path)
+            frame_path = ""
+            if use_source_frames:
+                timestamp = self._estimate_copy_video_timestamp(character_id, scenes, duration_sec, total_scenes, idx)
+                output_path = reference_dir / f"{Path(source_video_path).stem}_{character_id}.png"
+                frame_path = self._extract_video_frame(source_video_path, float(timestamp), output_path)
             character_items.append(
                 {
                     "character_id": character_id,
@@ -3093,7 +3713,7 @@ class StatusPanel(QWidget):
 
         self._append_run_log(f"🚀 Khởi động Clone Video (Pro Max) | video={os.path.basename(video_path)}")
         self._update_empty_state()
-        self._clone_worker = _GeminiCloneWorker(video_path, profile_dir, "en-US", "", "Tự động nhận diện", self)
+        self._clone_worker = _GeminiCloneWorker(video_path, profile_dir, "en-US", "", "Tự động nhận diện", 100, "", self)
         self._clone_worker.log_message.connect(self._append_run_log)
         self._clone_worker.completed.connect(lambda res: self._on_clone_complete(res, voice_profile, auto_run))
         self._clone_worker.start()
@@ -3173,8 +3793,30 @@ class StatusPanel(QWidget):
             self.runStateChanged.emit(False)
             return
 
-        self._append_run_log(f"✅ Idea to Video tạo {len(prompt_texts)} prompt. Bắt đầu chạy Text to Video...")
-        self.start_text_to_video(prompt_texts)
+        output_mode = "storytelling_image" if str((result or {}).get("_output_mode") or "").strip() == "storytelling_image" else "video"
+        if output_mode == "storytelling_image":
+            storytelling_items = [
+                self._storytelling_item_from_prompt(prompt_text, idx)
+                for idx, prompt_text in enumerate(prompt_texts, start=1)
+            ]
+            payload = self.enqueue_generate_image_from_prompts(storytelling_items)
+            if not payload:
+                self.runStateChanged.emit(False)
+                return
+            self._append_run_log(f"✅ Idea to Video tạo {len(storytelling_items)} cảnh. Bắt đầu tạo ảnh Storytelling...")
+            started = self.start_queued_job(str(payload.get("mode_key") or ""), list(payload.get("rows") or []))
+            if not started:
+                self.runStateChanged.emit(False)
+            return
+
+        idea_voice_key = str(getattr(self._cfg, "idea_voice_profile", "None_NoVoice") or "None_NoVoice")
+        idea_voice_profile_text = get_voice_profile_text(idea_voice_key)
+        video_prompt_texts = [
+            self._idea_video_prompt_from_prompt_text(prompt_text, idx, idea_voice_profile_text)
+            for idx, prompt_text in enumerate(prompt_texts, start=1)
+        ]
+        self._append_run_log(f"✅ Idea to Video tạo {len(video_prompt_texts)} prompt tiếng Anh chuẩn VEO. Bắt đầu chạy Text to Video...")
+        self.start_text_to_video(video_prompt_texts)
 
     def _start_text_to_video_rows(self, rows: list[int]) -> bool:
         if not rows:
@@ -3487,15 +4129,25 @@ class StatusPanel(QWidget):
             prompt_text = str((prompt_item.text() if prompt_item is not None else "") or "").strip()
             if not prompt_text:
                 continue
-            clean_items.append({"id": self._prompt_id_of_row(int(r)) or str(int(r) + 1), "description": prompt_text})
+            payload = self._row_mode_payload(int(r))
+            item_data = {"id": self._prompt_id_of_row(int(r)) or str(int(r) + 1), "description": prompt_text}
+            if isinstance(payload, dict):
+                for key, value in payload.items():
+                    if key in {"id", "description", "prompt"}:
+                        continue
+                    item_data[key] = value
+            clean_items.append(item_data)
             if not aspect_ratio_override:
-                payload = self._row_mode_payload(int(r))
                 aspect_ratio_override = str(payload.get("aspect_ratio") or "").strip() if isinstance(payload, dict) else ""
 
         if not clean_items:
             return False
 
-        self._snapshot_output_count_for_rows(rows)
+        storytelling_batch = any(self._is_storytelling_row(int(r)) for r in rows)
+        if storytelling_batch:
+            self._set_output_count_for_rows(rows, 1)
+        else:
+            self._snapshot_output_count_for_rows(rows)
         project_name = self._resolve_project_name()
         project_data = {
             "prompts": {"text_to_video": clean_items},
@@ -3503,7 +4155,7 @@ class StatusPanel(QWidget):
             "_worker_controls_lifecycle": True,
             "aspect_ratio": str(aspect_ratio_override or getattr(self._cfg, "video_aspect_ratio", "9:16") or "9:16"),
             "veo_model": str(getattr(self._cfg, "veo_model", "Veo 3.1 - Fast") or "Veo 3.1 - Fast"),
-            "output_count": int(getattr(self._cfg, "output_count", 1) or 1),
+            "output_count": 1 if storytelling_batch else int(getattr(self._cfg, "output_count", 1) or 1),
             "video_output_dir": str(getattr(self._cfg, "video_output_dir", "") or "").strip(),
         }
 
@@ -4108,6 +4760,7 @@ class StatusPanel(QWidget):
                 pass
         self._workflows = alive_workflows
         self._workflow = self._workflows[-1] if self._workflows else None
+
         self._refresh_pending_positions()
         if not self._workflows:
             self._finalize_unresolved_active_rows_after_exit()
@@ -4194,12 +4847,14 @@ class StatusPanel(QWidget):
                 break
 
         if all_terminal:
+            story_started = self._start_storytelling_export_for_rows(rows)
             self._active_queue_rows.clear()
             self._awaiting_completion_confirmation = False
             self._completion_poll_attempts = 0
             self._completion_poll_scheduled = False
             self._close_all_workflow_chrome_profiles_async()
-            self.runStateChanged.emit(False)
+            if not story_started:
+                self.runStateChanged.emit(False)
             return
 
         self._completion_poll_attempts += 1
@@ -4216,6 +4871,109 @@ class StatusPanel(QWidget):
             return
 
         self._schedule_completion_poll(500)
+
+    def _start_storytelling_export_for_rows(self, rows: list[int]) -> bool:
+        story_rows = [int(r) for r in (rows or []) if self._is_storytelling_row(int(r))]
+        if not story_rows:
+            return False
+
+        items: list[dict] = []
+        skipped = 0
+        def story_order(row: int) -> int:
+            try:
+                return int(self._row_mode_payload(row).get("storytelling_index") or (row + 1))
+            except Exception:
+                return int(row) + 1
+
+        story_rows.sort(key=story_order)
+        for r in story_rows:
+            media_map = self._row_media_map(r)
+            image_path = str(media_map.get(1) or "").strip()
+            if not image_path and media_map:
+                try:
+                    image_path = str(media_map[sorted(media_map.keys())[0]] or "").strip()
+                except Exception:
+                    image_path = ""
+            if not image_path or not os.path.isfile(image_path):
+                skipped += 1
+                continue
+
+            payload = self._row_mode_payload(r)
+            prompt_item = self.table.item(int(r), self.COL_PROMPT)
+            fallback_text = str((prompt_item.text() if prompt_item is not None else "") or "").strip()
+            narration = str(payload.get("narration") or "").strip()
+            if not narration:
+                prompt_obj = self._parse_storytelling_prompt_object(fallback_text)
+                narration = str(prompt_obj.get("summary") or "").strip() if isinstance(prompt_obj, dict) else ""
+            items.append(
+                {
+                    "image_path": image_path,
+                    "narration": narration,
+                    "row": int(r),
+                }
+            )
+
+        if skipped:
+            self._append_run_log(f"⚠️ Bỏ qua {skipped} cảnh Storytelling chưa có ảnh hợp lệ.")
+        if not items:
+            self._append_run_log("⚠️ Không có ảnh Storytelling thành công để xuất MP4.")
+            return False
+
+        output_dir = str(getattr(self._cfg, "video_output_dir", "") or "").strip()
+        if not output_dir:
+            output_dir = str(Path(DATA_GENERAL_DIR) / "storytelling_exports")
+
+        voice_key = str(getattr(self._cfg, "idea_voice_profile", "None_NoVoice") or "None_NoVoice")
+        if voice_key == "None_NoVoice":
+            voice_key = str(getattr(self._cfg, "voice_profile", "None_NoVoice") or "None_NoVoice")
+        tts_provider = str(getattr(self._cfg, "idea_tts_provider", "auto") or "auto").strip().lower()
+        if tts_provider not in {"auto", "edge", "sapi", "off"}:
+            tts_provider = "auto"
+        if tts_provider == "off":
+            voice_key = "None_NoVoice"
+        else:
+            tts_voice = str(getattr(self._cfg, "idea_tts_voice", "") or "").strip()
+            if tts_voice:
+                voice_key = tts_voice
+        aspect_ratio = str(getattr(self._cfg, "video_aspect_ratio", "9:16") or "9:16")
+
+        self._append_run_log(f"🎞️ Đang xuất MP4 Storytelling từ {len(items)} ảnh...")
+        worker = _StorytellingExportWorker(
+            items=items,
+            output_dir=output_dir,
+            voice_key=voice_key,
+            tts_provider=tts_provider,
+            aspect_ratio=aspect_ratio,
+            parent=self,
+        )
+        worker.log_message.connect(self._append_run_log)
+        worker.completed.connect(self._on_storytelling_export_complete)
+        self._workflow = worker
+        self._workflows.append(worker)
+        worker.start()
+        self.runStateChanged.emit(True)
+        return True
+
+    def _on_storytelling_export_complete(self, result: dict) -> None:
+        sender = self.sender()
+        alive_workflows: list[QThread] = []
+        for wf in list(self._workflows):
+            if sender is not None and wf is sender:
+                continue
+            try:
+                if wf and wf.isRunning():
+                    alive_workflows.append(wf)
+            except Exception:
+                pass
+        self._workflows = alive_workflows
+        self._workflow = self._workflows[-1] if self._workflows else None
+
+        if bool((result or {}).get("success")):
+            out_path = str((result or {}).get("path") or "").strip()
+            self._append_run_log(f"✅ Đã xuất MP4 Storytelling: {out_path}")
+        else:
+            self._append_run_log(f"❌ Lỗi xuất MP4 Storytelling: {(result or {}).get('message')}")
+        self.runStateChanged.emit(bool(self._workflows))
 
     def retry_selected_rows(self) -> None:
         rows = self._selected_rows()
@@ -4369,3 +5127,25 @@ class StatusPanel(QWidget):
             QMessageBox.information(self, "Không có lỗi", "Không có dòng lỗi để tạo lại.")
             return
         self._start_rows_by_mode(rows)
+
+    def _process_pending_copy_video_task(self, task: dict) -> None:
+        data = task.get('data', {})
+        voice_actor_key = task.get('voice_actor_key', '')
+        target_language = task.get('target_language', '')
+        source_video_path = task.get('source_video_path', '')
+        auto_run = task.get('auto_run', False)
+
+        self._populate_character_sync_from_copy_video(data, source_video_path)
+        payload = self.enqueue_copy_video_scenes(
+            copy_data=data,
+            voice_actor_key=voice_actor_key,
+            target_language=target_language,
+            source_video_path=source_video_path,
+            video_model=video_model,
+        )
+        if payload and auto_run:
+            self._append_run_log('⚡ Tạo ảnh hoàn tất. Tiếp tục đẩy Video Scenes vào hàng chờ.')
+            try:
+                self.queueJobsRequested.emit([payload])
+            except Exception:
+                pass

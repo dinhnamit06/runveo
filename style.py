@@ -47,6 +47,24 @@ STYLE_JSON = {
     "Realistic_CGI": {
         "visual_style": "Photorealistic CGI rendering, hyperrealistic human features, lifelike skin textures with subsurface scattering, realistic hair physics, accurate fabric simulation, physically-based rendering (PBR), volumetric lighting, ray-traced reflections, cinematic depth of field. Style reference: Avatar, The Jungle Book (2016). NOT cartoon, NOT stylized, soft afternoon sun, long shadows, photorealistic rendering, en-US dialogue in brackets, no text overlays."
     },
+    "Hyper_Realistic": {
+        "visual_style": "Hyper-realistic live-action photography style with real human actors, detailed natural skin texture, authentic clothing, real-world environments, cinematic lighting, natural color grading, ultra-high resolution, shallow depth of field when appropriate, realistic camera movement, documentary-level physical detail, no stylization. Convert any cartoon/anime/comic source into believable real-life scenes. NOT cartoon, NOT anime, NOT illustration, NOT 3D render, NOT CGI, NOT stylized. No visible text, subtitles, captions, logos, watermarks, or UI."
+    },
+    "Stick_Figure": {
+        "visual_style": "Minimal expressive stick-figure animation style. Characters are clean black stick figures with simple circle heads and clear body-line poses, readable silhouettes, simple facial marks only when needed, plain flat-color backgrounds, minimal props, strong visual clarity, smooth simple motion. Preserve story beats through gesture, staging, timing, and composition rather than detailed character design. NOT realistic, NOT 3D, NOT CGI, NOT detailed anatomy, NOT photorealistic. No visible text, subtitles, captions, logos, watermarks, or UI."
+    },
+    "Comic_Western": {
+        "visual_style": "Western comic book illustration style with bold ink outlines, dynamic panel-like composition without visible panels, halftone texture, expressive poses, dramatic shadows, saturated but controlled colors, clean readable action, graphic-novel lighting, cinematic framing. NOT photorealistic, NOT live-action, NOT 3D render. No visible text, speech bubbles, subtitles, captions, logos, watermarks, or UI."
+    },
+    "Manga_Black_White": {
+        "visual_style": "Black-and-white manga illustration style, clean ink linework, screentone shading, expressive manga faces, dynamic action poses, cinematic composition, high contrast, crisp panel-inspired framing without visible panel borders. Keep all narration and dialogue out of the image. NOT photorealistic, NOT live-action, NOT 3D, NOT colored anime. No visible text, speech bubbles, subtitles, captions, logos, watermarks, or UI."
+    },
+    "Flat_Illustration_2D": {
+        "visual_style": "Flat 2D editorial illustration style with simplified geometric forms, clean vector-like shapes, controlled color palette, soft minimal shadows, clear readable silhouettes, modern explainer-video composition, smooth but simple animation. NOT photorealistic, NOT 3D, NOT CGI, NOT detailed comic linework. No visible text, subtitles, captions, logos, watermarks, or UI."
+    },
+    "Low_Poly_3D": {
+        "visual_style": "Low-poly 3D animation style with simplified polygonal models, faceted surfaces, stylized lighting, clean geometric environments, readable character silhouettes, controlled color palette, charming game-like rendering, smooth camera movement. NOT photorealistic, NOT live-action, NOT 2D drawing. No visible text, subtitles, captions, logos, watermarks, or UI."
+    },
     "Reallistic_CGI": {
         "visual_style": "Photorealistic CGI rendering, hyperrealistic human features, lifelike skin textures with subsurface scattering, realistic hair physics, accurate fabric simulation, physically-based rendering (PBR), volumetric lighting, ray-traced reflections, cinematic depth of field. Style reference: Avatar, The Jungle Book (2016). NOT cartoon, NOT stylized, soft afternoon sun, long shadows, photorealistic rendering, en-US dialogue in brackets, no text overlays."
     },

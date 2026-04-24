@@ -2,6 +2,7 @@ import os
 import subprocess
 import sys
 import io
+import importlib.util
 from pathlib import Path
 
 # Force UTF-8 encoding for stdout to handle special characters in paths
@@ -63,6 +64,11 @@ def build():
         # The entry point script
         "run_veo_4.0.py"
     ]
+
+    if importlib.util.find_spec("edge_tts") is not None:
+        cmd.extend(["--collect-all", "edge_tts", "--hidden-import", "edge_tts"])
+    else:
+        print("[WARN] edge_tts is not installed; Edge TTS will not be bundled. Install with: pip install edge-tts")
 
 
 

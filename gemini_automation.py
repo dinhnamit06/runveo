@@ -61,6 +61,50 @@ def _normalize_text(value: Any) -> str:
     return str(value or "").strip()
 
 
+def _normalize_copy_strength(value: Any) -> int:
+    try:
+        strength = int(value)
+    except Exception:
+        strength = 100
+    return max(50, min(100, strength))
+
+
+def _normalize_user_edit_instruction(value: Any, max_chars: int = 1600) -> str:
+    text = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", "", str(value or ""))
+    text = re.sub(r"\s+", " ", text).strip()
+    if len(text) > max_chars:
+        text = text[:max_chars].rstrip()
+    return text
+
+
+def _copy_strength_prompt_block(copy_strength: int) -> str:
+    strength = _normalize_copy_strength(copy_strength)
+    if strength <= 60:
+        strategy = (
+            "50% inspired adaptation: copy only the core idea, core visual style, and emotional arc. "
+            "Do not recreate exact dialogue, exact characters, exact outfits, exact props, exact setting, or shot-by-shot staging. "
+            "Create a fresh short-video version with a clear opening, body/development, and ending/resolution."
+        )
+    elif strength <= 75:
+        strategy = (
+            "medium adaptation: keep the main concept, story beats, pacing, and visual style, but change specific visual details, "
+            "character designs, locations, props, and some actions enough to feel original."
+        )
+    elif strength < 100:
+        strategy = (
+            "close adaptation: preserve most scene beats, camera language, pacing, and style, with light variation in wording and secondary details."
+        )
+    else:
+        strategy = "100% faithful recreation: preserve source structure, scene order, actions, camera language, dialogue meaning, and style as closely as possible."
+
+    return (
+        f"Copy strength: {strength}%.\n"
+        f"Strategy for this task: {strategy}\n"
+        "Narrative requirement: every output must work as a complete short video with opening, body/development, and ending/resolution. "
+        "Use narrative_role values such as opening, body, and ending for scenes.\n"
+    )
+
+
 def _normalize_scene_ids(raw_ids: Any, default_character_ids: list[str]) -> list[str]:
     out: list[str] = []
     if isinstance(raw_ids, list):
@@ -73,8 +117,25 @@ def _normalize_scene_ids(raw_ids: Any, default_character_ids: list[str]) -> list
     return list(default_character_ids)
 
 
-def _normalize_copy_video_payload(data: dict, target_language: str) -> dict:
+def _normalize_copy_video_payload(
+    data: dict,
+    target_language: str,
+    copy_strength: int | None = None,
+    user_edit_instruction: str = "",
+) -> dict:
     normalized_target = normalize_locale(target_language) or "en-US"
+    normalized_strength = _normalize_copy_strength(
+        copy_strength
+        if copy_strength is not None
+        else data.get("copy_strength_percent") or data.get("copy_strength") or data.get("copy_level_percent") or 100
+    )
+    user_instruction = _normalize_user_edit_instruction(
+        user_edit_instruction
+        or data.get("user_edit_instruction")
+        or data.get("user_edit_instruction_en")
+        or data.get("custom_instruction")
+        or data.get("custom_instruction_en")
+    )
     detected_source = (
         normalize_locale(data.get("detected_source_language"))
         or normalize_locale(data.get("source_language"))
@@ -143,6 +204,11 @@ def _normalize_copy_video_payload(data: dict, target_language: str) -> dict:
                 "style_block_en",
                 "render_consistency_en",
                 "motion_style_en",
+                "narrative_role",
+                "copy_strategy_en",
+                "user_edit_instruction_en",
+                "custom_instruction_en",
+                "adaptation_instruction_en",
             ):
                 text_value = _normalize_text(item.get(text_key))
                 if text_value:
@@ -189,14 +255,30 @@ def _normalize_copy_video_payload(data: dict, target_language: str) -> dict:
 
     for scene in scenes:
         scene["character_ids"] = _normalize_scene_ids(scene.get("character_ids"), [item["character_id"] for item in characters])
+    total_scenes = len(scenes)
+    for idx, scene in enumerate(scenes):
+        if not _normalize_text(scene.get("narrative_role")):
+            if total_scenes <= 1:
+                scene["narrative_role"] = "opening-body-ending"
+            elif idx == 0:
+                scene["narrative_role"] = "opening"
+            elif idx == total_scenes - 1:
+                scene["narrative_role"] = "ending"
+            else:
+                scene["narrative_role"] = "body"
 
-    return {
+    out = {
         "schema_version": "copy_video_pro_v5",
+        "copy_strength_percent": normalized_strength,
         "detected_source_language": detected_source,
         "target_language": normalized_target,
         "characters": characters,
         "scenes": scenes,
     }
+    if user_instruction:
+        out["user_edit_instruction"] = user_instruction
+        out["user_edit_instruction_en"] = _normalize_text(data.get("user_edit_instruction_en")) or user_instruction
+    return out
 
 
 def _normalize_character_design_payload(data: dict, source_characters: list[dict[str, Any]]) -> dict:
@@ -1026,18 +1108,41 @@ class GeminiAutomation:
             "6. Use as many scenes as needed, but keep the JSON compact and valid.\n"
         )
 
-    def _build_copy_video_prompt_v2(self, target_language: str, style: str = "Tự động nhận diện") -> str:
+    def _build_copy_video_prompt_v2(
+        self,
+        target_language: str,
+        style: str = "Tự động nhận diện",
+        copy_strength: int = 100,
+        user_edit_instruction: str = "",
+    ) -> str:
         normalized_target = normalize_locale(target_language) or "en-US"
+        normalized_strength = _normalize_copy_strength(copy_strength)
+        clean_user_instruction = _normalize_user_edit_instruction(user_edit_instruction)
         style_instruction = ""
         if style != "Tự động nhận diện":
-            style_instruction = f"\n11. CRITICAL: For 'style_block_en', you MUST use exactly the following style: '{style}'."
+            style_instruction = f"\n13. CRITICAL: For 'style_block_en', you MUST use exactly the following style: '{style}'."
         else:
-            style_instruction = "\n11. For 'style_block_en', automatically determine the best matching visual style based on the video."
+            style_instruction = "\n13. For 'style_block_en', automatically determine the best matching visual style based on the video."
+        user_instruction_schema = ""
+        user_instruction_rules = ""
+        if clean_user_instruction:
+            safe_instruction = json.dumps(clean_user_instruction, ensure_ascii=False)
+            user_instruction_schema = '  "user_edit_instruction_en": "English version of the user edit instruction",\n'
+            user_instruction_rules = (
+                "\n14. USER EDIT INSTRUCTION: "
+                f"{safe_instruction}\n"
+                "- Apply this instruction consistently across character identity, scene planning, dialogue adaptation, and video_prompt_en.\n"
+                "- Keep the source video's structure according to the copy strength, but this user instruction overrides the source's exact character/background details when they conflict.\n"
+                "- Convert the user instruction into concise English in root user_edit_instruction_en.\n"
+                "- Add custom_instruction_en to affected scenes so downstream video prompts keep the edit.\n"
+            )
+        else:
+            user_instruction_rules = "\n14. No extra user edit instruction was provided; only follow copy strength and style rules."
         
         return (
             "You are Step0 source analysis for Video Composition.\n"
             "Analyze the uploaded video by watching the visuals and listening to the audio together.\n"
-            "Your job is source understanding and scene segmentation only.\n"
+            "Your job is source understanding, copy-strength adaptation, and scene planning only.\n"
             "Return ONLY one valid JSON object.\n"
             "Do not use markdown.\n"
             "Do not wrap in code fences.\n"
@@ -1045,6 +1150,8 @@ class GeminiAutomation:
             "Required schema_version: copy_video_pro_v5\n"
             "{\n"
             '  "schema_version": "copy_video_pro_v5",\n'
+            f'  "copy_strength_percent": {normalized_strength},\n'
+            f"{user_instruction_schema}"
             '  "detected_source_language": "vi-VN",\n'
             f'  "target_language": "{normalized_target}",\n'
             '  "characters": [\n'
@@ -1061,6 +1168,7 @@ class GeminiAutomation:
             '      "dialogue_original": "original spoken dialogue",\n'
             f'      "dialogue_target": "translated dialogue in {normalized_target}",\n'
             '      "shot_type": "long shot",\n'
+            '      "narrative_role": "opening",\n'
             '      "camera_angle": "eye-level",\n'
             '      "framing": "vertical 9:16 framing",\n'
             '      "lens_feel": "cinematic 2D lens feel",\n'
@@ -1071,6 +1179,7 @@ class GeminiAutomation:
             '      "style_block_en": "2D animation style, flat perspective with clean outlines, bold line art, and simplified forms",\n'
             '      "render_consistency_en": "consistent cel shading or flat coloring, no depth simulation",\n'
             '      "motion_style_en": "smooth but intentionally stylized, frame-by-frame animation feel",\n'
+            '      "custom_instruction_en": "scene-specific English edit instruction if the user edit affects this scene",\n'
             '      "video_prompt_en": "cinematic English scene prompt for video generation",\n'
             '      "start_sec": 0.0,\n'
             '      "end_sec": 3.5\n'
@@ -1080,7 +1189,7 @@ class GeminiAutomation:
             "Rules:\n"
             "1. Segment the video into clear short scenes, ideally around 4 to 8 seconds each.\n"
             "2. Detect the source language from spoken audio or visible subtitles.\n"
-            f"3. Translate all spoken dialogue to {normalized_target} and keep the original dialogue too.\n"
+            f"3. For close copy levels, translate spoken dialogue to {normalized_target} and keep the original dialogue too. For 50%-60%, make dialogue_target adapted/new dialogue in {normalized_target} that preserves intent, not a literal copy.\n"
             "4. All character appearance descriptions and all visual scene fields must be written in clear cinematic English.\n"
             "5. Reuse the same character_id consistently across scenes.\n"
             "6. shot_type, camera_angle, framing, and lens_feel must be concise film-style descriptors.\n"
@@ -1088,11 +1197,38 @@ class GeminiAutomation:
             "8. environment_en, mood_en, and motion_en must be concise and production-friendly.\n"
             "9. If the video has no dialogue in a scene, use empty strings for dialogue fields.\n"
             "10. Output compact JSON only.\n"
+            "11. Apply the copy strength profile below when deciding how closely to mirror the source.\n"
+            "12. The scenes must form a full short-video arc: opening, body/development, and ending/resolution. If the source is too short, create concise adapted beats to complete the arc.\n"
             f"{style_instruction}\n"
+            f"{user_instruction_rules}\n"
+            f"{_copy_strength_prompt_block(normalized_strength)}\n"
         )
 
     def _build_character_design_prompt(self, source_data: dict) -> str:
         source_json = json.dumps(source_data or {}, ensure_ascii=False, indent=2)
+        copy_strength = _normalize_copy_strength((source_data or {}).get("copy_strength_percent") or 100)
+        has_user_instruction = bool(
+            _normalize_user_edit_instruction(
+                (source_data or {}).get("user_edit_instruction_en")
+                or (source_data or {}).get("user_edit_instruction")
+            )
+        )
+        if has_user_instruction:
+            character_copy_rule = (
+                "9. User edit instruction is present: apply it before copy-strength preservation. "
+                "Preserve only the unaffected source identity details; change any face, body, wardrobe, age, gender, role, or styling details required by the user edit."
+            )
+        elif copy_strength <= 60:
+            character_copy_rule = (
+                "9. Copy strength is low: design original characters inspired only by the role/archetype. "
+                "Do not replicate exact faces, outfits, accessories, or other identifying details from the source."
+            )
+        elif copy_strength < 100:
+            character_copy_rule = (
+                "9. Copy strength is partial: keep character roles recognizable, but vary non-essential face, wardrobe, and accessory details."
+            )
+        else:
+            character_copy_rule = "9. Copy strength is 100%: preserve visible character identity as closely as the source analysis allows."
         return (
             "You are Character Design Planner for a video generation workflow.\n"
             "Based on the source analysis JSON below, design consistent production-ready character reference plans.\n"
@@ -1134,6 +1270,8 @@ class GeminiAutomation:
             "6. turnaround_prompts_en must be suitable for generating clean character reference images.\n"
             "7. Focus on consistency, silhouette clarity, outfit repeatability, and face identity stability.\n"
             "8. Output compact JSON only.\n"
+            f"{character_copy_rule}\n"
+            "10. If the source analysis contains user_edit_instruction_en, the character designs MUST obey it consistently.\n"
             "\n"
             "Source analysis JSON:\n"
             f"{source_json}"
@@ -1223,11 +1361,18 @@ class GeminiAutomation:
             parsed = json.loads(json_text)
             if not isinstance(parsed, dict):
                 raise RuntimeError("Phản hồi từ Gemini không phải JSON object hợp lệ.")
-            return _normalize_copy_video_payload(parsed, target_language)
+            return _normalize_copy_video_payload(parsed, target_language, copy_strength=100)
         except Exception as exc:
             raise RuntimeError(f"Lỗi tự động hóa Gemini: {exc}") from exc
 
-    async def analyze_video_v2(self, video_path: str, target_language: str = "en-US", style: str = "Tự động nhận diện") -> dict:
+    async def analyze_video_v2(
+        self,
+        video_path: str,
+        target_language: str = "en-US",
+        style: str = "Tự động nhận diện",
+        copy_strength: int = 100,
+        user_edit_instruction: str = "",
+    ) -> dict:
         if not os.path.exists(video_path):
             raise FileNotFoundError(f"Không tìm thấy tệp video: {video_path}")
         if self.page is None:
@@ -1242,10 +1387,20 @@ class GeminiAutomation:
                 raise RuntimeError("Không tìm thấy nút upload để gửi video nguồn lên Gemini.")
 
             parsed = await self._submit_prompt_and_wait_json_with_retry(
-                self._build_copy_video_prompt_v2(target_language, style=style),
+                self._build_copy_video_prompt_v2(
+                    target_language,
+                    style=style,
+                    copy_strength=copy_strength,
+                    user_edit_instruction=user_edit_instruction,
+                ),
                 previous_texts=previous_texts,
             )
-            source_data = _normalize_copy_video_payload(parsed, target_language)
+            source_data = _normalize_copy_video_payload(
+                parsed,
+                target_language,
+                copy_strength=copy_strength,
+                user_edit_instruction=user_edit_instruction,
+            )
             characters = source_data.get("characters") if isinstance(source_data.get("characters"), list) else []
             if not characters:
                 return source_data

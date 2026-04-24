@@ -128,7 +128,14 @@ class AppConfig:
     idea_scene_count: int = 1
     idea_style: str = "3d_Pixar"
     idea_dialogue_language: str = "Tiếng Việt (vi-VN)"
+    idea_source_mode: str = "manual"
+    idea_source_kind: str = "auto"
+    idea_source_url: str = ""
+    idea_source_pdf_path: str = ""
+    idea_output_mode: str = "video"
     idea_voice_profile: str = "None_NoVoice"
+    idea_tts_provider: str = "auto"
+    idea_tts_voice: str = "vi-VN-HoaiMyNeural"
     idea_clone_mode: bool = False
     idea_video_path: str = ""
     idea_auto_run: bool = False
@@ -136,6 +143,9 @@ class AppConfig:
     copy_video_target_language: str = "en-US"
     copy_video_voice_profile: str = "None_NoVoice"
     copy_video_auto_run: bool = False
+    copy_video_style: str = "Tự động nhận diện"
+    copy_video_strength: int = 100
+    copy_video_user_idea: str = ""
 
     # VEO3 settings (per Settings tab)
     veo3_user: str = ""
@@ -234,7 +244,28 @@ class AppConfig:
                     )
                     or cfg.idea_dialogue_language
                 )
+                cfg.idea_source_mode = str(
+                    data.get("IDEA_SOURCE_MODE", data.get("idea_source_mode", cfg.idea_source_mode))
+                    or cfg.idea_source_mode
+                )
+                cfg.idea_source_kind = str(
+                    data.get("IDEA_SOURCE_KIND", data.get("idea_source_kind", cfg.idea_source_kind))
+                    or cfg.idea_source_kind
+                )
+                cfg.idea_source_url = str(
+                    data.get("IDEA_SOURCE_URL", data.get("idea_source_url", cfg.idea_source_url)) or ""
+                )
+                cfg.idea_source_pdf_path = str(
+                    data.get("IDEA_SOURCE_PDF_PATH", data.get("idea_source_pdf_path", cfg.idea_source_pdf_path))
+                    or ""
+                )
+                cfg.idea_output_mode = str(
+                    data.get("IDEA_OUTPUT_MODE", data.get("idea_output_mode", cfg.idea_output_mode))
+                    or cfg.idea_output_mode
+                )
                 cfg.idea_voice_profile = str(data.get("IDEA_VOICE_PROFILE", cfg.idea_voice_profile) or "None_NoVoice")
+                cfg.idea_tts_provider = str(data.get("IDEA_TTS_PROVIDER", cfg.idea_tts_provider) or "auto")
+                cfg.idea_tts_voice = str(data.get("IDEA_TTS_VOICE", cfg.idea_tts_voice) or "vi-VN-HoaiMyNeural")
                 cfg.idea_clone_mode = bool(data.get("IDEA_CLONE_MODE", cfg.idea_clone_mode))
                 cfg.idea_video_path = str(data.get("IDEA_VIDEO_PATH", cfg.idea_video_path) or "")
                 cfg.idea_auto_run = bool(data.get("IDEA_AUTO_RUN", cfg.idea_auto_run))
@@ -246,6 +277,30 @@ class AppConfig:
                     data.get("COPY_VIDEO_VOICE_PROFILE", cfg.copy_video_voice_profile) or "None_NoVoice"
                 )
                 cfg.copy_video_auto_run = bool(data.get("COPY_VIDEO_AUTO_RUN", cfg.copy_video_auto_run))
+                cfg.copy_video_style = str(
+                    data.get("COPY_VIDEO_STYLE", data.get("copy_video_style", cfg.copy_video_style))
+                    or cfg.copy_video_style
+                )
+                cfg.copy_video_user_idea = str(
+                    data.get("COPY_VIDEO_USER_IDEA", data.get("copy_video_user_idea", cfg.copy_video_user_idea))
+                    or ""
+                )
+                try:
+                    cfg.copy_video_strength = max(
+                        50,
+                        min(
+                            100,
+                            int(
+                                data.get(
+                                    "COPY_VIDEO_STRENGTH",
+                                    data.get("copy_video_strength", cfg.copy_video_strength),
+                                )
+                                or cfg.copy_video_strength
+                            ),
+                        ),
+                    )
+                except Exception:
+                    cfg.copy_video_strength = 100
 
                 cfg.offscreen_chrome = bool(data.get("offscreen_chrome", cfg.offscreen_chrome))
 
@@ -320,6 +375,20 @@ class AppConfig:
             cfg.veo_model = VEO_MODEL_FAST
         if str(cfg.create_image_model or "") not in {"Nano Banana pro", "Nano Banana 2", "Nano Banana", "Imagen 4"}:
             cfg.create_image_model = "Imagen 4"
+        if str(cfg.idea_source_mode or "") not in {"manual", "link", "pdf"}:
+            cfg.idea_source_mode = "manual"
+        if str(cfg.idea_source_kind or "") not in {"auto", "news", "story", "comic"}:
+            cfg.idea_source_kind = "auto"
+        if str(cfg.idea_output_mode or "") not in {"video", "storytelling_image"}:
+            cfg.idea_output_mode = "video"
+        if str(cfg.idea_tts_provider or "") not in {"auto", "edge", "sapi", "off"}:
+            cfg.idea_tts_provider = "auto"
+        if not str(cfg.idea_tts_voice or "").strip():
+            cfg.idea_tts_voice = "vi-VN-HoaiMyNeural"
+        try:
+            cfg.copy_video_strength = max(50, min(100, int(cfg.copy_video_strength or 100)))
+        except Exception:
+            cfg.copy_video_strength = 100
         if int(cfg.grok_video_length_seconds or 6) not in {6, 10}:
             cfg.grok_video_length_seconds = 6
         if str(cfg.grok_video_resolution or "") not in {"480p", "720p"}:
@@ -402,7 +471,14 @@ class AppConfig:
             "IDEA_SCENE_COUNT": int(max(1, min(100, int(self.idea_scene_count or 1)))),
             "IDEA_STYLE": str(self.idea_style or "3d_Pixar"),
             "IDEA_DIALOGUE_LANGUAGE": str(self.idea_dialogue_language or "Tiếng Việt (vi-VN)"),
+            "IDEA_SOURCE_MODE": str(self.idea_source_mode or "manual"),
+            "IDEA_SOURCE_KIND": str(self.idea_source_kind or "auto"),
+            "IDEA_SOURCE_URL": str(self.idea_source_url or ""),
+            "IDEA_SOURCE_PDF_PATH": str(self.idea_source_pdf_path or ""),
+            "IDEA_OUTPUT_MODE": str(self.idea_output_mode or "video"),
             "IDEA_VOICE_PROFILE": str(self.idea_voice_profile or "None_NoVoice"),
+            "IDEA_TTS_PROVIDER": str(self.idea_tts_provider or "auto"),
+            "IDEA_TTS_VOICE": str(self.idea_tts_voice or "vi-VN-HoaiMyNeural"),
             "IDEA_CLONE_MODE": bool(self.idea_clone_mode),
             "IDEA_VIDEO_PATH": str(self.idea_video_path or ""),
             "IDEA_AUTO_RUN": bool(self.idea_auto_run),
@@ -410,6 +486,9 @@ class AppConfig:
             "COPY_VIDEO_TARGET_LANGUAGE": str(self.copy_video_target_language or "en-US"),
             "COPY_VIDEO_VOICE_PROFILE": str(self.copy_video_voice_profile or "None_NoVoice"),
             "COPY_VIDEO_AUTO_RUN": bool(self.copy_video_auto_run),
+            "COPY_VIDEO_STYLE": str(self.copy_video_style or "Tự động nhận diện"),
+            "COPY_VIDEO_STRENGTH": int(max(50, min(100, int(self.copy_video_strength or 100)))),
+            "COPY_VIDEO_USER_IDEA": str(self.copy_video_user_idea or ""),
             "GROK_VIDEO_LENGTH_SECONDS": int(10 if int(self.grok_video_length_seconds or 6) == 10 else 6),
             "GROK_VIDEO_RESOLUTION": "720p" if str(self.grok_video_resolution or "480p") == "720p" else "480p",
             "GROK_ACCOUNT_TYPE": grok_account_type,
@@ -700,6 +779,17 @@ def apply_style(app: QApplication) -> None:
     app.setStyleSheet(qss)
 
 
+def _ensure_utf8_stdio() -> None:
+    for stream_name in ("stdout", "stderr"):
+        stream = getattr(sys, stream_name, None)
+        if stream is None or not hasattr(stream, "reconfigure"):
+            continue
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
+
+
 class MainWindow(QMainWindow):
     def __init__(self, config: AppConfig):
         super().__init__()
@@ -770,9 +860,11 @@ class MainWindow(QMainWindow):
         except Exception:
             pass
         self.tab_grok_create_image = CreateImageFromPromptTab()
+        self.tab_grok_char_sync = CharacterSyncTab()
         self.tab_grok_settings = GrokSettingsTab(config=self._cfg)
         self.grok_tabs.addTab(self.tab_grok_text, icon(""), "Text to Video")
         self.grok_tabs.addTab(self.tab_grok_image, icon(""), "Image to Video")
+        self.grok_tabs.addTab(self.tab_grok_char_sync, icon(""), "Đồng nhất nhân vật")
         self.grok_tabs.addTab(self.tab_grok_settings, icon(""), "Cài đặt")
 
         grok_main = QWidget()
@@ -1039,7 +1131,7 @@ class MainWindow(QMainWindow):
         elif cur is self.tab_copy_video:
             self.btn_start.setText(f"{platform_prefix} - Phân tích video mẫu")
             self.btn_start.setObjectName("Accent")
-        elif cur is self.tab_char_sync:
+        elif cur is self.tab_char_sync or cur is self.tab_grok_char_sync:
             self.btn_start.setText(f"{platform_prefix} - Tạo video đồng nhất Nhân Vật")
             self.btn_start.setObjectName("Accent")
         else:
@@ -1071,6 +1163,8 @@ class MainWindow(QMainWindow):
             return "grok_settings"
         if cur is self.tab_char_sync:
             return "character_sync"
+        if cur is self.tab_grok_char_sync:
+            return "grok_character_sync"
         if cur is self.tab_settings:
             return "settings"
         return "unknown"
@@ -1255,10 +1349,25 @@ class MainWindow(QMainWindow):
         voice_actor_key = str(copy_settings.get("voice_actor_key") or "None_NoVoice").strip()
         auto_run = bool(copy_settings.get("auto_run"))
         style = str(copy_settings.get("style") or "Tự động nhận diện").strip()
+        user_idea = str(copy_settings.get("user_idea") or "").strip()
+        try:
+            copy_strength = max(50, min(100, int(copy_settings.get("copy_strength") or 100)))
+        except Exception:
+            copy_strength = 100
+        video_model = str(copy_settings.get("video_model") or "VEO 3").strip()
         if not video_path:
             QMessageBox.warning(self, "Thiếu video", "Hãy chọn video nguồn ở tab SAO CHÉP VIDEO.")
             return
-        self.status.start_copy_video(video_path, target_language, voice_actor_key, auto_run, style)
+        self.status.start_copy_video(
+            video_path,
+            target_language,
+            voice_actor_key,
+            auto_run,
+            style,
+            copy_strength,
+            user_idea,
+            video_model,
+        )
 
     def _on_start_stop(self) -> None:
         flow_name = self._flow_name_from_current_tab()
@@ -1326,7 +1435,11 @@ class MainWindow(QMainWindow):
                 auto_run = bool(idea_settings.get('auto_run', False))
                 target_language = get_voice_locale(voice_profile) or "vi-VN"
                 style = str(idea_settings.get("style") or "Tự động nhận diện")
-                self.status.start_copy_video(video_path, target_language, voice_profile, auto_run, style)
+                try:
+                    copy_strength = max(50, min(100, int(getattr(self._cfg, "copy_video_strength", 100) or 100)))
+                except Exception:
+                    copy_strength = 100
+                self.status.start_copy_video(video_path, target_language, voice_profile, auto_run, style, copy_strength)
             else:
                 try:
                     self.status.start_idea_to_video(idea_settings)
@@ -1423,7 +1536,7 @@ class MainWindow(QMainWindow):
             self._enqueue_payload(payload)
             return
 
-        if flow_name == "character_sync":
+        if flow_name == "character_sync" or flow_name == "grok_character_sync":
             self._ensure_veo_model_allowed(show_message=True)
             self._cfg.video_aspect_ratio = str(self.combo_aspect.currentData() or "9:16")
             self._cfg.veo_model = str(self.combo_veo_model.currentData() or VEO_MODEL_FAST)
@@ -1433,7 +1546,8 @@ class MainWindow(QMainWindow):
             except Exception:
                 pass
 
-            prompts = self.tab_char_sync.get_prompts()
+            char_sync_tab = self.tab_grok_char_sync if flow_name == "grok_character_sync" else self.tab_char_sync
+            prompts = char_sync_tab.get_prompts()
             if not prompts:
                 QMessageBox.warning(self, "Thiếu prompt", "Hãy nhập ít nhất 1 prompt ở tab Đồng bộ nhân vật.")
                 return
@@ -1442,7 +1556,7 @@ class MainWindow(QMainWindow):
             if add_queue_mode and not self._confirm_add_to_queue("tạo video đồng nhất nhân vật", len(prompts)):
                 return
 
-            characters = self.tab_char_sync.get_character_items()
+            characters = char_sync_tab.get_character_items()
             if not characters:
                 QMessageBox.warning(self, "Thiếu ảnh nhân vật", "Hãy thêm ít nhất 1 ảnh nhân vật ở tab Đồng bộ nhân vật.")
                 return
@@ -1458,7 +1572,11 @@ class MainWindow(QMainWindow):
                 )
                 return
 
-            payload = self.status.enqueue_character_sync(prompts, characters)
+            if flow_name == "grok_character_sync":
+                payload = self.status.enqueue_grok_character_sync(prompts, characters)
+            else:
+                payload = self.status.enqueue_character_sync(prompts, characters)
+                
             self._enqueue_payload(payload)
             if add_queue_mode:
                 self._notify_add_to_queue_success("tạo video đồng nhất nhân vật", len(prompts))
@@ -1522,6 +1640,7 @@ class MainWindow(QMainWindow):
 
 
 def main() -> None:
+    _ensure_utf8_stdio()
     app = QApplication(sys.argv)
     app_ic = app_logo_icon()
     if not app_ic.isNull():

@@ -258,6 +258,26 @@ VOICE_JSON: dict[str, dict] = {
 VOICE_OPTIONS = list(VOICE_JSON.keys())
 
 
+VOICE_DISPLAY_LABELS: dict[str, str] = {
+    "None_NoVoice": "Không có giọng đọc",
+    "Nam_Kechuyen": "Nam kể chuyện trầm ấm",
+    "Nu_Kechuyen": "Nữ kể chuyện trầm ấm",
+    "Nam_Tre": "Nam trẻ trung",
+    "Nu_Tre": "Nữ trẻ trung",
+    "Nam_Gia": "Nam trung niên",
+    "Nu_Gia": "Nữ trung niên",
+    "Nam_Phim": "Nam giọng phim",
+    "Nu_Phim": "Nữ giọng phim",
+    "Nam_Review": "Nam review nhanh",
+    "Nu_Review": "Nữ review nhanh",
+    "Nam_Hai": "Nam hài hước",
+    "Nam_Tram_Duc": "Nam trầm đục",
+    "US_Male_Epic": "Nam hùng tráng",
+    "US_Female_Warm": "Nữ ấm áp",
+    "EN_GB_Narrator": "Dẫn truyện trang trọng",
+}
+
+
 def normalize_locale(value: str | None) -> str:
     raw = str(value or "").strip().replace("_", "-")
     if not raw:
@@ -291,8 +311,23 @@ def get_voice_metadata(key: str | None) -> dict:
 
 
 def get_voice_label(key: str | None) -> str:
+    raw_key = str(key or "").strip()
+    if raw_key in VOICE_DISPLAY_LABELS:
+        return VOICE_DISPLAY_LABELS[raw_key]
     meta = get_voice_metadata(key)
-    return str(meta.get("label") or "Không có giọng đọc")
+    label = str(meta.get("label") or "Không có giọng đọc")
+    for prefix in (
+        "Nam Việt - ",
+        "Nữ Việt - ",
+        "Nam Mỹ - ",
+        "Nữ Mỹ - ",
+        "Người dẫn truyện Anh",
+    ):
+        if label.startswith(prefix):
+            if prefix == "Người dẫn truyện Anh":
+                return "Dẫn truyện trang trọng"
+            return label[len(prefix):].strip() or label
+    return label
 
 
 def get_voice_profile_text(key: str | None) -> str:
@@ -400,15 +435,13 @@ def get_best_voice(target_language: str | None, preferred_key: str | None = None
 def get_voice_choices(target_language: str | None = None, include_none: bool = True) -> list[tuple[str, str]]:
     normalized_target = normalize_locale(target_language)
     target_base = get_base_language(normalized_target)
-    ranked: list[tuple[int, int, str]] = []
+    ranked_all: list[tuple[int, int, str]] = []
 
     for key in VOICE_OPTIONS:
         meta = get_voice_metadata(key)
         if not _voice_enabled(meta):
             continue
         if key == "None_NoVoice":
-            if include_none:
-                ranked.append((99, 0, key))
             continue
         aliases = _normalized_aliases(meta)
         score = 4
@@ -420,7 +453,16 @@ def get_voice_choices(target_language: str | None = None, include_none: bool = T
             score = 2
         elif normalized_target and any(fallback in aliases for fallback in _fallback_candidates(normalized_target)):
             score = 3
-        ranked.append((score, -int(meta.get("priority", 0)), key))
+        ranked_all.append((score, -int(meta.get("priority", 0)), key))
+
+    if normalized_target and normalized_target != "*":
+        ranked = [item for item in ranked_all if item[0] <= 2]
+        if not ranked:
+            ranked = [item for item in ranked_all if item[0] == 3]
+        if not ranked:
+            ranked = list(ranked_all)
+    else:
+        ranked = list(ranked_all)
 
     ranked.sort(key=lambda item: (item[0], item[1], item[2]))
     choices = [(key, get_voice_label(key)) for _, _, key in ranked]
