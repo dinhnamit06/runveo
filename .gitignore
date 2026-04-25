@@ -1,47 +1,99 @@
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-*.pyo
-*.pyd
-.Python
+
+# C extensions
+*.so
+
+# Distribution / packaging
+bin/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Environments
+.env
+.venv
 env/
 venv/
-pip-log.txt
-pip-delete-this-directory.txt
+ENV/
+env.bak/
+venv.bak/
 
-# Distribution / Build
-build/
-dist/
-dist_obfuscated/
-dist_obfuscated_v2/
-*.spec
-
-# Chrome User Data (Internal browsers)
-chrome_userdata/
-chrome_userdata_grok/
-chrome_user_data/
-chrome_user_data_grok/
-chrome_userdata_test/
-
-# Application Logs & Data
-*.log
-build_log.txt
-pyarmor.bug.log
-downloads/
-temp_images/
-tests_verification/
-data_general/
-Workflows/**/state.json
-
-# IDEs & System
-.vscode/
+# IDE / Editors
 .idea/
-.DS_Store
-Thumbs.db
+.vscode/
+*.swp
+*.swo
 
-# Antigravity/Gemini Specific
-.gemini/
-.antigravity/
-.antigravityignore
-brain/
+# Project specific
+chrome_user_data/
+chrome_user_data_*/
+*user_data*
+playwright_*/
+data_general/
+/Workflows/
+_video_frames/
+_video_scene/
+
+_video/
+test-results/
+test_result/
+test_result_*/
+test_result_*.zip
+test_result_*.html
+test_result_*.json
+test_result_*.xml
+test_result_*.log
+test_result_*.txt
+test_result_*.csv
+test_result_*.xlsx
+test_result_*.pdf
+test_result_*.png
+test_result_*.jpg
+test_result_*.jpeg
+test_result_*.gif
+test_result_*.mp4
+test_result_*.avi
+test_result_*.mov
+test_result_*.mkv
+test_result_*.webm
+test_result_*.flv
+test_result_*.wmv
+test_result_*.mp3
+test_result_*.wav
+test_result_*.ogg
+test_result_*.flac
+test_result_*.aac
+test_result_*.m4a
+test_result_*.opus
+test_result_*.alac
+test_result_*.ape
+test_result_*.wma
+test_result_*.aiff
+test_result_*.au
+test_result_*.raw
+test_result_*.pac
+test_result_*.iso
+test_result_*.vcd
+test_result_*.cue
+test_result_
+payload_nano.json
+src/core/Workflows/default_project/*.json
+
+_logs_and_temp/*.json

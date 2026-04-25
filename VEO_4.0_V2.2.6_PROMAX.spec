@@ -1,7 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 from PyInstaller.utils.hooks import collect_all
 
-datas = [('icons', 'icons'), ('data_general', 'data_general'), ('Workflows', 'Workflows'), ('qt_ui', 'qt_ui'), ('*.py', '.')]
+datas = [('icons', 'icons'), ('data_general', 'data_general'), ('Workflows', 'Workflows'), ('qt_ui', 'qt_ui'), ('src', 'src')]
 binaries = []
 hiddenimports = ['PyQt6.QtCore', 'PyQt6.QtGui', 'PyQt6.QtWidgets', 'branding_config', 'License', 'grok_api_text_to_video', 'grok_api_image_to_video', 'grok_workflow_text_to_video', 'grok_workflow_image_to_video']
 tmp_ret = collect_all('google')

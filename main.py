@@ -1,9 +1,9 @@
-def main() -> None:
-    from ui import main as qt_main
+import sys
+from pathlib import Path
 
-    qt_main()
+sys.path.insert(0, str(Path(__file__).parent))
 
+from src.core.main import main
 
 if __name__ == "__main__":
     main()
-  
